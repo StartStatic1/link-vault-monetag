@@ -232,6 +232,9 @@
       <div class="domain-tag" id="domain-tag">🌐 —</div>
     </div>
 
+    <label>Descrição <span style="color:var(--muted);font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">(opcional — para seu controle)</span></label>
+    <input type="text" id="desc-input" placeholder="Ex: Filme X — Drive Google" maxlength="80">
+
     <label>Domínio Base (seu site)</label>
     <input type="text" id="base-input" placeholder="https://seusite.com" value="">
 
@@ -250,6 +253,10 @@
       <div class="info-row">
         <span class="info-key">Destino</span>
         <span class="info-val" id="res-dest">—</span>
+      </div>
+      <div class="info-row" id="res-desc-row" style="display:none;">
+        <span class="info-key">Descrição</span>
+        <span class="info-val" id="res-desc" style="text-align:right;max-width:65%;word-break:break-word;">—</span>
       </div>
       <div class="generated-url" id="gen-url">—</div>
       <button class="btn btn-copy visible" onclick="copyLink()">📋 COPIAR LINK</button>
@@ -332,13 +339,14 @@ function previewDomain() {
 function generateLink() {
   const url  = document.getElementById('url-input').value.trim();
   const base = document.getElementById('base-input').value.trim().replace(/\/$/, '');
+  const desc = document.getElementById('desc-input').value.trim();
 
   if (!url) { showToast('⚠️ Cole a URL de destino'); return; }
   if (!base) { showToast('⚠️ Informe o domínio base'); return; }
 
   try { new URL(url); } catch(_) { showToast('❌ URL inválida'); return; }
 
-  const encoded = btoa(url);
+  const encoded   = btoa(url);
   const generated = `${base}/site/?d=${encoded}`;
 
   // Mostra resultado
@@ -346,12 +354,22 @@ function generateLink() {
   let host = '—';
   try { host = new URL(url).hostname.replace('www.',''); } catch(_){}
   document.getElementById('res-dest').textContent = host;
-  document.getElementById('gen-url').textContent = generated;
+  document.getElementById('gen-url').textContent  = generated;
+
+  // Mostra descrição no resultado (se preenchida)
+  const descRow = document.getElementById('res-desc-row');
+  if (desc) {
+    document.getElementById('res-desc').textContent = desc;
+    descRow.style.display = 'flex';
+  } else {
+    descRow.style.display = 'none';
+  }
 
   // Salva histórico
   const entry = {
     id: Date.now(),
     dest: url,
+    desc: desc || '',
     generated,
     created: new Date().toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }),
   };
@@ -383,6 +401,7 @@ function renderHistory() {
   }
   el.innerHTML = history_data.map(e => `
     <div class="hist-item" id="hi-${e.id}">
+      ${e.desc ? `<div style="font-size:11px;font-weight:600;color:#c4b5fd;margin-bottom:4px;">📝 ${e.desc}</div>` : ''}
       <div class="hist-dest">${e.generated}</div>
       <div class="hist-meta">
         <span>${truncate(e.dest, 32)}</span>
