@@ -293,10 +293,24 @@
 
 <script>
 /* ── STATE ── */
-const STORAGE_KEY = 'lv_history';
+const STORAGE_KEY     = 'lv_history';
+const BASE_URL_KEY    = 'lv_base_url';
 let history_data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
 /* ── INIT ── */
+// Pré-preenche domínio base: prioridade → salvo → domínio atual
+(function initBaseUrl() {
+  const saved = localStorage.getItem(BASE_URL_KEY);
+  const auto  = location.origin; // ex: https://meusite.com
+  const input = document.getElementById('base-input');
+  input.value = saved || auto;
+})();
+
+// Salva o domínio base sempre que o usuário alterar
+document.getElementById('base-input').addEventListener('change', function() {
+  localStorage.setItem(BASE_URL_KEY, this.value.trim());
+});
+
 renderHistory();
 updateStats();
 
