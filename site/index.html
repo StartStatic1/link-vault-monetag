@@ -312,16 +312,14 @@
 <div class="ad-slot-bait ads banner adsbox" id="adblock-bait-el"></div>
 
 <!-- OVERLAY ANTI-ADBLOCK (oculto por padrão) -->
-<div id="adblock-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(8,5,16,.97);backdrop-filter:blur(12px);display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
-  <div style="font-size:52px;margin-bottom:16px">🚫</div>
-  <h2 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#f1f0f4;margin-bottom:10px;">AdBlock Detectado</h2>
-  <p style="font-size:14px;color:#6b7280;line-height:1.7;max-width:300px;margin-bottom:24px;">
-    Este site é mantido por anúncios. Por favor, <strong style="color:#c4b5fd;">desative seu AdBlock</strong> para acessar o conteúdo gratuitamente.
-  </p>
-  <button onclick="checkAdblock()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:12px;padding:14px 28px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 5px 0 #5b21b6;">
+<div id="adblock-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(8,5,16,.97);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
+  <div id="overlay-icon" style="font-size:52px;margin-bottom:16px">🚫</div>
+  <h2 id="overlay-title" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#f1f0f4;margin-bottom:10px;">Bloqueador Detectado</h2>
+  <p id="overlay-msg" style="font-size:14px;color:#6b7280;line-height:1.7;max-width:300px;margin-bottom:24px;"></p>
+  <button onclick="retryAccess()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:12px;padding:14px 28px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 5px 0 #5b21b6;">
     ✅ JÁ DESATIVEI
   </button>
-  <p style="margin-top:14px;font-size:11px;color:#3d3558;">Atualize a página após desativar o AdBlock</p>
+  <p style="margin-top:14px;font-size:11px;color:#3d3558;">Desative o bloqueador e toque em "Já Desativei"</p>
 </div>
 
 <!-- ═══ TOPBAR ═══ -->
@@ -546,6 +544,71 @@ setInterval(() => {
   el.textContent = next;
 }, 7000);
 
+/* ── OVERLAY UNIFICADO ── */
+let _overlayReason = null; // 'adblock' | 'popup'
+
+function showOverlay(reason) {
+  _overlayReason = reason;
+  const overlay = document.getElementById('adblock-overlay');
+  const icon    = document.getElementById('overlay-icon');
+  const title   = document.getElementById('overlay-title');
+  const msg     = document.getElementById('overlay-msg');
+
+  if (reason === 'popup') {
+    icon.textContent  = '🔕';
+    title.textContent = 'Pop-ups Bloqueados';
+    msg.innerHTML     = 'Seu navegador está bloqueando os anúncios necessários.<br><br>Vá em <strong style="color:#c4b5fd">Configurações → Permissões → Pop-ups</strong> e permita este site, ou desative o bloqueador de anúncios.';
+  } else {
+    icon.textContent  = '🚫';
+    title.textContent = 'AdBlock Detectado';
+    msg.innerHTML     = 'Este site é mantido por anúncios. Por favor, <strong style="color:#c4b5fd">desative seu AdBlock</strong> para acessar o conteúdo gratuitamente.';
+  }
+  overlay.style.display = 'flex';
+}
+
+function hideOverlay() {
+  document.getElementById('adblock-overlay').style.display = 'none';
+  _overlayReason = null;
+}
+
+function retryAccess() {
+  // Re-checa adblock
+  const bait    = document.getElementById('adblock-bait-el');
+  const blocked =
+    !bait ||
+    bait.offsetParent === null ||
+    bait.offsetHeight === 0 ||
+    bait.offsetWidth  === 0 ||
+    bait.clientHeight === 0 ||
+    getComputedStyle(bait).display      === 'none' ||
+    getComputedStyle(bait).visibility   === 'hidden';
+
+  if (blocked) { showOverlay('adblock'); return; }
+
+  // Se era popup blocker: tenta reabrir o ad
+  if (_overlayReason === 'popup') {
+    const win = window.open(CONFIG.adLink1, '_blank');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      showOverlay('popup'); return;
+    }
+  }
+  hideOverlay();
+}
+
+function checkAdblock() {
+  const bait    = document.getElementById('adblock-bait-el');
+  const blocked =
+    !bait ||
+    bait.offsetParent === null ||
+    bait.offsetHeight === 0 ||
+    bait.offsetWidth  === 0 ||
+    bait.clientHeight === 0 ||
+    getComputedStyle(bait).display      === 'none' ||
+    getComputedStyle(bait).visibility   === 'hidden';
+  if (blocked) showOverlay('adblock');
+}
+setTimeout(checkAdblock, 1500);
+
 /* ── UTILS ── */
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -555,11 +618,13 @@ function showToast(msg) {
 }
 
 function rippleEffect(btn, e) {
-  const r = document.createElement('span');
+  const r    = document.createElement('span');
   r.className = 'ripple-el';
   const rect = btn.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height);
-  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  const clientX = e ? e.clientX : rect.left + rect.width / 2;
+  const clientY = e ? e.clientY : rect.top  + rect.height / 2;
+  r.style.cssText = `width:${size}px;height:${size}px;left:${clientX - rect.left - size/2}px;top:${clientY - rect.top - size/2}px`;
   btn.appendChild(r);
   setTimeout(() => r.remove(), 700);
 }
@@ -569,7 +634,6 @@ function scrollToEl(el) {
 }
 
 function setStep(n) {
-  // Stepper nodes
   for (let i = 1; i <= 3; i++) {
     const node = document.getElementById('sn'+i);
     const line = document.getElementById('sl'+i);
@@ -583,51 +647,49 @@ function setStep(n) {
 
 function setProgress(pct) {
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-pct').textContent  = pct + '%';
 }
 
 function setStatusTag(text, cls) {
-  const tag = document.getElementById('status-tag');
+  const tag   = document.getElementById('status-tag');
   tag.textContent = text;
-  tag.className = 'tag ' + cls;
+  tag.className   = 'tag ' + cls;
 }
 
 function runTimer(id, seconds, ringId, onDone) {
   const wrap = document.getElementById('timer'+id+'-wrap');
   const cnt  = document.getElementById('cnt'+id);
   const ring = document.getElementById('ring'+id);
-  const circ = 125.6; // 2π × r=20
-
+  const circ = 125.6;
   wrap.style.display = 'flex';
-  cnt.textContent = seconds;
+  cnt.textContent    = seconds;
   ring.style.strokeDashoffset = circ;
-
   let remaining = seconds;
   const iv = setInterval(() => {
     remaining--;
     cnt.textContent = remaining;
     ring.style.strokeDashoffset = circ - (circ * (seconds - remaining) / seconds);
-    if (remaining <= 0) {
-      clearInterval(iv);
-      onDone();
-    }
+    if (remaining <= 0) { clearInterval(iv); onDone(); }
   }, 1000);
 }
 
 /* ── ETAPA 1 ── */
 function step1Click(btn) {
-  rippleEffect(btn, event);
-  // Abre ad link Monetag (direct link ou popunder)
-  if (CONFIG.adLink1 !== 'MONETAG_DIRECT_LINK_ETAPA_1') {
-    window.open(CONFIG.adLink1, '_blank');
+  rippleEffect(btn, event || null);
+
+  // Tenta abrir o ad — detecta popup blocker
+  const win = window.open(CONFIG.adLink1, '_blank');
+  if (!win || win.closed || typeof win.closed === 'undefined') {
+    showOverlay('popup');
+    return; // não avança até desbloquear
   }
-  btn.disabled = true;
+
+  btn.disabled    = true;
   btn.textContent = '⏳ AGUARDE...';
   setStatusTag('⏳ Verificando', 'tag-violet');
   setProgress(10);
 
   runTimer(1, CONFIG.timer1, 'ring1', () => {
-    // Passa para etapa 2
     document.getElementById('sec-1').classList.remove('visible');
     document.getElementById('sec-2').classList.add('visible');
     setStep(2);
@@ -640,11 +702,15 @@ function step1Click(btn) {
 
 /* ── ETAPA 2 ── */
 function step2Click(btn) {
-  rippleEffect(btn, event);
-  if (CONFIG.adLink2 !== 'MONETAG_DIRECT_LINK_ETAPA_2') {
-    window.open(CONFIG.adLink2, '_blank');
+  rippleEffect(btn, event || null);
+
+  const win = window.open(CONFIG.adLink2, '_blank');
+  if (!win || win.closed || typeof win.closed === 'undefined') {
+    showOverlay('popup');
+    return;
   }
-  btn.disabled = true;
+
+  btn.disabled    = true;
   btn.textContent = '⏳ AGUARDE...';
   setProgress(55);
 
@@ -661,8 +727,8 @@ function step2Click(btn) {
 
 /* ── ETAPA 3 ── */
 function step3Click(btn) {
-  rippleEffect(btn, event);
-  btn.disabled = true;
+  rippleEffect(btn, event || null);
+  btn.disabled    = true;
   btn.textContent = '⏳ LIBERANDO...';
   setProgress(92);
 
@@ -676,28 +742,6 @@ function step3Click(btn) {
     }, 800);
   });
 }
-
-/* ── ANTI-ADBLOCK ── */
-function checkAdblock() {
-  const bait = document.getElementById('adblock-bait-el');
-  const blocked =
-    !bait ||
-    bait.offsetParent === null ||
-    bait.offsetHeight === 0 ||
-    bait.offsetWidth  === 0 ||
-    bait.clientHeight === 0 ||
-    getComputedStyle(bait).display === 'none' ||
-    getComputedStyle(bait).visibility === 'hidden';
-
-  const overlay = document.getElementById('adblock-overlay');
-  if (blocked) {
-    overlay.style.display = 'flex';
-  } else {
-    overlay.style.display = 'none';
-  }
-}
-// Checa após 1.5s (tempo dos scripts de ad carregarem)
-setTimeout(checkAdblock, 1500);
 
 // Anti-back: bloqueia botão voltar
 history.pushState(null, '', location.href);
