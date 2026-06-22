@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkVault — Painel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #080510;
+      --card:   #0f0c1a;
+      --card2:  #130f20;
+      --border: rgba(124,58,237,.2);
+      --violet: #7c3aed;
+      --violet2:#5b21b6;
+      --green:  #10b981;
+      --orange: #f97316;
+      --red:    #ef4444;
+      --text:   #f1f0f4;
+      --muted:  #6b7280;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124,58,237,.1) 0%, transparent 70%);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 28px 16px 60px;
+    }
+
+    /* ── HEADER ── */
+    .header { text-align: center; margin-bottom: 26px; }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--violet);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-bottom: 4px;
+    }
+    .logo svg { width:18px; height:18px; }
+    .logo-sub { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+    /* ── PANEL ── */
+    .panel { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 14px; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+    }
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--violet);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── INPUTS ── */
+    label {
+      display: block; font-size: 11px; font-weight: 600;
+      color: var(--muted); text-transform: uppercase; letter-spacing: .5px;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%; padding: 13px 14px;
+      background: #0c0918; color: var(--text);
+      border: 1px solid #1e1535; border-radius: 12px;
+      font-size: 14px; font-family: 'Inter', sans-serif;
+      outline: none; transition: border .2s;
+      margin-bottom: 14px;
+    }
+    input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(124,58,237,.1); }
+    input::placeholder { color: #3d3558; }
+
+    /* ── DOMAIN PREVIEW ── */
+    .domain-tag {
+      display: inline-block;
+      background: rgba(124,58,237,.1); border: 1px solid var(--border);
+      border-radius: 8px; padding: 4px 10px;
+      font-size: 11px; color: #c4b5fd;
+      margin-bottom: 14px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      width: 100%; padding: 15px;
+      border: none; border-radius: 12px; cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: transform .12s, box-shadow .12s;
+    }
+    .btn:active { transform: translateY(2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--violet), #4f46e5);
+      color: #fff;
+      box-shadow: 0 5px 0 var(--violet2);
+    }
+    .btn-copy {
+      background: linear-gradient(135deg, var(--green), #059669);
+      color: #fff;
+      box-shadow: 0 5px 0 #065f46;
+      display: none;
+    }
+    .btn-copy.visible { display: block; }
+
+    /* ── RESULT BOX ── */
+    .result-box { display: none; }
+    .result-box.visible { display: flex; flex-direction: column; gap: 10px; }
+
+    .generated-url {
+      background: #0c0918; border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px 14px; font-size: 12px; color: #c4b5fd;
+      word-break: break-all; line-height: 1.6;
+      font-family: monospace;
+    }
+
+    .info-row {
+      display: flex; justify-content: space-between;
+      padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+      font-size: 12px;
+    }
+    .info-row:last-child { border: none; }
+    .info-key { color: var(--muted); }
+    .info-val { color: var(--text); font-weight: 600; }
+
+    /* ── HISTORY ── */
+    .history-empty {
+      text-align: center; padding: 20px;
+      color: var(--muted); font-size: 13px;
+    }
+    .hist-item {
+      background: var(--card2); border: 1px solid rgba(255,255,255,.06);
+      border-radius: 12px; padding: 12px 14px; margin-bottom: 8px;
+      cursor: pointer; transition: border-color .2s;
+    }
+    .hist-item:hover { border-color: rgba(124,58,237,.35); }
+    .hist-item:last-child { margin-bottom: 0; }
+    .hist-dest { font-size: 12px; color: #c4b5fd; font-family: monospace; margin-bottom: 4px; word-break: break-all; }
+    .hist-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+    .hist-actions { display: flex; gap: 6px; margin-top: 8px; }
+    .hist-btn {
+      padding: 4px 10px; border: 1px solid; border-radius: 6px;
+      font-size: 11px; font-weight: 600; cursor: pointer; background: transparent;
+      font-family: 'Inter', sans-serif; transition: all .2s;
+    }
+    .hist-copy { color: var(--violet); border-color: rgba(124,58,237,.3); }
+    .hist-copy:hover { background: rgba(124,58,237,.1); }
+    .hist-del  { color: var(--red);    border-color: rgba(239,68,68,.25); }
+    .hist-del:hover  { background: rgba(239,68,68,.1); }
+
+    /* ── STATS ── */
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-box {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px; font-weight: 700; color: var(--violet);
+      display: block;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 20px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--violet); color: #fff;
+      padding: 10px 22px; border-radius: 30px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(124,58,237,.5);
+      transition: transform .3s; z-index: 999;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-block; padding: 3px 9px; border-radius: 20px;
+      font-size: 10px; font-weight: 700;
+    }
+    .badge-v { background: rgba(124,58,237,.15); color: var(--violet); border: 1px solid rgba(124,58,237,.3); }
+    .badge-g { background: rgba(16,185,129,.15);  color: var(--green);  border: 1px solid rgba(16,185,129,.3); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>
+    LINKVAULT
+  </div>
+  <div class="logo-sub">Painel · Gerador de Links</div>
+</div>
+
+<div class="panel">
+
+  <!-- ── STATS ── -->
+  <div class="stats-grid" id="stats-grid">
+    <div class="stat-box">
+      <span class="stat-num" id="stat-total">0</span>
+      <div class="stat-label">Links Gerados</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" id="stat-today">0</span>
+      <div class="stat-label">Hoje</div>
+    </div>
+  </div>
+
+  <!-- ── GERADOR ── -->
+  <div class="card">
+    <div class="card-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+      Gerar Link Monetizado
+    </div>
+
+    <label>URL de Destino</label>
+    <input type="url" id="url-input" placeholder="https://..." oninput="previewDomain()">
+
+    <div id="domain-preview" style="display:none;">
+      <div class="domain-tag" id="domain-tag">🌐 —</div>
+    </div>
+
+    <label>Domínio Base (seu site)</label>
+    <input type="text" id="base-input" placeholder="https://seusite.com" value="">
+
+    <button class="btn btn-primary" onclick="generateLink()">⚡ GERAR LINK</button>
+
+    <!-- RESULTADO -->
+    <div class="result-box" id="result-box" style="margin-top:14px;">
+      <div class="info-row">
+        <span class="info-key">Status</span>
+        <span class="info-val"><span class="badge badge-g">✓ Pronto</span></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Etapas de Ads</span>
+        <span class="info-val">3 etapas</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Destino</span>
+        <span class="info-val" id="res-dest">—</span>
+      </div>
+      <div class="generated-url" id="gen-url">—</div>
+      <button class="btn btn-copy visible" onclick="copyLink()">📋 COPIAR LINK</button>
+    </div>
+  </div>
+
+  <!-- ── HISTÓRICO ── -->
+  <div class="card">
+    <div class="card-title" style="justify-content:space-between;align-items:center;">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;vertical-align:middle;margin-right:5px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Histórico
+      </span>
+      <button onclick="clearHistory()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--muted);font-family:inherit;">limpar</button>
+    </div>
+    <div id="history-list">
+      <div class="history-empty">Nenhum link gerado ainda</div>
+    </div>
+  </div>
+
+  <!-- ── INSTRUCOES ── -->
+  <div class="card" style="border-color:rgba(249,115,22,.2);">
+    <div class="card-title" style="color:var(--orange);">
+      📋 Como usar
+    </div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.8;display:flex;flex-direction:column;gap:6px;">
+      <div>① Cole a URL de destino (link para o seu conteúdo)</div>
+      <div>② Defina o domínio base do seu site</div>
+      <div>③ Clique em <strong style="color:var(--text)">Gerar Link</strong></div>
+      <div>④ Copie e compartilhe o link gerado</div>
+      <div style="margin-top:6px;padding:10px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);border-radius:8px;">
+        💡 O usuário passará por 3 etapas com anúncios Monetag antes de acessar o destino.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Copiado!</div>
+
+<script>
+/* ── STATE ── */
+const STORAGE_KEY = 'lv_history';
+let history_data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+/* ── INIT ── */
+renderHistory();
+updateStats();
+
+/* ── DOMAIN PREVIEW ── */
+function previewDomain() {
+  const val = document.getElementById('url-input').value.trim();
+  const prev = document.getElementById('domain-preview');
+  const tag  = document.getElementById('domain-tag');
+  try {
+    const host = new URL(val).hostname.replace('www.','');
+    tag.textContent = '🌐 ' + host;
+    prev.style.display = 'block';
+  } catch(_) {
+    prev.style.display = 'none';
+  }
+}
+
+/* ── GENERATE ── */
+function generateLink() {
+  const url  = document.getElementById('url-input').value.trim();
+  const base = document.getElementById('base-input').value.trim().replace(/\/$/, '');
+
+  if (!url) { showToast('⚠️ Cole a URL de destino'); return; }
+  if (!base) { showToast('⚠️ Informe o domínio base'); return; }
+
+  try { new URL(url); } catch(_) { showToast('❌ URL inválida'); return; }
+
+  const encoded = btoa(url);
+  const generated = `${base}/site/?d=${encoded}`;
+
+  // Mostra resultado
+  document.getElementById('result-box').classList.add('visible');
+  let host = '—';
+  try { host = new URL(url).hostname.replace('www.',''); } catch(_){}
+  document.getElementById('res-dest').textContent = host;
+  document.getElementById('gen-url').textContent = generated;
+
+  // Salva histórico
+  const entry = {
+    id: Date.now(),
+    dest: url,
+    generated,
+    created: new Date().toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }),
+  };
+  history_data.unshift(entry);
+  if (history_data.length > 30) history_data = history_data.slice(0, 30);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(history_data));
+
+  renderHistory();
+  updateStats();
+  showToast('✅ Link gerado!');
+}
+
+/* ── COPY ── */
+function copyLink() {
+  const txt = document.getElementById('gen-url').textContent;
+  copyText(txt);
+}
+
+function copyText(txt) {
+  navigator.clipboard.writeText(txt).then(() => showToast('📋 Copiado!'));
+}
+
+/* ── HISTORY ── */
+function renderHistory() {
+  const el = document.getElementById('history-list');
+  if (!history_data.length) {
+    el.innerHTML = '<div class="history-empty">Nenhum link gerado ainda</div>';
+    return;
+  }
+  el.innerHTML = history_data.map(e => `
+    <div class="hist-item" id="hi-${e.id}">
+      <div class="hist-dest">${e.generated}</div>
+      <div class="hist-meta">
+        <span>${truncate(e.dest, 32)}</span>
+        <span>${e.created}</span>
+      </div>
+      <div class="hist-actions">
+        <button class="hist-btn hist-copy" onclick="copyText('${e.generated}')">📋 Copiar</button>
+        <button class="hist-btn hist-del" onclick="deleteEntry(${e.id})">🗑 Remover</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteEntry(id) {
+  history_data = history_data.filter(e => e.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(history_data));
+  renderHistory();
+  updateStats();
+}
+
+function clearHistory() {
+  if (!confirm('Limpar todo o histórico?')) return;
+  history_data = [];
+  localStorage.removeItem(STORAGE_KEY);
+  renderHistory();
+  updateStats();
+}
+
+/* ── STATS ── */
+function updateStats() {
+  document.getElementById('stat-total').textContent = history_data.length;
+  const today = new Date().toLocaleDateString('pt-BR');
+  const todayCount = history_data.filter(e => e.created.startsWith(today.slice(0,5))).length;
+  document.getElementById('stat-today').textContent = todayCount;
+}
+
+/* ── UTILS ── */
+function truncate(str, max) { return str.length > max ? str.slice(0, max) + '…' : str; }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+</script>
+</body>
+</html>
