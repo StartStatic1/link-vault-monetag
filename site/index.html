@@ -27,16 +27,21 @@
       --accent-b: #EA6C0A;
       --green:    #16A34A;
       --green-l:  #F0FDF4;
+      --red:      #DC2626;
+      --red-l:    #FEF2F2;
       --shadow:   0 1px 3px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.06);
     }
+
     body {
       background: var(--bg);
       font-family: 'Inter', sans-serif;
       color: var(--text);
       min-height: 100vh;
       display: flex; flex-direction: column; align-items: center;
-      padding: 0 16px 90px;
+      padding: 0 16px 100px;
     }
+
+    /* TOPBAR */
     .topbar {
       width: 100%; background: var(--white);
       border-bottom: 1px solid var(--border);
@@ -45,7 +50,7 @@
       margin-bottom: 24px;
     }
     .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
-    .logo-name { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; color: var(--text); }
+    .logo-name { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; }
     .logo-name span { color: var(--accent); }
 
     .wrapper { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 12px; }
@@ -79,14 +84,10 @@
       background: var(--white); border: 1px solid var(--border);
       border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow);
     }
-    .steps-label {
-      font-size: 11px; font-weight: 600; color: var(--sub);
-      text-transform: uppercase; letter-spacing: .8px; margin-bottom: 14px;
-    }
+    .steps-label { font-size: 11px; font-weight: 600; color: var(--sub); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 14px; }
     .step-row {
       display: flex; align-items: center; gap: 12px;
-      padding: 10px 0; border-bottom: 1px solid var(--border);
-      transition: opacity .3s;
+      padding: 10px 0; border-bottom: 1px solid var(--border); transition: opacity .3s;
     }
     .step-row:last-of-type { border-bottom: none; }
     .step-row.pending { opacity: .38; }
@@ -101,14 +102,17 @@
     .step-text { flex: 1; }
     .step-name { font-size: 13px; font-weight: 500; }
     .step-desc { font-size: 11px; color: var(--sub); margin-top: 1px; }
-    .step-badge {
-      font-size: 10px; font-weight: 600; padding: 2px 9px; border-radius: 20px;
-    }
+    .step-badge { font-size: 10px; font-weight: 600; padding: 2px 9px; border-radius: 20px; }
     .badge-wait  { background: #FFF7ED; color: var(--accent); border: 1px solid #FED7AA; }
     .badge-ok    { background: var(--green-l); color: var(--green); border: 1px solid #BBF7D0; }
     .badge-queue { background: var(--bg); color: var(--sub); border: 1px solid var(--border); }
 
-    /* TIMER */
+    .prog-wrap { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .prog-track { flex: 1; height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .prog-fill { height: 100%; width: 0%; background: var(--accent); border-radius: 4px; transition: width .6s ease; }
+    .prog-fill.green { background: var(--green); }
+    .prog-pct { font-size: 12px; font-weight: 600; color: var(--sub); min-width: 36px; text-align: right; }
+
     .timer-box {
       display: flex; align-items: center; justify-content: space-between;
       margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
@@ -117,20 +121,29 @@
     .timer-val { font-family: 'DM Sans',sans-serif; font-size: 22px; font-weight: 700; color: var(--accent); min-width: 40px; text-align: right; }
     .timer-val.done { color: var(--green); }
 
-    /* PROGRESS */
-    .prog-wrap { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
-    .prog-track {
-      flex: 1; height: 7px; background: var(--bg);
-      border-radius: 4px; overflow: hidden; border: 1px solid var(--border);
+    /* QUIZ */
+    .quiz-card {
+      background: var(--white); border: 1.5px solid #FED7AA;
+      border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow);
+      display: none;
     }
-    .prog-fill {
-      height: 100%; width: 0%; background: var(--accent);
-      border-radius: 4px; transition: width .6s ease;
+    .quiz-card.show { display: block; }
+    .quiz-label { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px; }
+    .quiz-q { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.4; }
+    .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-btn {
+      width: 100%; padding: 12px 16px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 12px; text-align: left;
+      font-family: 'Inter',sans-serif; font-size: 13px; font-weight: 500;
+      color: var(--text); cursor: pointer; transition: all .2s;
+      display: flex; align-items: center; gap: 10px;
     }
-    .prog-fill.green { background: var(--green); }
-    .prog-pct { font-size: 12px; font-weight: 600; color: var(--sub); min-width: 36px; text-align: right; }
+    .quiz-btn:hover { background: var(--accent-l); border-color: #FED7AA; }
+    .quiz-btn.selected { background: var(--accent-l); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .quiz-btn .q-icon { font-size: 18px; }
 
-    /* BOTÃO */
+    /* BOTÃO PRINCIPAL */
     .btn-main {
       width: 100%; padding: 18px;
       background: var(--accent); border: none; border-radius: 14px;
@@ -138,7 +151,7 @@
       font-size: 16px; font-weight: 700; cursor: pointer;
       box-shadow: 0 4px 0 var(--accent-b), 0 8px 20px rgba(249,115,22,.25);
       transition: transform .1s, box-shadow .1s;
-      display: none;
+      display: none; position: relative; overflow: hidden;
     }
     .btn-main:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--accent-b); }
     .btn-main.visible { display: block; }
@@ -147,6 +160,21 @@
       box-shadow: 0 4px 0 #15803D, 0 8px 20px rgba(22,163,74,.25);
     }
     .btn-main.green-btn:active { box-shadow: 0 1px 0 #15803D; }
+    /* Botão bloqueado (adblock ativo) */
+    .btn-main.locked {
+      background: #9CA3AF !important;
+      box-shadow: 0 4px 0 #6B7280 !important;
+      cursor: not-allowed !important;
+      opacity: .7;
+    }
+
+    /* SCROLL HINT */
+    .scroll-hint {
+      text-align: center; font-size: 12px; color: var(--sub);
+      padding: 8px 0; animation: bounce 1.5s infinite; display: none;
+    }
+    .scroll-hint.show { display: block; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)}50%{transform:translateY(4px)} }
 
     /* CANAIS */
     .channels-card {
@@ -162,12 +190,7 @@
       transition: border-color .2s, background .2s;
     }
     .ch-item:hover { background: var(--bg); border-color: #D1D5DB; }
-    .ch-emoji {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: var(--bg); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 17px; flex-shrink: 0;
-    }
+    .ch-emoji { width: 36px; height: 36px; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
     .ch-info { flex: 1; }
     .ch-name { font-size: 13px; font-weight: 600; }
     .ch-desc { font-size: 11px; color: var(--sub); margin-top: 1px; }
@@ -175,6 +198,7 @@
     .tag-free { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
     .tag-vip  { background: var(--accent-l); color: var(--accent); border: 1px solid #FED7AA; }
 
+    /* FOOTER */
     .footer {
       position: fixed; bottom: 0; left: 0; width: 100%;
       background: var(--white); border-top: 1px solid var(--border);
@@ -183,38 +207,147 @@
       font-size: 11px; color: var(--sub);
     }
 
-    /* ADBLOCK OVERLAY */
+    /* ══════════════════════════════════════════
+       OVERLAY ADBLOCK — Full screen, sem escape
+       ══════════════════════════════════════════ */
     .overlay {
-      display: none; position: fixed; inset: 0; z-index: 999;
-      background: rgba(248,249,251,.97); backdrop-filter: blur(8px);
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(17,24,39,.96);
+      backdrop-filter: blur(12px);
       flex-direction: column; align-items: center; justify-content: center;
-      padding: 32px; text-align: center;
+      padding: 28px; text-align: center;
+      /* Bloqueia qualquer interação com o fundo */
+      pointer-events: all;
     }
     .overlay.show { display: flex; }
-    .overlay-icon { font-size: 48px; margin-bottom: 16px; }
-    .overlay-title { font-family: 'DM Sans',sans-serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-    .overlay-desc { font-size: 13px; color: var(--sub); line-height: 1.7; max-width: 280px; margin-bottom: 24px; }
-    .overlay-btn {
-      background: var(--accent); color: white; border: none;
-      border-radius: 12px; padding: 14px 28px;
-      font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;
-      box-shadow: 0 4px 0 var(--accent-b);
+
+    .ab-card {
+      background: var(--white); border-radius: 24px;
+      padding: 32px 28px 28px; width: 100%; max-width: 360px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+    .ab-icon { font-size: 52px; margin-bottom: 6px; line-height: 1; }
+    .ab-title {
+      font-family: 'DM Sans',sans-serif; font-size: 20px; font-weight: 700;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .ab-desc { font-size: 13px; color: var(--sub); line-height: 1.7; margin-bottom: 14px; }
+    .ab-browser-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red-l); border: 1px solid #FECACA;
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 12px; font-weight: 700; color: var(--red);
+      margin-bottom: 18px;
     }
 
-    .ad-bait { position: absolute; left: -9999px; width: 1px; height: 1px; }
+    /* Steps do overlay */
+    .ab-steps {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 16px;
+      text-align: left; margin-bottom: 20px;
+    }
+    .ab-step {
+      font-size: 12.5px; color: var(--sub);
+      padding: 5px 0; display: flex; align-items: flex-start; gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ab-step:last-child { border-bottom: none; padding-bottom: 0; }
+    .ab-step strong { color: var(--text); }
+    .ab-step-num {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); color: white;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* Botão principal do overlay */
+    .ab-btn-main {
+      width: 100%; padding: 15px;
+      background: var(--accent); border: none; border-radius: 12px;
+      color: white; font-family: 'DM Sans',sans-serif;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 0 var(--accent-b);
+      transition: transform .1s, box-shadow .1s;
+      margin-bottom: 10px;
+    }
+    .ab-btn-main:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--accent-b); }
+
+    /* Alerta de "ainda bloqueando" */
+    .ab-still-blocked {
+      display: none; background: var(--red-l); border: 1px solid #FECACA;
+      border-radius: 10px; padding: 10px 14px;
+      font-size: 12px; color: var(--red); font-weight: 600;
+      margin-bottom: 10px; text-align: left;
+    }
+    .ab-still-blocked.show { display: block; }
+
+    /* Nota de rodapé do overlay — SEM botão de skip */
+    .ab-footer-note {
+      font-size: 11px; color: var(--sub); line-height: 1.6;
+      border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px;
+    }
+
+    /* FLASH UNLOCK */
+    .unlock-flash {
+      position: fixed; inset: 0; z-index: 8888;
+      background: rgba(22,163,74,.12); pointer-events: none;
+      opacity: 0; transition: opacity .15s;
+    }
+    .unlock-flash.show { opacity: 1; }
+
+    /* AD BAITS — nomes da EasyList, blockers removem automaticamente */
+    .ad-bait, .ads, .adsbox, .adsbygoogle,
+    .banner-ads, .ad-unit, .pub_300x250, #banner {
+      position: absolute !important; left: -9999px !important;
+      width: 1px !important; height: 1px !important;
+    }
   </style>
 </head>
 <body>
 
-<div class="ad-bait ads adsbygoogle banner adsbox" id="ad-bait"></div>
+<!-- MÚLTIPLOS BAITS (EasyList) -->
+<div class="ad-bait ads adsbox adsbygoogle" id="ad-bait" aria-hidden="true"></div>
+<div class="pub_300x250 banner-ads ad-unit" id="ad-bait-2" aria-hidden="true"></div>
+<div id="banner" class="ads banner" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;"></div>
 
-<!-- Overlay adblock -->
+<!-- ══ OVERLAY — SEM botão de skip, sem escape ══ -->
 <div class="overlay" id="adblock-overlay">
-  <div class="overlay-icon">🔕</div>
-  <div class="overlay-title">Anúncios bloqueados</div>
-  <div class="overlay-desc">Este serviço é gratuito e mantido por anúncios.<br>Desative seu bloqueador para continuar.</div>
-  <button class="overlay-btn" onclick="retryAdblock()">Já desativei — continuar</button>
+  <div class="ab-card">
+    <div class="ab-icon" id="ab-icon">🔕</div>
+    <div class="ab-title" id="ab-title">Bloqueador detectado</div>
+    <div class="ab-desc" id="ab-desc">
+      Este serviço é gratuito e mantido por anúncios.<br>
+      <strong>Desative o bloqueador para acessar o link.</strong>
+    </div>
+    <div class="ab-browser-badge" id="ab-badge">
+      <span id="ab-badge-icon">🛡️</span>
+      <span id="ab-badge-text">Bloqueador ativo</span>
+    </div>
+
+    <div class="ab-steps" id="ab-steps">
+      <!-- preenchido pelo JS por browser -->
+    </div>
+
+    <!-- Alerta de "ainda bloqueando" (aparece se retentar sem desativar) -->
+    <div class="ab-still-blocked" id="ab-still-blocked">
+      ⚠️ Bloqueador ainda ativo! Siga os passos acima e recarregue a página antes de continuar.
+    </div>
+
+    <button class="ab-btn-main" onclick="retryAdblock()">
+      ✅ Já desativei — verificar
+    </button>
+
+    <div class="ab-footer-note">
+      Sem anúncios = sem servidor = sem link.<br>
+      O desbloqueio leva menos de 30 segundos. 🙏
+    </div>
+  </div>
 </div>
+
+<!-- FLASH VERDE -->
+<div class="unlock-flash" id="unlock-flash"></div>
 
 <!-- TOPBAR -->
 <div class="topbar">
@@ -275,15 +408,29 @@
       <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
       <div class="prog-pct" id="prog-pct">0%</div>
     </div>
-
     <div class="timer-box">
-      <span class="timer-label">⏱ Aguarde para liberar</span>
-      <span class="timer-val" id="timer-val">15</span>
+      <span class="timer-label" id="timer-label">⏱ Role a página para liberar</span>
+      <span class="timer-val" id="timer-val">8</span>
     </div>
   </div>
 
-  <!-- BOTÃO -->
-  <button class="btn-main" id="btn-access" onclick="irParaDestino()">
+  <!-- SCROLL HINT -->
+  <div class="scroll-hint show" id="scroll-hint">👇 Role para baixo para continuar</div>
+
+  <!-- QUIZ -->
+  <div class="quiz-card" id="quiz-card">
+    <div class="quiz-label">⚡ Confirmação rápida</div>
+    <div class="quiz-q">Qual tipo de conteúdo você veio buscar?</div>
+    <div class="quiz-options">
+      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="q-icon">📱</span> Apps & APKs desbloqueados</button>
+      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="q-icon">🎬</span> Filmes e séries</button>
+      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="q-icon">🎮</span> Jogos e emuladores</button>
+      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="q-icon">🔧</span> Ferramentas e tutoriais</button>
+    </div>
+  </div>
+
+  <!-- BOTÃO PRINCIPAL -->
+  <button class="btn-main" id="btn-access" onclick="handleBtnClick()">
     🚀 Acessar link agora
   </button>
 
@@ -293,26 +440,17 @@
     <div class="ch-list">
       <a class="ch-item" href="https://t.me/ApkBugado" target="_blank">
         <div class="ch-emoji">📱</div>
-        <div class="ch-info">
-          <div class="ch-name">APK Bugado</div>
-          <div class="ch-desc">Apps e jogos desbloqueados</div>
-        </div>
+        <div class="ch-info"><div class="ch-name">APK Bugado</div><div class="ch-desc">Apps e jogos desbloqueados</div></div>
         <span class="ch-tag tag-free">Grátis</span>
       </a>
       <a class="ch-item" href="https://t.me/streamflixofc" target="_blank">
         <div class="ch-emoji">🎬</div>
-        <div class="ch-info">
-          <div class="ch-name">StreamFlix Cinema</div>
-          <div class="ch-desc">Filmes e séries em alta</div>
-        </div>
+        <div class="ch-info"><div class="ch-name">StreamFlix Cinema</div><div class="ch-desc">Filmes e séries em alta</div></div>
         <span class="ch-tag tag-free">Grátis</span>
       </a>
       <a class="ch-item" href="https://mnil.ink/p3" target="_blank">
         <div class="ch-emoji">👑</div>
-        <div class="ch-info">
-          <div class="ch-name">Acesso VIP</div>
-          <div class="ch-desc">Conteúdo premium sem anúncios</div>
-        </div>
+        <div class="ch-info"><div class="ch-name">Acesso VIP</div><div class="ch-desc">Conteúdo premium sem anúncios</div></div>
         <span class="ch-tag tag-vip">VIP</span>
       </a>
     </div>
@@ -326,16 +464,34 @@
 </div>
 
 <script>
+// ─── DESTINO ───────────────────────────────────────────────────
 const dest = new URLSearchParams(location.search).get('d') || sessionStorage.getItem('_lv_d');
 if (dest) sessionStorage.setItem('_lv_d', dest);
 else document.body.innerHTML = "<p style='text-align:center;margin-top:40vh;font-family:sans-serif;color:#6B7280'>Link inválido ou expirado.</p>";
 
-// ── STEPS ──────────────────────────────────────────────────────
+// ─── ESTADO ────────────────────────────────────────────────────
+let secs         = 8;
+let timerStarted = false;
+let timerDone    = false;
+let quizDone     = false;
+let step3Done    = false;
+let quizShown    = false;
+let adblockActive = false;   // true = bloqueador detectado
+let adblockCleared = false;  // true = usuário desativou com sucesso
+
+const timerEl    = document.getElementById('timer-val');
+const btnEl      = document.getElementById('btn-access');
+const timerLabel = document.getElementById('timer-label');
+const scrollHint = document.getElementById('scroll-hint');
+const quizCard   = document.getElementById('quiz-card');
+const progFill   = document.getElementById('prog-fill');
+const progPct    = document.getElementById('prog-pct');
+
+// ─── STEPS ─────────────────────────────────────────────────────
 function setProgress(pct, green) {
-  const f = document.getElementById('prog-fill');
-  f.style.width = pct + '%';
-  document.getElementById('prog-pct').textContent = pct + '%';
-  if (green) f.classList.add('green');
+  progFill.style.width = pct + '%';
+  progPct.textContent  = pct + '%';
+  if (green) progFill.classList.add('green');
 }
 function activateStep(n) {
   const r = document.getElementById('step'+n), b = document.getElementById('badge'+n);
@@ -348,60 +504,318 @@ function doneStep(n) {
   b.className = 'step-badge badge-ok'; b.textContent = 'OK';
 }
 
-// Etapas: step 1 já ativo. Schedule dos demais.
-setTimeout(() => { setProgress(25);  doneStep(1); activateStep(2); }, 3000);
-setTimeout(() => { setProgress(50);  doneStep(2); activateStep(3); }, 7000);
-setTimeout(() => { setProgress(75);  doneStep(3); activateStep(4); }, 11000);
+// Step 1 → 3s
+setTimeout(() => { setProgress(25); doneStep(1); activateStep(2); }, 3000);
+
+// Step 2 → 6s + quiz
 setTimeout(() => {
+  setProgress(50); doneStep(2); activateStep(3);
+  if (!quizShown) { quizShown = true; quizCard.classList.add('show'); }
+}, 6000);
+
+// Step 3 → 11s (fallback se não respondeu quiz)
+setTimeout(() => {
+  if (!step3Done) { step3Done = true; setProgress(75); doneStep(3); activateStep(4); }
+}, 11000);
+
+// ─── TIMER — inicia no scroll ──────────────────────────────────
+function startTimer() {
+  if (timerStarted) return;
+  timerStarted = true;
+  timerLabel.textContent = '⏱ Aguarde para liberar';
+  scrollHint.classList.remove('show');
+
+  const tick = setInterval(() => {
+    secs--;
+    timerEl.textContent = secs > 0 ? secs : '✓';
+    if (secs <= 0) {
+      clearInterval(tick);
+      timerDone = true;
+      timerEl.classList.add('done');
+      timerLabel.textContent = '✅ Tempo concluído!';
+      checkReadyToShow();
+    }
+  }, 1000);
+}
+
+// ─── QUIZ ──────────────────────────────────────────────────────
+function answerQuiz(el) {
+  if (quizDone) return;
+  quizDone = true;
+  el.classList.add('selected');
+  document.querySelectorAll('.quiz-btn').forEach(b => b.disabled = true);
+  setTimeout(() => {
+    if (!step3Done) { step3Done = true; setProgress(75); doneStep(3); activateStep(4); }
+    quizCard.style.opacity = '0.6';
+  }, 400);
+  checkReadyToShow();
+}
+
+// ─── MOSTRAR BOTÃO ─────────────────────────────────────────────
+function checkReadyToShow() {
+  if (timerDone && (quizDone || step3Done)) {
+    showFinalUnlock();
+  }
+}
+
+function showFinalUnlock() {
   setProgress(100, true); doneStep(4);
   document.getElementById('seal-ring').classList.add('done');
   document.getElementById('seal-inner').classList.add('done');
   document.getElementById('seal-inner').textContent = '✅';
   document.getElementById('seal-title').textContent = 'Link verificado';
   document.getElementById('seal-sub').textContent = 'Tudo certo! Clique para acessar.';
-  document.getElementById('timer-val').classList.add('done');
-}, 15000);
+  timerLabel.textContent = '✅ Acesso liberado!';
 
-// ── TIMER COUNTDOWN 15s ────────────────────────────────────────
-let secs = 15;
-const timerEl = document.getElementById('timer-val');
-const btnEl   = document.getElementById('btn-access');
+  // Botão aparece — verde se livre, cinza/bloqueado se adblock ativo
+  btnEl.classList.add('visible');
+  refreshButtonState();
+}
 
-const tick = setInterval(() => {
-  secs--;
-  timerEl.textContent = secs > 0 ? secs : '✓';
-  if (secs <= 0) {
-    clearInterval(tick);
-    btnEl.classList.add('visible', 'green-btn');
-    document.querySelector('.timer-label').textContent = '✅ Acesso liberado!';
+// Atualiza visual do botão conforme estado do adblock
+function refreshButtonState() {
+  if (!btnEl.classList.contains('visible')) return;
+  if (adblockActive && !adblockCleared) {
+    btnEl.classList.remove('green-btn');
+    btnEl.classList.add('locked');
+    btnEl.textContent = '🔒 Desative o bloqueador para acessar';
+  } else {
+    btnEl.classList.remove('locked');
+    btnEl.classList.add('green-btn');
+    btnEl.textContent = '🚀 Acessar link agora';
   }
-}, 1000);
+}
 
+// ─── CLIQUE NO BOTÃO ──────────────────────────────────────────
+function handleBtnClick() {
+  if (adblockActive && !adblockCleared) {
+    // Tenta de novo detectar — e mostra overlay se confirmado
+    runAdblockCheck().then(() => {
+      if (adblockActive && !adblockCleared) {
+        document.getElementById('adblock-overlay').classList.add('show');
+      }
+    });
+    return;
+  }
+  irParaDestino();
+}
+
+// ─── REDIRECT ──────────────────────────────────────────────────
 function irParaDestino() {
   if (!dest) return;
-  try { window.location.href = atob(dest); }
-  catch (_) { window.location.href = dest; }
+  const flash = document.getElementById('unlock-flash');
+  flash.classList.add('show');
+  setTimeout(() => flash.classList.remove('show'), 300);
+  setTimeout(() => {
+    try { window.location.href = atob(dest); }
+    catch (_) { window.location.href = dest; }
+  }, 350);
 }
 
 // Anti-back
 history.pushState(null, '', location.href);
 window.addEventListener('popstate', () => history.pushState(null, '', location.href));
 
-// Adblock
-function checkAdblock() {
-  const b = document.getElementById('ad-bait');
-  const blocked = !b || b.offsetHeight === 0 || b.offsetWidth === 0 ||
-    getComputedStyle(b).display === 'none' || getComputedStyle(b).visibility === 'hidden';
-  if (blocked) document.getElementById('adblock-overlay').classList.add('show');
+// ─── SCROLL DETECTOR ───────────────────────────────────────────
+let scrollFired = false;
+function onScroll() {
+  if (!scrollFired) { scrollFired = true; startTimer(); }
 }
-function retryAdblock() {
-  const b = document.getElementById('ad-bait');
-  const blocked = !b || b.offsetHeight === 0 || getComputedStyle(b).display === 'none';
-  if (blocked) { alert('Bloqueador ainda ativo. Desative e tente novamente.'); return; }
+window.addEventListener('scroll',    onScroll, { passive: true });
+window.addEventListener('touchmove', onScroll, { passive: true });
+setTimeout(() => { if (!timerStarted) onScroll(); }, 5000); // fallback mobile
+
+// ══════════════════════════════════════════════════════════════
+// ANTI-ADBLOCK MULTI-VETOR
+// ══════════════════════════════════════════════════════════════
+
+// Detecta browser para instrução personalizada
+function detectBrowser() {
+  if (navigator.brave) return 'Brave';
+  const ua = navigator.userAgent;
+  if (/OPR|Opera/i.test(ua)) return 'Opera';
+  if (/Edg/i.test(ua)) return 'Edge';
+  if (/Firefox/i.test(ua)) return 'Firefox';
+  return 'Generico';
+}
+
+// Monta overlay com instruções certas pro browser
+function buildOverlay(browser) {
+  const icon    = document.getElementById('ab-icon');
+  const title   = document.getElementById('ab-title');
+  const badge   = document.getElementById('ab-badge-text');
+  const badgeIc = document.getElementById('ab-badge-icon');
+  const steps   = document.getElementById('ab-steps');
+
+  const configs = {
+    Brave: {
+      icon: '🦁', title: 'Brave Shields ativado',
+      badge: 'Brave Shields detectado', badgeIcon: '🦁',
+      steps: [
+        'Clique no <strong>ícone do leão 🦁</strong> na barra de endereço',
+        'Clique em <strong>"Shields are UP for..."</strong> para desativar',
+        '<strong>Recarregue a página</strong> e clique em "Já desativei"',
+      ]
+    },
+    Opera: {
+      icon: '🔵', title: 'Opera Ad Block ativado',
+      badge: 'Opera Ad Block detectado', badgeIcon: '🔵',
+      steps: [
+        'Clique no <strong>ícone de escudo</strong> na barra de endereço',
+        'Selecione <strong>"Desativar para este site"</strong>',
+        '<strong>Recarregue a página</strong> e clique em "Já desativei"',
+      ]
+    },
+    Edge: {
+      icon: '🛡️', title: 'Bloqueador detectado (Edge)',
+      badge: 'Bloqueador ativo no Edge', badgeIcon: '🛡️',
+      steps: [
+        'Clique no <strong>ícone do bloqueador</strong> na barra',
+        '<strong>Desative para este site</strong>',
+        '<strong>Recarregue</strong> e clique em "Já desativei"',
+      ]
+    },
+    Firefox: {
+      icon: '🦊', title: 'Bloqueador detectado (Firefox)',
+      badge: 'uBlock / AdBlock detectado', badgeIcon: '🛡️',
+      steps: [
+        'Clique no <strong>ícone do uBlock/AdBlock</strong> na barra',
+        'Clique no <strong>botão azul grande</strong> para desligar no site',
+        '<strong>Recarregue</strong> e clique em "Já desativei"',
+      ]
+    },
+    Generico: {
+      icon: '🔕', title: 'Bloqueador de anúncios detectado',
+      badge: 'Bloqueador ativo', badgeIcon: '🛡️',
+      steps: [
+        'Clique no <strong>ícone do bloqueador</strong> na barra do navegador',
+        'Selecione <strong>"Desativar para este site"</strong>',
+        '<strong>Recarregue</strong> e clique em "Já desativei"',
+      ]
+    }
+  };
+
+  const cfg = configs[browser] || configs.Generico;
+  icon.textContent    = cfg.icon;
+  title.textContent   = cfg.title;
+  badge.textContent   = cfg.badge;
+  badgeIc.textContent = cfg.badgeIcon;
+  steps.innerHTML = cfg.steps.map((s,i) => `
+    <div class="ab-step">
+      <div class="ab-step-num">${i+1}</div>
+      <span>${s}</span>
+    </div>`).join('');
+}
+
+// VETOR 1 & 2: bait DOM (pega uBlock, ABP, Adblock)
+function checkBaits() {
+  const els = [
+    document.getElementById('ad-bait'),
+    document.getElementById('ad-bait-2'),
+    document.getElementById('banner'),
+  ];
+  let blocked = 0;
+  els.forEach(el => {
+    if (!el) { blocked++; return; }
+    const cs = getComputedStyle(el);
+    if (el.offsetHeight === 0 || el.offsetWidth === 0 ||
+        cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0') {
+      blocked++;
+    }
+  });
+  return blocked >= 2; // 2 de 3 = positivo
+}
+
+// VETOR 3: timing fetch (Brave & Opera — resposta < 5ms = bloqueado)
+async function checkTiming() {
+  const urls = [
+    'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+    'https://googleads.g.doubleclick.net/pagead/viewthroughconversion/123456789/',
+  ];
+  let blocked = 0;
+  for (const url of urls) {
+    try {
+      const t0 = performance.now();
+      await fetch(`${url}?_=${Date.now()}`, { method:'HEAD', mode:'no-cors', cache:'no-store' });
+      if (performance.now() - t0 < 5) blocked++;
+    } catch(e) { blocked++; }
+  }
+  return blocked >= 1;
+}
+
+// ORQUESTRADOR
+async function runAdblockCheck() {
+  const bait   = checkBaits();
+  const timing = await checkTiming();
+
+  if (bait || timing) {
+    adblockActive = true;
+    adblockCleared = false;
+    const browser = detectBrowser();
+    buildOverlay(browser);
+    document.getElementById('adblock-overlay').classList.add('show');
+    refreshButtonState();
+  }
+}
+
+// Check periódico a cada 5s (self-healing)
+setInterval(async () => {
+  if (adblockCleared) return;
+  const bait = checkBaits();
+  if (bait && !adblockActive) {
+    adblockActive = true;
+    const browser = detectBrowser();
+    buildOverlay(browser);
+    document.getElementById('adblock-overlay').classList.add('show');
+    refreshButtonState();
+  }
+}, 5000);
+
+// Inicia checks escalonados
+setTimeout(runAdblockCheck, 2000);
+setTimeout(async () => {
+  if (adblockCleared) return;
+  const bait = checkBaits(); const timing = await checkTiming();
+  if ((bait || timing) && !adblockActive) {
+    adblockActive = true;
+    buildOverlay(detectBrowser());
+    document.getElementById('adblock-overlay').classList.add('show');
+    refreshButtonState();
+  }
+}, 7000);
+
+// ─── RETRY (botão "Já desativei") ─────────────────────────────
+async function retryAdblock() {
+  const stillBlocked = document.getElementById('ab-still-blocked');
+  stillBlocked.classList.remove('show');
+
+  // Cria novos baits temporários para re-testar
+  const testBait = document.createElement('div');
+  testBait.className = 'adsbox ads ad-unit pub_300x250';
+  testBait.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;';
+  document.body.appendChild(testBait);
+
+  // Aguarda 300ms para blockers agirem
+  await new Promise(r => setTimeout(r, 300));
+
+  const bait   = checkBaits() || testBait.offsetHeight === 0;
+  const timing = await checkTiming();
+  document.body.removeChild(testBait);
+
+  if (bait || timing) {
+    // Ainda bloqueando
+    stillBlocked.classList.add('show');
+    // Atualiza badge
+    document.getElementById('ab-badge-text').textContent = '⚠️ Ainda bloqueando!';
+    return;
+  }
+
+  // LIBERADO!
+  adblockActive  = false;
+  adblockCleared = true;
   document.getElementById('adblock-overlay').classList.remove('show');
+  refreshButtonState();
 }
-setTimeout(checkAdblock, 2500);
-setTimeout(checkAdblock, 8000);
 </script>
 </body>
 </html>
