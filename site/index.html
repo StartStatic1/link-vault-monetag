@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verificando acesso...</title>
+  <title>Verificando acesso seguro...</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- MONETAG: Multitag -->
   <script src="https://quge5.com/88/tag.min.js" data-zone="252888" async data-cfasync="false"></script>
@@ -14,365 +14,378 @@
   <!-- MONETAG: Vignette -->
   <script>(function(s){s.dataset.zone='11192284';s.src='https://n6wxm.com/vignette.min.js';})(document.documentElement.appendChild(document.createElement('script')));</script>
 
+  <!-- AD BAITS para detecção -->
+  <div class="ad-bait ads adsbox adsbygoogle" id="ad-bait" aria-hidden="true"></div>
+  <div class="pub_300x250 banner-ads ad-unit" id="ad-bait-2" aria-hidden="true"></div>
+  <div id="banner" class="ads banner" aria-hidden="true"></div>
+
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg:       #F8F9FB;
-      --white:    #FFFFFF;
-      --border:   #E5E7EB;
-      --text:     #111827;
-      --sub:      #6B7280;
-      --accent:   #F97316;
-      --accent-l: #FFF7ED;
-      --accent-b: #EA6C0A;
-      --green:    #16A34A;
-      --green-l:  #F0FDF4;
-      --red:      #DC2626;
-      --red-l:    #FEF2F2;
-      --shadow:   0 1px 3px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.06);
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#0F1117;
+      --card:#181C27;
+      --card2:#1E2235;
+      --border:#2A3050;
+      --text:#F1F3F9;
+      --sub:#8892B0;
+      --muted:#4A5578;
+      --accent:#6C63FF;
+      --accent2:#8B83FF;
+      --accent-dark:#4A43CC;
+      --accent-glow:rgba(108,99,255,.25);
+      --green:#22C55E;
+      --green-dark:#16A34A;
+      --green-glow:rgba(34,197,94,.2);
+      --orange:#F97316;
+      --red:#EF4444;
+      --shadow:0 0 0 1px var(--border),0 8px 32px rgba(0,0,0,.4);
     }
 
-    body {
-      background: var(--bg);
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center;
-      padding: 0 16px 100px;
+    body{
+      background:var(--bg);
+      background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(108,99,255,.12),transparent);
+      font-family:'Inter',sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      display:flex;flex-direction:column;align-items:center;
+      padding:0 16px 120px;
+    }
+
+    /* AD BAITS */
+    .ad-bait,.ads,.adsbox,.adsbygoogle,.banner-ads,.ad-unit,.pub_300x250,#banner{
+      position:absolute!important;left:-9999px!important;
+      width:1px!important;height:1px!important;opacity:0!important;
     }
 
     /* TOPBAR */
-    .topbar {
-      width: 100%; background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 24px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin-bottom: 24px;
+    .topbar{
+      width:100%;max-width:460px;
+      padding:18px 0 14px;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      margin-bottom:20px;
     }
-    .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
-    .logo-name { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; }
-    .logo-name span { color: var(--accent); }
+    .logo-icon{
+      width:32px;height:32px;border-radius:9px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;font-size:16px;
+      box-shadow:0 0 16px var(--accent-glow);
+    }
+    .logo-name{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:800;letter-spacing:-.3px}
+    .logo-name span{color:var(--accent2)}
+    .secure-badge{
+      margin-left:auto;
+      display:flex;align-items:center;gap:5px;
+      background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);
+      border-radius:20px;padding:4px 10px;
+      font-size:11px;font-weight:600;color:var(--green);
+    }
+    .secure-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse-dot 1.5s ease infinite}
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-    .wrapper { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 12px; }
+    .wrapper{width:100%;max-width:460px;display:flex;flex-direction:column;gap:12px}
 
-    /* SEAL */
-    .seal-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 20px; padding: 28px 24px 22px;
-      text-align: center; box-shadow: var(--shadow);
+    /* HERO CARD */
+    .hero-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:20px;padding:28px 24px 22px;
+      text-align:center;box-shadow:var(--shadow);
+      position:relative;overflow:hidden;
     }
-    .seal-wrap { position: relative; width: 80px; height: 80px; margin: 0 auto 18px; }
-    .seal-ring {
-      position: absolute; inset: 0; border-radius: 50%;
-      border: 2.5px solid var(--border); border-top-color: var(--accent);
-      animation: spin 1.2s linear infinite;
+    .hero-card::before{
+      content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);
+      width:200px;height:200px;border-radius:50%;
+      background:radial-gradient(circle,var(--accent-glow),transparent 70%);
+      pointer-events:none;
     }
-    .seal-ring.done { animation: none; border-color: var(--green); }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .seal-inner {
-      position: absolute; inset: 9px; border-radius: 50%;
-      background: var(--accent-l);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px; transition: background .4s;
+    .shield-wrap{position:relative;width:72px;height:72px;margin:0 auto 16px}
+    .shield-svg{width:72px;height:72px}
+    .shield-circle{
+      position:absolute;inset:-8px;border-radius:50%;
+      border:2px solid var(--border);border-top-color:var(--accent);
+      animation:spin 1.4s linear infinite;
     }
-    .seal-inner.done { background: var(--green-l); }
-    .seal-title { font-family: 'DM Sans',sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 5px; }
-    .seal-sub { font-size: 13px; color: var(--sub); line-height: 1.5; }
+    .shield-circle.done{animation:none;border-color:var(--green)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .shield-icon{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      font-size:28px;
+    }
+    .hero-title{font-family:'DM Sans',sans-serif;font-size:19px;font-weight:800;margin-bottom:6px;letter-spacing:-.3px}
+    .hero-sub{font-size:13px;color:var(--sub);line-height:1.6}
 
     /* STEPS */
-    .steps-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow);
+    .steps-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);
     }
-    .steps-label { font-size: 11px; font-weight: 600; color: var(--sub); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 14px; }
-    .step-row {
-      display: flex; align-items: center; gap: 12px;
-      padding: 10px 0; border-bottom: 1px solid var(--border); transition: opacity .3s;
+    .card-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+    .step-row{
+      display:flex;align-items:center;gap:12px;
+      padding:10px 0;border-bottom:1px solid var(--border);
+      transition:opacity .3s;
     }
-    .step-row:last-of-type { border-bottom: none; }
-    .step-row.pending { opacity: .38; }
-    .step-icon {
-      width: 34px; height: 34px; border-radius: 10px;
-      background: var(--bg); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px; flex-shrink: 0; transition: all .4s;
+    .step-row:last-of-type{border-bottom:none}
+    .step-row.pending{opacity:.3}
+    .step-num{
+      width:28px;height:28px;border-radius:8px;
+      background:var(--card2);border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      font-size:11px;font-weight:700;color:var(--muted);
+      flex-shrink:0;transition:all .4s;
     }
-    .step-row.active .step-icon { background: var(--accent-l); border-color: #FED7AA; }
-    .step-row.done  .step-icon { background: var(--green-l);  border-color: #BBF7D0; }
-    .step-text { flex: 1; }
-    .step-name { font-size: 13px; font-weight: 500; }
-    .step-desc { font-size: 11px; color: var(--sub); margin-top: 1px; }
-    .step-badge { font-size: 10px; font-weight: 600; padding: 2px 9px; border-radius: 20px; }
-    .badge-wait  { background: #FFF7ED; color: var(--accent); border: 1px solid #FED7AA; }
-    .badge-ok    { background: var(--green-l); color: var(--green); border: 1px solid #BBF7D0; }
-    .badge-queue { background: var(--bg); color: var(--sub); border: 1px solid var(--border); }
+    .step-row.active .step-num{background:rgba(108,99,255,.15);border-color:var(--accent);color:var(--accent)}
+    .step-row.done .step-num{background:rgba(34,197,94,.15);border-color:var(--green);color:var(--green)}
+    .step-text{flex:1}
+    .step-name{font-size:13px;font-weight:600}
+    .step-desc{font-size:11px;color:var(--sub);margin-top:1px}
+    .step-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+    .badge-wait{background:rgba(108,99,255,.15);color:var(--accent2);border:1px solid rgba(108,99,255,.3)}
+    .badge-ok{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+    .badge-queue{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border)}
 
-    .prog-wrap { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
-    .prog-track { flex: 1; height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
-    .prog-fill { height: 100%; width: 0%; background: var(--accent); border-radius: 4px; transition: width .6s ease; }
-    .prog-fill.green { background: var(--green); }
-    .prog-pct { font-size: 12px; font-weight: 600; color: var(--sub); min-width: 36px; text-align: right; }
+    /* TIMER BLOCK */
+    .timer-block{
+      margin-top:14px;padding-top:14px;border-top:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    .timer-info{flex:1}
+    .timer-label{font-size:12px;color:var(--sub);margin-bottom:3px}
+    .prog-track{height:5px;background:var(--card2);border-radius:3px;overflow:hidden;border:1px solid var(--border)}
+    .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .8s ease}
+    .prog-fill.green{background:linear-gradient(90deg,var(--green-dark),var(--green))}
+    .timer-count{
+      font-family:'DM Sans',sans-serif;font-size:32px;font-weight:800;
+      color:var(--accent2);min-width:48px;text-align:center;line-height:1;
+      text-shadow:0 0 20px var(--accent-glow);
+    }
+    .timer-count.done{color:var(--green);text-shadow:0 0 20px var(--green-glow)}
 
-    .timer-box {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
+    /* INTERAÇÃO OBRIGATÓRIA — scrollzone */
+    .scroll-gate{
+      display:none;
+      background:rgba(108,99,255,.06);border:1px dashed rgba(108,99,255,.3);
+      border-radius:12px;padding:14px 16px;margin-top:12px;
+      text-align:center;
     }
-    .timer-label { font-size: 12px; color: var(--sub); }
-    .timer-val { font-family: 'DM Sans',sans-serif; font-size: 22px; font-weight: 700; color: var(--accent); min-width: 40px; text-align: right; }
-    .timer-val.done { color: var(--green); }
+    .scroll-gate.show{display:block}
+    .scroll-gate-text{font-size:12px;color:var(--accent2);font-weight:600}
+    .scroll-arrow{font-size:20px;animation:bounce 1s ease infinite;display:block;margin-top:4px}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 
-    /* QUIZ */
-    .quiz-card {
-      background: var(--white); border: 1.5px solid #FED7AA;
-      border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow);
-      display: none;
+    /* QUIZ — bloqueante */
+    .quiz-card{
+      background:var(--card);border:1px solid rgba(108,99,255,.35);
+      border-radius:16px;padding:20px;box-shadow:var(--shadow);
+      display:none;
     }
-    .quiz-card.show { display: block; }
-    .quiz-label { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px; }
-    .quiz-q { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.4; }
-    .quiz-options { display: flex; flex-direction: column; gap: 8px; }
-    .quiz-btn {
-      width: 100%; padding: 12px 16px;
-      background: var(--bg); border: 1.5px solid var(--border);
-      border-radius: 12px; text-align: left;
-      font-family: 'Inter',sans-serif; font-size: 13px; font-weight: 500;
-      color: var(--text); cursor: pointer; transition: all .2s;
-      display: flex; align-items: center; gap: 10px;
+    .quiz-card.show{display:block}
+    .quiz-eyebrow{font-size:10px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+    .quiz-q{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;line-height:1.4;color:var(--text)}
+    .quiz-opts{display:flex;flex-direction:column;gap:7px}
+    .quiz-btn{
+      width:100%;padding:12px 14px;
+      background:var(--card2);border:1px solid var(--border);
+      border-radius:10px;text-align:left;
+      font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+      color:var(--sub);cursor:pointer;transition:all .2s;
+      display:flex;align-items:center;gap:10px;
     }
-    .quiz-btn:hover { background: var(--accent-l); border-color: #FED7AA; }
-    .quiz-btn.selected { background: var(--accent-l); border-color: var(--accent); color: var(--accent); font-weight: 600; }
-    .quiz-btn .q-icon { font-size: 18px; }
+    .quiz-btn:hover:not(:disabled){background:rgba(108,99,255,.1);border-color:rgba(108,99,255,.4);color:var(--text)}
+    .quiz-btn.selected{background:rgba(108,99,255,.15);border-color:var(--accent);color:var(--accent2);font-weight:600}
+    .quiz-btn:disabled{cursor:default;opacity:.7}
+    .quiz-icon{font-size:16px;flex-shrink:0}
 
-    /* BOTÃO PRINCIPAL */
-    .btn-main {
-      width: 100%; padding: 18px;
-      background: var(--accent); border: none; border-radius: 14px;
-      color: white; font-family: 'DM Sans',sans-serif;
-      font-size: 16px; font-weight: 700; cursor: pointer;
-      box-shadow: 0 4px 0 var(--accent-b), 0 8px 20px rgba(249,115,22,.25);
-      transition: transform .1s, box-shadow .1s;
-      display: none; position: relative; overflow: hidden;
+    /* SLIDER DE CONFIRMAÇÃO */
+    .slider-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:16px;padding:20px;box-shadow:var(--shadow);
+      display:none;
     }
-    .btn-main:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--accent-b); }
-    .btn-main.visible { display: block; }
-    .btn-main.green-btn {
-      background: var(--green);
-      box-shadow: 0 4px 0 #15803D, 0 8px 20px rgba(22,163,74,.25);
+    .slider-card.show{display:block}
+    .slider-eyebrow{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+    .slider-title{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;margin-bottom:14px}
+    .slider-track{
+      position:relative;height:52px;background:var(--card2);
+      border:1px solid var(--border);border-radius:14px;
+      overflow:hidden;cursor:pointer;user-select:none;touch-action:pan-y;
     }
-    .btn-main.green-btn:active { box-shadow: 0 1px 0 #15803D; }
-    /* Botão bloqueado (adblock ativo) */
-    .btn-main.locked {
-      background: #9CA3AF !important;
-      box-shadow: 0 4px 0 #6B7280 !important;
-      cursor: not-allowed !important;
-      opacity: .7;
+    .slider-fill{
+      position:absolute;left:0;top:0;height:100%;width:0%;
+      background:linear-gradient(90deg,rgba(108,99,255,.3),rgba(108,99,255,.15));
+      border-radius:14px;transition:none;
     }
+    .slider-fill.success{background:linear-gradient(90deg,rgba(34,197,94,.3),rgba(34,197,94,.15));width:100%!important;transition:width .3s ease}
+    .slider-thumb{
+      position:absolute;left:4px;top:4px;
+      width:44px;height:44px;border-radius:11px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;
+      font-size:18px;box-shadow:0 4px 12px rgba(108,99,255,.4);
+      cursor:grab;transition:left .05s;
+    }
+    .slider-thumb.success{background:linear-gradient(135deg,var(--green-dark),var(--green));box-shadow:0 4px 12px var(--green-glow)}
+    .slider-thumb:active{cursor:grabbing}
+    .slider-text{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:600;color:var(--muted);pointer-events:none;
+      letter-spacing:.5px;
+    }
+    .slider-text.hidden{opacity:0}
 
-    /* SCROLL HINT */
-    .scroll-hint {
-      text-align: center; font-size: 12px; color: var(--sub);
-      padding: 8px 0; animation: bounce 1.5s infinite; display: none;
+    /* BOTÃO FINAL */
+    .btn-main{
+      width:100%;padding:18px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border:none;border-radius:14px;
+      color:white;font-family:'DM Sans',sans-serif;
+      font-size:16px;font-weight:800;cursor:pointer;
+      box-shadow:0 4px 0 var(--accent-dark),0 8px 24px var(--accent-glow);
+      transition:transform .1s,box-shadow .1s;
+      display:none;letter-spacing:-.2px;
     }
-    .scroll-hint.show { display: block; }
-    @keyframes bounce { 0%,100%{transform:translateY(0)}50%{transform:translateY(4px)} }
+    .btn-main:active{transform:translateY(3px);box-shadow:0 1px 0 var(--accent-dark)}
+    .btn-main.show{display:block}
+    .btn-main.green-btn{
+      background:linear-gradient(135deg,var(--green-dark),var(--green));
+      box-shadow:0 4px 0 #15803D,0 8px 24px var(--green-glow);
+    }
+    .btn-main.green-btn:active{box-shadow:0 1px 0 #15803D}
+    .btn-main.locked{
+      background:linear-gradient(135deg,#374151,#4B5563)!important;
+      box-shadow:0 4px 0 #1F2937!important;cursor:not-allowed!important;
+    }
 
     /* CANAIS */
-    .channels-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 16px; padding: 16px 20px; box-shadow: var(--shadow);
+    .channels-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:16px;padding:16px 20px;box-shadow:var(--shadow);
     }
-    .ch-label { font-size: 11px; font-weight: 600; color: var(--sub); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 12px; }
-    .ch-list { display: flex; flex-direction: column; gap: 8px; }
-    .ch-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 11px 14px; border: 1px solid var(--border);
-      border-radius: 12px; text-decoration: none; color: var(--text);
-      transition: border-color .2s, background .2s;
+    .ch-list{display:flex;flex-direction:column;gap:7px}
+    .ch-item{
+      display:flex;align-items:center;gap:12px;
+      padding:11px 13px;border:1px solid var(--border);
+      border-radius:11px;text-decoration:none;color:var(--text);
+      transition:border-color .2s,background .2s;background:var(--card2);
     }
-    .ch-item:hover { background: var(--bg); border-color: #D1D5DB; }
-    .ch-emoji { width: 36px; height: 36px; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
-    .ch-info { flex: 1; }
-    .ch-name { font-size: 13px; font-weight: 600; }
-    .ch-desc { font-size: 11px; color: var(--sub); margin-top: 1px; }
-    .ch-tag { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
-    .tag-free { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
-    .tag-vip  { background: var(--accent-l); color: var(--accent); border: 1px solid #FED7AA; }
+    .ch-item:hover{border-color:rgba(108,99,255,.4);background:rgba(108,99,255,.06)}
+    .ch-emoji{width:34px;height:34px;border-radius:9px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .ch-info{flex:1}
+    .ch-name{font-size:13px;font-weight:600}
+    .ch-desc{font-size:11px;color:var(--sub);margin-top:1px}
+    .ch-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+    .tag-free{background:rgba(59,130,246,.15);color:#60A5FA;border:1px solid rgba(59,130,246,.3)}
+    .tag-vip{background:rgba(108,99,255,.15);color:var(--accent2);border:1px solid rgba(108,99,255,.3)}
 
     /* FOOTER */
-    .footer {
-      position: fixed; bottom: 0; left: 0; width: 100%;
-      background: var(--white); border-top: 1px solid var(--border);
-      padding: 12px 24px;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      font-size: 11px; color: var(--sub);
+    .footer{
+      position:fixed;bottom:0;left:0;width:100%;
+      background:rgba(15,17,23,.92);backdrop-filter:blur(16px);
+      border-top:1px solid var(--border);
+      padding:12px 24px;
+      display:flex;align-items:center;justify-content:center;gap:6px;
+      font-size:11px;color:var(--muted);
     }
 
-    /* ══════════════════════════════════════════
-       OVERLAY ADBLOCK — Full screen, sem escape
-       ══════════════════════════════════════════ */
-    .overlay {
-      display: none;
-      position: fixed; inset: 0; z-index: 9999;
-      background: rgba(17,24,39,.96);
-      backdrop-filter: blur(12px);
-      flex-direction: column; align-items: center; justify-content: center;
-      padding: 28px; text-align: center;
-      /* Bloqueia qualquer interação com o fundo */
-      pointer-events: all;
+    /* OVERLAY ADBLOCK */
+    .overlay{
+      display:none;position:fixed;inset:0;z-index:9999;
+      background:rgba(9,11,17,.96);backdrop-filter:blur(16px);
+      flex-direction:column;align-items:center;justify-content:center;padding:24px;
     }
-    .overlay.show { display: flex; }
+    .overlay.show{display:flex}
+    .ab-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:24px;padding:28px;width:100%;max-width:360px;
+      box-shadow:0 20px 60px rgba(0,0,0,.6);
+    }
+    .ab-icon{font-size:48px;margin-bottom:6px;line-height:1}
+    .ab-title{font-family:'DM Sans',sans-serif;font-size:19px;font-weight:800;margin-bottom:6px;color:var(--text)}
+    .ab-desc{font-size:13px;color:var(--sub);line-height:1.7;margin-bottom:14px}
+    .ab-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);
+      border-radius:20px;padding:5px 12px;
+      font-size:12px;font-weight:700;color:var(--red);margin-bottom:18px;
+    }
+    .ab-steps{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:18px;text-align:left}
+    .ab-step{font-size:12px;color:var(--sub);padding:5px 0;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid var(--border)}
+    .ab-step:last-child{border-bottom:none;padding-bottom:0}
+    .ab-step strong{color:var(--text)}
+    .ab-step-num{width:18px;height:18px;border-radius:50%;background:var(--accent);color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+    .ab-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:12px;color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 var(--accent-dark);margin-bottom:10px}
+    .ab-still{display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--red);font-weight:600;margin-bottom:10px}
+    .ab-still.show{display:block}
+    .ab-note{font-size:11px;color:var(--muted);line-height:1.6;border-top:1px solid var(--border);padding-top:12px;margin-top:4px}
 
-    .ab-card {
-      background: var(--white); border-radius: 24px;
-      padding: 32px 28px 28px; width: 100%; max-width: 360px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.4);
-    }
-    .ab-icon { font-size: 52px; margin-bottom: 6px; line-height: 1; }
-    .ab-title {
-      font-family: 'DM Sans',sans-serif; font-size: 20px; font-weight: 700;
-      color: var(--text); margin-bottom: 6px;
-    }
-    .ab-desc { font-size: 13px; color: var(--sub); line-height: 1.7; margin-bottom: 14px; }
-    .ab-browser-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--red-l); border: 1px solid #FECACA;
-      border-radius: 20px; padding: 5px 14px;
-      font-size: 12px; font-weight: 700; color: var(--red);
-      margin-bottom: 18px;
-    }
+    /* FLASH */
+    .flash{position:fixed;inset:0;z-index:8888;background:rgba(34,197,94,.12);pointer-events:none;opacity:0;transition:opacity .15s}
+    .flash.show{opacity:1}
 
-    /* Steps do overlay */
-    .ab-steps {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 14px; padding: 14px 16px;
-      text-align: left; margin-bottom: 20px;
+    /* PAUSED badge */
+    .paused-badge{
+      display:none;align-items:center;gap:6px;
+      background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);
+      border-radius:8px;padding:7px 12px;margin-top:10px;
+      font-size:12px;font-weight:600;color:var(--orange);
     }
-    .ab-step {
-      font-size: 12.5px; color: var(--sub);
-      padding: 5px 0; display: flex; align-items: flex-start; gap: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-    .ab-step:last-child { border-bottom: none; padding-bottom: 0; }
-    .ab-step strong { color: var(--text); }
-    .ab-step-num {
-      width: 20px; height: 20px; border-radius: 50%;
-      background: var(--accent); color: white;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: 1px;
-    }
+    .paused-badge.show{display:flex}
 
-    /* Botão principal do overlay */
-    .ab-btn-main {
-      width: 100%; padding: 15px;
-      background: var(--accent); border: none; border-radius: 12px;
-      color: white; font-family: 'DM Sans',sans-serif;
-      font-size: 15px; font-weight: 700; cursor: pointer;
-      box-shadow: 0 4px 0 var(--accent-b);
-      transition: transform .1s, box-shadow .1s;
-      margin-bottom: 10px;
-    }
-    .ab-btn-main:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--accent-b); }
-
-    /* Alerta de "ainda bloqueando" */
-    .ab-still-blocked {
-      display: none; background: var(--red-l); border: 1px solid #FECACA;
-      border-radius: 10px; padding: 10px 14px;
-      font-size: 12px; color: var(--red); font-weight: 600;
-      margin-bottom: 10px; text-align: left;
-    }
-    .ab-still-blocked.show { display: block; }
-
-    /* Nota de rodapé do overlay — SEM botão de skip */
-    .ab-footer-note {
-      font-size: 11px; color: var(--sub); line-height: 1.6;
-      border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px;
-    }
-
-    /* FLASH UNLOCK */
-    .unlock-flash {
-      position: fixed; inset: 0; z-index: 8888;
-      background: rgba(22,163,74,.12); pointer-events: none;
-      opacity: 0; transition: opacity .15s;
-    }
-    .unlock-flash.show { opacity: 1; }
-
-    /* AD BAITS — nomes da EasyList, blockers removem automaticamente */
-    .ad-bait, .ads, .adsbox, .adsbygoogle,
-    .banner-ads, .ad-unit, .pub_300x250, #banner {
-      position: absolute !important; left: -9999px !important;
-      width: 1px !important; height: 1px !important;
+    @media(max-width:380px){
+      .hero-title{font-size:17px}
+      .timer-count{font-size:28px}
     }
   </style>
 </head>
 <body>
 
-<!-- MÚLTIPLOS BAITS (EasyList) -->
-<div class="ad-bait ads adsbox adsbygoogle" id="ad-bait" aria-hidden="true"></div>
-<div class="pub_300x250 banner-ads ad-unit" id="ad-bait-2" aria-hidden="true"></div>
-<div id="banner" class="ads banner" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;"></div>
+<!-- FLASH UNLOCK -->
+<div class="flash" id="flash"></div>
 
-<!-- ══ OVERLAY — SEM botão de skip, sem escape ══ -->
+<!-- OVERLAY ADBLOCK -->
 <div class="overlay" id="adblock-overlay">
   <div class="ab-card">
     <div class="ab-icon" id="ab-icon">🔕</div>
     <div class="ab-title" id="ab-title">Bloqueador detectado</div>
     <div class="ab-desc" id="ab-desc">
       Este serviço é gratuito e mantido por anúncios.<br>
-      <strong>Desative o bloqueador para acessar o link.</strong>
+      <strong>Desative o bloqueador para continuar.</strong>
     </div>
-    <div class="ab-browser-badge" id="ab-badge">
+    <div class="ab-badge">
       <span id="ab-badge-icon">🛡️</span>
       <span id="ab-badge-text">Bloqueador ativo</span>
     </div>
-
-    <div class="ab-steps" id="ab-steps">
-      <!-- preenchido pelo JS por browser -->
-    </div>
-
-    <!-- Alerta de "ainda bloqueando" (aparece se retentar sem desativar) -->
-    <div class="ab-still-blocked" id="ab-still-blocked">
-      ⚠️ Bloqueador ainda ativo! Siga os passos acima e recarregue a página antes de continuar.
-    </div>
-
-    <button class="ab-btn-main" onclick="retryAdblock()">
-      ✅ Já desativei — verificar
-    </button>
-
-    <div class="ab-footer-note">
-      Sem anúncios = sem servidor = sem link.<br>
-      O desbloqueio leva menos de 30 segundos. 🙏
-    </div>
+    <div class="ab-steps" id="ab-steps"></div>
+    <div class="ab-still" id="ab-still">⚠️ Bloqueador ainda ativo! Siga os passos e recarregue a página.</div>
+    <button class="ab-btn" onclick="retryAdblock()">✅ Já desativei — verificar</button>
+    <div class="ab-note">Sem anúncios = sem servidor = sem link.<br>O desbloqueio leva menos de 30 segundos. 🙏</div>
   </div>
 </div>
 
-<!-- FLASH VERDE -->
-<div class="unlock-flash" id="unlock-flash"></div>
-
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="logo-dot"></div>
+  <div class="logo-icon">🔗</div>
   <div class="logo-name">Link<span>Vault</span></div>
+  <div class="secure-badge"><div class="secure-dot"></div> SSL Ativo</div>
 </div>
 
 <div class="wrapper">
 
-  <!-- SEAL -->
-  <div class="seal-card">
-    <div class="seal-wrap">
-      <div class="seal-ring" id="seal-ring"></div>
-      <div class="seal-inner" id="seal-inner">🔗</div>
+  <!-- HERO -->
+  <div class="hero-card">
+    <div class="shield-wrap">
+      <div class="shield-circle" id="shield-circle"></div>
+      <div class="shield-icon" id="shield-icon">🔗</div>
     </div>
-    <div class="seal-title" id="seal-title">Verificando link</div>
-    <div class="seal-sub" id="seal-sub">Aguarde enquanto validamos o acesso...</div>
+    <div class="hero-title" id="hero-title">Verificando link</div>
+    <div class="hero-sub" id="hero-sub">Aguarde enquanto validamos o acesso ao conteúdo...</div>
   </div>
 
   <!-- STEPS -->
   <div class="steps-card">
-    <div class="steps-label">Progresso da verificação</div>
+    <div class="card-label">Progresso da verificação</div>
 
     <div class="step-row active" id="step1">
-      <div class="step-icon">🔍</div>
+      <div class="step-num" id="snum1">1</div>
       <div class="step-text">
         <div class="step-name">Validando link</div>
         <div class="step-desc">Checando integridade do destino</div>
@@ -380,23 +393,23 @@
       <span class="step-badge badge-wait" id="badge1">Em curso</span>
     </div>
     <div class="step-row pending" id="step2">
-      <div class="step-icon">🛡️</div>
+      <div class="step-num" id="snum2">2</div>
       <div class="step-text">
-        <div class="step-name">Verificação de segurança</div>
-        <div class="step-desc">Analisando conteúdo</div>
+        <div class="step-name">Análise de segurança</div>
+        <div class="step-desc">Verificando conteúdo do destino</div>
       </div>
       <span class="step-badge badge-queue" id="badge2">Aguardando</span>
     </div>
     <div class="step-row pending" id="step3">
-      <div class="step-icon">🔐</div>
+      <div class="step-num" id="snum3">3</div>
       <div class="step-text">
-        <div class="step-name">Autenticando sessão</div>
-        <div class="step-desc">Confirmando identidade</div>
+        <div class="step-name">Confirmação de acesso</div>
+        <div class="step-desc">Interação necessária para continuar</div>
       </div>
       <span class="step-badge badge-queue" id="badge3">Aguardando</span>
     </div>
     <div class="step-row pending" id="step4">
-      <div class="step-icon">✅</div>
+      <div class="step-num" id="snum4">4</div>
       <div class="step-text">
         <div class="step-name">Acesso liberado</div>
         <div class="step-desc">Pronto para redirecionar</div>
@@ -404,39 +417,53 @@
       <span class="step-badge badge-queue" id="badge4">Aguardando</span>
     </div>
 
-    <div class="prog-wrap">
-      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
-      <div class="prog-pct" id="prog-pct">0%</div>
+    <div class="timer-block">
+      <div class="timer-info">
+        <div class="timer-label" id="timer-label">👇 Role para iniciar verificação</div>
+        <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+        <div class="paused-badge" id="paused-badge">⏸ Timer pausado — retorne à aba</div>
+      </div>
+      <div class="timer-count" id="timer-val">15</div>
     </div>
-    <div class="timer-box">
-      <span class="timer-label" id="timer-label">⏱ Role a página para liberar</span>
-      <span class="timer-val" id="timer-val">8</span>
+
+    <!-- Gate de scroll -->
+    <div class="scroll-gate show" id="scroll-gate">
+      <div class="scroll-gate-text">Role a página para iniciar o timer ↓</div>
+      <span class="scroll-arrow">👇</span>
     </div>
   </div>
 
-  <!-- SCROLL HINT -->
-  <div class="scroll-hint show" id="scroll-hint">👇 Role para baixo para continuar</div>
-
-  <!-- QUIZ -->
+  <!-- QUIZ (bloqueante — aparece no step 2) -->
   <div class="quiz-card" id="quiz-card">
-    <div class="quiz-label">⚡ Confirmação rápida</div>
-    <div class="quiz-q">Qual tipo de conteúdo você veio buscar?</div>
-    <div class="quiz-options">
-      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="q-icon">📱</span> Apps & APKs desbloqueados</button>
-      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="q-icon">🎬</span> Filmes e séries</button>
-      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="q-icon">🎮</span> Jogos e emuladores</button>
-      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="q-icon">🔧</span> Ferramentas e tutoriais</button>
+    <div class="quiz-eyebrow">⚡ Etapa obrigatória — confirme abaixo</div>
+    <div class="quiz-q" id="quiz-q">Qual tipo de conteúdo você veio acessar?</div>
+    <div class="quiz-opts" id="quiz-opts">
+      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="quiz-icon">📱</span> Apps e APKs desbloqueados</button>
+      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="quiz-icon">🎬</span> Filmes e séries</button>
+      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="quiz-icon">🎮</span> Jogos e emuladores</button>
+      <button class="quiz-btn" onclick="answerQuiz(this)"><span class="quiz-icon">🔧</span> Ferramentas e tutoriais</button>
     </div>
   </div>
 
-  <!-- BOTÃO PRINCIPAL -->
-  <button class="btn-main" id="btn-access" onclick="handleBtnClick()">
+  <!-- SLIDER DE CONFIRMAÇÃO (aparece após quiz) -->
+  <div class="slider-card" id="slider-card">
+    <div class="slider-eyebrow">Etapa final</div>
+    <div class="slider-title">Deslize para confirmar o acesso →</div>
+    <div class="slider-track" id="slider-track">
+      <div class="slider-fill" id="slider-fill"></div>
+      <div class="slider-thumb" id="slider-thumb">→</div>
+      <div class="slider-text" id="slider-text">DESLIZE PARA CONTINUAR</div>
+    </div>
+  </div>
+
+  <!-- BOTÃO FINAL -->
+  <button class="btn-main" id="btn-main" onclick="handleClick()">
     🚀 Acessar link agora
   </button>
 
   <!-- CANAIS -->
   <div class="channels-card">
-    <div class="ch-label">Nossos canais</div>
+    <div class="card-label" style="margin-bottom:12px">Nossos canais</div>
     <div class="ch-list">
       <a class="ch-item" href="https://t.me/ApkBugado" target="_blank">
         <div class="ch-emoji">📱</div>
@@ -450,7 +477,7 @@
       </a>
       <a class="ch-item" href="https://mnil.ink/p3" target="_blank">
         <div class="ch-emoji">👑</div>
-        <div class="ch-info"><div class="ch-name">Acesso VIP</div><div class="ch-desc">Conteúdo premium sem anúncios</div></div>
+        <div class="ch-info"><div class="ch-name">Acesso VIP</div><div class="ch-desc">Conteúdo premium exclusivo</div></div>
         <span class="ch-tag tag-vip">VIP</span>
       </a>
     </div>
@@ -459,177 +486,286 @@
 </div>
 
 <div class="footer">
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
   Conexão segura · LinkVault
 </div>
 
 <script>
-// ─── DESTINO ───────────────────────────────────────────────────
+// ─── DESTINO ────────────────────────────────────────────────────
 const dest = new URLSearchParams(location.search).get('d') || sessionStorage.getItem('_lv_d');
 if (dest) sessionStorage.setItem('_lv_d', dest);
-else document.body.innerHTML = "<p style='text-align:center;margin-top:40vh;font-family:sans-serif;color:#6B7280'>Link inválido ou expirado.</p>";
+else {
+  document.body.innerHTML = `<p style="text-align:center;margin-top:40vh;font-family:sans-serif;color:#8892B0;font-size:14px">❌ Link inválido ou expirado.</p>`;
+}
 
-// ─── ESTADO ────────────────────────────────────────────────────
-let secs         = 8;
-let timerStarted = false;
-let timerDone    = false;
-let quizDone     = false;
-let step3Done    = false;
-let quizShown    = false;
-let adblockActive = false;   // true = bloqueador detectado
-let adblockCleared = false;  // true = usuário desativou com sucesso
+// ─── ESTADO ─────────────────────────────────────────────────────
+const TIMER_TOTAL   = 15;   // segundos totais
+let secs            = TIMER_TOTAL;
+let timerInterval   = null;
+let timerStarted    = false;
+let timerDone       = false;
+let quizDone        = false;
+let sliderDone      = false;
+let quizShown       = false;
+let sliderShown     = false;
+let step2Done       = false;
+let step3Done       = false;
+let adblockActive   = false;
+let adblockCleared  = false;
+let tabHidden       = false;
 
 const timerEl    = document.getElementById('timer-val');
-const btnEl      = document.getElementById('btn-access');
 const timerLabel = document.getElementById('timer-label');
-const scrollHint = document.getElementById('scroll-hint');
-const quizCard   = document.getElementById('quiz-card');
 const progFill   = document.getElementById('prog-fill');
-const progPct    = document.getElementById('prog-pct');
+const scrollGate = document.getElementById('scroll-gate');
+const pausedBadge= document.getElementById('paused-badge');
+const quizCard   = document.getElementById('quiz-card');
+const sliderCard = document.getElementById('slider-card');
+const btnMain    = document.getElementById('btn-main');
 
-// ─── STEPS ─────────────────────────────────────────────────────
+// ─── STEPS ──────────────────────────────────────────────────────
+function setStep(n, state) {
+  const row   = document.getElementById('step'+n);
+  const badge = document.getElementById('badge'+n);
+  const num   = document.getElementById('snum'+n);
+  row.className = 'step-row ' + state;
+  if (state === 'active') { badge.className='step-badge badge-wait'; badge.textContent='Em curso'; }
+  if (state === 'done')   { badge.className='step-badge badge-ok';   badge.textContent='✓'; num.textContent='✓'; }
+  if (state === 'pending'){ badge.className='step-badge badge-queue'; badge.textContent='Aguardando'; }
+}
 function setProgress(pct, green) {
   progFill.style.width = pct + '%';
-  progPct.textContent  = pct + '%';
   if (green) progFill.classList.add('green');
 }
-function activateStep(n) {
-  const r = document.getElementById('step'+n), b = document.getElementById('badge'+n);
-  r.classList.remove('pending'); r.classList.add('active');
-  b.className = 'step-badge badge-wait'; b.textContent = 'Em curso';
-}
-function doneStep(n) {
-  const r = document.getElementById('step'+n), b = document.getElementById('badge'+n);
-  r.classList.remove('active'); r.classList.add('done');
-  b.className = 'step-badge badge-ok'; b.textContent = 'OK';
-}
 
-// Step 1 → 3s
-setTimeout(() => { setProgress(25); doneStep(1); activateStep(2); }, 3000);
-
-// Step 2 → 6s + quiz
-setTimeout(() => {
-  setProgress(50); doneStep(2); activateStep(3);
-  if (!quizShown) { quizShown = true; quizCard.classList.add('show'); }
-}, 6000);
-
-// Step 3 → 11s (fallback se não respondeu quiz)
-setTimeout(() => {
-  if (!step3Done) { step3Done = true; setProgress(75); doneStep(3); activateStep(4); }
-}, 11000);
-
-// ─── TIMER — inicia no scroll ──────────────────────────────────
+// ─── TIMER — só inicia no scroll ────────────────────────────────
 function startTimer() {
   if (timerStarted) return;
   timerStarted = true;
-  timerLabel.textContent = '⏱ Aguarde para liberar';
-  scrollHint.classList.remove('show');
+  scrollGate.classList.remove('show');
+  timerLabel.textContent = '⏱ Aguarde a verificação completar';
 
-  const tick = setInterval(() => {
+  // Step 1 → 3s
+  setTimeout(() => { setStep(1,'done'); setStep(2,'active'); setProgress(25); showQuiz(); }, 3000);
+
+  timerInterval = setInterval(() => {
+    if (tabHidden) return; // PAUSA se sair da aba
     secs--;
+    const pct = Math.round(((TIMER_TOTAL - secs) / TIMER_TOTAL) * 100);
+    setProgress(Math.min(pct, quizDone ? 75 : 50));
     timerEl.textContent = secs > 0 ? secs : '✓';
+
     if (secs <= 0) {
-      clearInterval(tick);
+      clearInterval(timerInterval);
       timerDone = true;
       timerEl.classList.add('done');
-      timerLabel.textContent = '✅ Tempo concluído!';
-      checkReadyToShow();
+      timerLabel.textContent = '✅ Tempo verificado';
+      checkCanAdvance();
     }
   }, 1000);
 }
 
-// ─── QUIZ ──────────────────────────────────────────────────────
+// ─── PAUSA AO SAIR DA ABA ───────────────────────────────────────
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    tabHidden = true;
+    if (timerStarted && !timerDone) {
+      pausedBadge.classList.add('show');
+      timerLabel.textContent = '⏸ Timer pausado — retorne à página';
+    }
+  } else {
+    tabHidden = false;
+    pausedBadge.classList.remove('show');
+    if (timerStarted && !timerDone) {
+      timerLabel.textContent = '⏱ Aguarde a verificação completar';
+    }
+  }
+});
+
+// ─── QUIZ BLOQUEANTE ─────────────────────────────────────────────
+function showQuiz() {
+  if (quizShown) return;
+  quizShown = true;
+  quizCard.classList.add('show');
+  quizCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 function answerQuiz(el) {
   if (quizDone) return;
   quizDone = true;
   el.classList.add('selected');
   document.querySelectorAll('.quiz-btn').forEach(b => b.disabled = true);
+  setStep(2,'done'); setStep(3,'active'); setProgress(50);
+  step2Done = true;
+
+  // Pequena pausa visual, depois mostra slider
   setTimeout(() => {
-    if (!step3Done) { step3Done = true; setProgress(75); doneStep(3); activateStep(4); }
-    quizCard.style.opacity = '0.6';
-  }, 400);
-  checkReadyToShow();
+    quizCard.style.opacity = '0.5';
+    quizCard.style.pointerEvents = 'none';
+    showSlider();
+  }, 500);
+  checkCanAdvance();
 }
 
-// ─── MOSTRAR BOTÃO ─────────────────────────────────────────────
-function checkReadyToShow() {
-  if (timerDone && (quizDone || step3Done)) {
+// ─── SLIDER OBRIGATÓRIO ──────────────────────────────────────────
+function showSlider() {
+  if (sliderShown) return;
+  sliderShown = true;
+  sliderCard.classList.add('show');
+  sliderCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  initSlider();
+}
+
+function initSlider() {
+  const track = document.getElementById('slider-track');
+  const thumb = document.getElementById('slider-thumb');
+  const fill  = document.getElementById('slider-fill');
+  const txt   = document.getElementById('slider-text');
+
+  const trackW = track.clientWidth;
+  const thumbW = 52; // thumb width + margins
+  const maxX   = trackW - thumbW;
+  const threshold = maxX * 0.85; // 85% = sucesso
+
+  let dragging = false;
+  let startX   = 0;
+  let currentX = 0;
+
+  function getX(e) { return e.touches ? e.touches[0].clientX : e.clientX; }
+
+  function onStart(e) {
+    if (sliderDone) return;
+    dragging = true;
+    startX = getX(e) - currentX;
+    thumb.style.transition = 'none';
+    fill.style.transition   = 'none';
+    txt.classList.add('hidden');
+  }
+
+  function onMove(e) {
+    if (!dragging || sliderDone) return;
+    e.preventDefault();
+    let x = getX(e) - startX;
+    x = Math.max(0, Math.min(x, maxX));
+    currentX = x;
+    thumb.style.left = (x + 4) + 'px';
+    fill.style.width = ((x / maxX) * 100) + '%';
+  }
+
+  function onEnd() {
+    if (!dragging || sliderDone) return;
+    dragging = false;
+    if (currentX >= threshold) {
+      onSliderSuccess();
+    } else {
+      // Volta ao início com animação
+      thumb.style.transition = 'left .3s ease';
+      fill.style.transition  = 'width .3s ease';
+      thumb.style.left = '4px';
+      fill.style.width = '0%';
+      currentX = 0;
+      txt.classList.remove('hidden');
+    }
+  }
+
+  track.addEventListener('mousedown',  onStart);
+  track.addEventListener('touchstart', onStart, { passive: true });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('mouseup',   onEnd);
+  window.addEventListener('touchend',  onEnd);
+}
+
+function onSliderSuccess() {
+  sliderDone = true;
+  const thumb = document.getElementById('slider-thumb');
+  const fill  = document.getElementById('slider-fill');
+  const txt   = document.getElementById('slider-text');
+
+  thumb.classList.add('success');
+  fill.classList.add('success');
+  thumb.textContent = '✓';
+  txt.textContent   = '✅ CONFIRMADO';
+  txt.classList.remove('hidden');
+  txt.style.color = 'var(--green)';
+
+  setStep(3,'done'); setStep(4,'active'); setProgress(75); step3Done = true;
+  checkCanAdvance();
+}
+
+// ─── CHECK FINAL ─────────────────────────────────────────────────
+function checkCanAdvance() {
+  // Precisa: timer zerado + quiz respondido + slider arrastado
+  if (timerDone && quizDone && sliderDone) {
     showFinalUnlock();
   }
 }
 
 function showFinalUnlock() {
-  setProgress(100, true); doneStep(4);
-  document.getElementById('seal-ring').classList.add('done');
-  document.getElementById('seal-inner').classList.add('done');
-  document.getElementById('seal-inner').textContent = '✅';
-  document.getElementById('seal-title').textContent = 'Link verificado';
-  document.getElementById('seal-sub').textContent = 'Tudo certo! Clique para acessar.';
-  timerLabel.textContent = '✅ Acesso liberado!';
+  setProgress(100, true); setStep(4,'done');
+  document.getElementById('shield-circle').classList.add('done');
+  document.getElementById('shield-icon').textContent = '✅';
+  document.getElementById('hero-title').textContent = 'Link verificado!';
+  document.getElementById('hero-sub').textContent = 'Tudo certo! Clique no botão abaixo para acessar.';
+  timerLabel.textContent = '✅ Verificação completa';
 
-  // Botão aparece — verde se livre, cinza/bloqueado se adblock ativo
-  btnEl.classList.add('visible');
-  refreshButtonState();
+  btnMain.classList.add('show');
+  updateBtn();
+
+  // Scroll suave até o botão
+  setTimeout(() => btnMain.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
 }
 
-// Atualiza visual do botão conforme estado do adblock
-function refreshButtonState() {
-  if (!btnEl.classList.contains('visible')) return;
+function updateBtn() {
+  if (!btnMain.classList.contains('show')) return;
   if (adblockActive && !adblockCleared) {
-    btnEl.classList.remove('green-btn');
-    btnEl.classList.add('locked');
-    btnEl.textContent = '🔒 Desative o bloqueador para acessar';
+    btnMain.classList.remove('green-btn');
+    btnMain.classList.add('locked');
+    btnMain.textContent = '🔒 Desative o bloqueador para acessar';
   } else {
-    btnEl.classList.remove('locked');
-    btnEl.classList.add('green-btn');
-    btnEl.textContent = '🚀 Acessar link agora';
+    btnMain.classList.remove('locked');
+    btnMain.classList.add('green-btn');
+    btnMain.textContent = '🚀 Acessar link agora';
   }
 }
 
-// ─── CLIQUE NO BOTÃO ──────────────────────────────────────────
-function handleBtnClick() {
+// ─── CLICK NO BOTÃO ──────────────────────────────────────────────
+function handleClick() {
   if (adblockActive && !adblockCleared) {
-    // Tenta de novo detectar — e mostra overlay se confirmado
     runAdblockCheck().then(() => {
-      if (adblockActive && !adblockCleared) {
+      if (adblockActive && !adblockCleared)
         document.getElementById('adblock-overlay').classList.add('show');
-      }
     });
     return;
   }
-  irParaDestino();
+  goToDestino();
 }
 
-// ─── REDIRECT ──────────────────────────────────────────────────
-function irParaDestino() {
+function goToDestino() {
   if (!dest) return;
-  const flash = document.getElementById('unlock-flash');
-  flash.classList.add('show');
-  setTimeout(() => flash.classList.remove('show'), 300);
+  const fl = document.getElementById('flash');
+  fl.classList.add('show');
+  setTimeout(() => fl.classList.remove('show'), 300);
   setTimeout(() => {
     try { window.location.href = atob(dest); }
-    catch (_) { window.location.href = dest; }
+    catch(_) { window.location.href = dest; }
   }, 350);
 }
 
 // Anti-back
-history.pushState(null, '', location.href);
-window.addEventListener('popstate', () => history.pushState(null, '', location.href));
+history.pushState(null,'',location.href);
+window.addEventListener('popstate', () => history.pushState(null,'',location.href));
 
-// ─── SCROLL DETECTOR ───────────────────────────────────────────
+// ─── SCROLL GATE ─────────────────────────────────────────────────
 let scrollFired = false;
 function onScroll() {
   if (!scrollFired) { scrollFired = true; startTimer(); }
 }
 window.addEventListener('scroll',    onScroll, { passive: true });
 window.addEventListener('touchmove', onScroll, { passive: true });
-setTimeout(() => { if (!timerStarted) onScroll(); }, 5000); // fallback mobile
+// SEM fallback automático — usuário PRECISA scrollar
 
-// ══════════════════════════════════════════════════════════════
-// ANTI-ADBLOCK MULTI-VETOR
-// ══════════════════════════════════════════════════════════════
-
-// Detecta browser para instrução personalizada
+// ─── ANTI-ADBLOCK ────────────────────────────────────────────────
 function detectBrowser() {
   if (navigator.brave) return 'Brave';
   const ua = navigator.userAgent;
@@ -639,182 +775,85 @@ function detectBrowser() {
   return 'Generico';
 }
 
-// Monta overlay com instruções certas pro browser
 function buildOverlay(browser) {
-  const icon    = document.getElementById('ab-icon');
-  const title   = document.getElementById('ab-title');
-  const badge   = document.getElementById('ab-badge-text');
-  const badgeIc = document.getElementById('ab-badge-icon');
-  const steps   = document.getElementById('ab-steps');
-
   const configs = {
-    Brave: {
-      icon: '🦁', title: 'Brave Shields ativado',
-      badge: 'Brave Shields detectado', badgeIcon: '🦁',
-      steps: [
-        'Clique no <strong>ícone do leão 🦁</strong> na barra de endereço',
-        'Clique em <strong>"Shields are UP for..."</strong> para desativar',
-        '<strong>Recarregue a página</strong> e clique em "Já desativei"',
-      ]
-    },
-    Opera: {
-      icon: '🔵', title: 'Opera Ad Block ativado',
-      badge: 'Opera Ad Block detectado', badgeIcon: '🔵',
-      steps: [
-        'Clique no <strong>ícone de escudo</strong> na barra de endereço',
-        'Selecione <strong>"Desativar para este site"</strong>',
-        '<strong>Recarregue a página</strong> e clique em "Já desativei"',
-      ]
-    },
-    Edge: {
-      icon: '🛡️', title: 'Bloqueador detectado (Edge)',
-      badge: 'Bloqueador ativo no Edge', badgeIcon: '🛡️',
-      steps: [
-        'Clique no <strong>ícone do bloqueador</strong> na barra',
-        '<strong>Desative para este site</strong>',
-        '<strong>Recarregue</strong> e clique em "Já desativei"',
-      ]
-    },
-    Firefox: {
-      icon: '🦊', title: 'Bloqueador detectado (Firefox)',
-      badge: 'uBlock / AdBlock detectado', badgeIcon: '🛡️',
-      steps: [
-        'Clique no <strong>ícone do uBlock/AdBlock</strong> na barra',
-        'Clique no <strong>botão azul grande</strong> para desligar no site',
-        '<strong>Recarregue</strong> e clique em "Já desativei"',
-      ]
-    },
-    Generico: {
-      icon: '🔕', title: 'Bloqueador de anúncios detectado',
-      badge: 'Bloqueador ativo', badgeIcon: '🛡️',
-      steps: [
-        'Clique no <strong>ícone do bloqueador</strong> na barra do navegador',
-        'Selecione <strong>"Desativar para este site"</strong>',
-        '<strong>Recarregue</strong> e clique em "Já desativei"',
-      ]
-    }
+    Brave:   { icon:'🦁', title:'Brave Shields ativado', badge:'Brave Shields detectado', steps:['Clique no <strong>ícone do leão 🦁</strong> na barra','Selecione <strong>"Shields DOWN for..."</strong>','<strong>Recarregue</strong> e clique em "Já desativei"'] },
+    Opera:   { icon:'🔵', title:'Opera Ad Block ativado', badge:'Opera Ad Block detectado', steps:['Clique no <strong>ícone de escudo</strong> na barra','Selecione <strong>"Desativar para este site"</strong>','<strong>Recarregue</strong> e clique em "Já desativei"'] },
+    Edge:    { icon:'🛡️', title:'Bloqueador detectado (Edge)', badge:'Bloqueador ativo no Edge', steps:['Clique no <strong>ícone do bloqueador</strong>','<strong>Desative para este site</strong>','<strong>Recarregue</strong> e clique em "Já desativei"'] },
+    Firefox: { icon:'🦊', title:'Bloqueador detectado (Firefox)', badge:'uBlock / AdBlock detectado', steps:['Clique no <strong>ícone do uBlock/AdBlock</strong>','Clique no <strong>botão azul grande</strong> para desligar','<strong>Recarregue</strong> e clique em "Já desativei"'] },
+    Generico:{ icon:'🔕', title:'Bloqueador detectado', badge:'Bloqueador ativo', steps:['Clique no <strong>ícone do bloqueador</strong> na barra','Selecione <strong>"Desativar para este site"</strong>','<strong>Recarregue</strong> e clique em "Já desativei"'] }
   };
-
-  const cfg = configs[browser] || configs.Generico;
-  icon.textContent    = cfg.icon;
-  title.textContent   = cfg.title;
-  badge.textContent   = cfg.badge;
-  badgeIc.textContent = cfg.badgeIcon;
-  steps.innerHTML = cfg.steps.map((s,i) => `
-    <div class="ab-step">
-      <div class="ab-step-num">${i+1}</div>
-      <span>${s}</span>
-    </div>`).join('');
+  const c = configs[browser] || configs.Generico;
+  document.getElementById('ab-icon').textContent  = c.icon;
+  document.getElementById('ab-title').textContent = c.title;
+  document.getElementById('ab-badge-text').textContent = c.badge;
+  document.getElementById('ab-steps').innerHTML = c.steps.map((s,i)=>`<div class="ab-step"><div class="ab-step-num">${i+1}</div><span>${s}</span></div>`).join('');
 }
 
-// VETOR 1 & 2: bait DOM (pega uBlock, ABP, Adblock)
 function checkBaits() {
-  const els = [
-    document.getElementById('ad-bait'),
-    document.getElementById('ad-bait-2'),
-    document.getElementById('banner'),
-  ];
+  const els = [document.getElementById('ad-bait'),document.getElementById('ad-bait-2'),document.getElementById('banner')];
   let blocked = 0;
   els.forEach(el => {
     if (!el) { blocked++; return; }
     const cs = getComputedStyle(el);
-    if (el.offsetHeight === 0 || el.offsetWidth === 0 ||
-        cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0') {
-      blocked++;
-    }
+    if (el.offsetHeight===0||el.offsetWidth===0||cs.display==='none'||cs.visibility==='hidden'||cs.opacity==='0') blocked++;
   });
-  return blocked >= 2; // 2 de 3 = positivo
+  return blocked >= 2;
 }
 
-// VETOR 3: timing fetch (Brave & Opera — resposta < 5ms = bloqueado)
 async function checkTiming() {
-  const urls = [
-    'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
-    'https://googleads.g.doubleclick.net/pagead/viewthroughconversion/123456789/',
-  ];
+  const urls = ['https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js','https://googleads.g.doubleclick.net/pagead/viewthroughconversion/123456789/'];
   let blocked = 0;
   for (const url of urls) {
     try {
       const t0 = performance.now();
-      await fetch(`${url}?_=${Date.now()}`, { method:'HEAD', mode:'no-cors', cache:'no-store' });
-      if (performance.now() - t0 < 5) blocked++;
+      await fetch(`${url}?_=${Date.now()}`,{method:'HEAD',mode:'no-cors',cache:'no-store'});
+      if (performance.now()-t0 < 5) blocked++;
     } catch(e) { blocked++; }
   }
   return blocked >= 1;
 }
 
-// ORQUESTRADOR
 async function runAdblockCheck() {
-  const bait   = checkBaits();
-  const timing = await checkTiming();
-
-  if (bait || timing) {
-    adblockActive = true;
-    adblockCleared = false;
-    const browser = detectBrowser();
-    buildOverlay(browser);
+  const bait = checkBaits(); const timing = await checkTiming();
+  if (bait||timing) {
+    adblockActive = true; adblockCleared = false;
+    buildOverlay(detectBrowser());
     document.getElementById('adblock-overlay').classList.add('show');
-    refreshButtonState();
+    updateBtn();
   }
 }
 
-// Check periódico a cada 5s (self-healing)
-setInterval(async () => {
+setInterval(async()=>{
   if (adblockCleared) return;
-  const bait = checkBaits();
-  if (bait && !adblockActive) {
-    adblockActive = true;
-    const browser = detectBrowser();
-    buildOverlay(browser);
+  if (checkBaits()&&!adblockActive) {
+    adblockActive=true; buildOverlay(detectBrowser());
     document.getElementById('adblock-overlay').classList.add('show');
-    refreshButtonState();
+    updateBtn();
   }
-}, 5000);
+},5000);
 
-// Inicia checks escalonados
 setTimeout(runAdblockCheck, 2000);
-setTimeout(async () => {
-  if (adblockCleared) return;
-  const bait = checkBaits(); const timing = await checkTiming();
-  if ((bait || timing) && !adblockActive) {
-    adblockActive = true;
-    buildOverlay(detectBrowser());
-    document.getElementById('adblock-overlay').classList.add('show');
-    refreshButtonState();
-  }
-}, 7000);
+setTimeout(async()=>{ if(!adblockCleared){const b=checkBaits();const t=await checkTiming();if((b||t)&&!adblockActive){adblockActive=true;buildOverlay(detectBrowser());document.getElementById('adblock-overlay').classList.add('show');updateBtn();}} },7000);
 
-// ─── RETRY (botão "Já desativei") ─────────────────────────────
 async function retryAdblock() {
-  const stillBlocked = document.getElementById('ab-still-blocked');
-  stillBlocked.classList.remove('show');
-
-  // Cria novos baits temporários para re-testar
+  document.getElementById('ab-still').classList.remove('show');
   const testBait = document.createElement('div');
-  testBait.className = 'adsbox ads ad-unit pub_300x250';
-  testBait.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;';
+  testBait.className='adsbox ads ad-unit pub_300x250';
+  testBait.style.cssText='position:absolute;left:-9999px;width:1px;height:1px;';
   document.body.appendChild(testBait);
-
-  // Aguarda 300ms para blockers agirem
-  await new Promise(r => setTimeout(r, 300));
-
-  const bait   = checkBaits() || testBait.offsetHeight === 0;
+  await new Promise(r=>setTimeout(r,300));
+  const bait = checkBaits()||testBait.offsetHeight===0;
   const timing = await checkTiming();
   document.body.removeChild(testBait);
-
-  if (bait || timing) {
-    // Ainda bloqueando
-    stillBlocked.classList.add('show');
-    // Atualiza badge
-    document.getElementById('ab-badge-text').textContent = '⚠️ Ainda bloqueando!';
+  if (bait||timing) {
+    document.getElementById('ab-still').classList.add('show');
+    document.getElementById('ab-badge-text').textContent='⚠️ Ainda bloqueando!';
     return;
   }
-
-  // LIBERADO!
-  adblockActive  = false;
-  adblockCleared = true;
+  adblockActive=false; adblockCleared=true;
   document.getElementById('adblock-overlay').classList.remove('show');
-  refreshButtonState();
+  updateBtn();
 }
 </script>
 </body>
