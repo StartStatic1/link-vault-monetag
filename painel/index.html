@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --bg:       #F8F9FB;
       --white:    #FFFFFF;
@@ -24,396 +23,203 @@
       --red:      #DC2626;
       --red-l:    #FEF2F2;
       --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
-      --sidebar:  240px;
+      --sidebar:  230px;
     }
+    body { background: var(--bg); font-family: 'Inter', sans-serif; color: var(--text); min-height: 100vh; }
 
-    body {
-      background: var(--bg);
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    /* ── SIDEBAR ── */
+    /* SIDEBAR */
     .sidebar {
-      position: fixed;
-      top: 0; left: 0;
-      width: var(--sidebar);
-      height: 100vh;
-      background: var(--white);
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      z-index: 100;
+      position: fixed; top: 0; left: 0;
+      width: var(--sidebar); height: 100vh;
+      background: var(--white); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; z-index: 100;
     }
-
     .sb-logo {
-      padding: 20px 20px 16px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 9px;
+      padding: 18px 16px 14px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 9px;
     }
     .sb-logo-dot {
-      width: 28px; height: 28px;
-      background: var(--accent);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px;
+      width: 30px; height: 30px; background: var(--accent);
+      border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px;
     }
-    .sb-logo-name {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -.3px;
-    }
+    .sb-logo-name { font-family: 'DM Sans',sans-serif; font-size: 16px; font-weight: 700; }
     .sb-logo-name span { color: var(--accent); }
 
-    .sb-section {
-      padding: 16px 12px 8px;
-      flex: 1;
-    }
-    .sb-section-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 0 8px;
-      margin-bottom: 6px;
-    }
-
+    .sb-nav { padding: 14px 10px; flex: 1; }
+    .sb-group-label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; padding: 0 8px; margin: 10px 0 5px; }
     .sb-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      color: var(--sub);
-      font-size: 14px;
-      font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px; border-radius: 10px; cursor: pointer;
+      color: var(--sub); font-size: 13px; font-weight: 500;
       transition: background .15s, color .15s;
-      margin-bottom: 2px;
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: left;
+      margin-bottom: 1px; border: none; background: none; width: 100%; text-align: left;
     }
     .sb-item:hover { background: var(--bg); color: var(--text); }
-    .sb-item.active {
-      background: var(--accent-l);
-      color: var(--accent);
-    }
-    .sb-icon { font-size: 16px; width: 20px; text-align: center; }
+    .sb-item.active { background: var(--accent-l); color: var(--accent); font-weight: 600; }
+    .sb-icon { font-size: 15px; width: 20px; text-align: center; }
+    .sb-footer { padding: 14px 16px; border-top: 1px solid var(--border); }
+    .sb-version { font-size: 11px; color: var(--muted); text-align: center; }
 
-    .sb-footer {
-      padding: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .sb-version {
-      font-size: 11px;
-      color: var(--muted);
-      text-align: center;
-    }
+    /* MAIN */
+    .main { margin-left: var(--sidebar); min-height: 100vh; padding: 28px 28px 60px; }
 
-    /* ── MAIN ── */
-    .main {
-      margin-left: var(--sidebar);
-      min-height: 100vh;
-      padding: 32px;
-    }
+    /* PAGE HEADER */
+    .page-header { margin-bottom: 22px; }
+    .page-title { font-family: 'DM Sans',sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -.4px; }
+    .page-sub { font-size: 13px; color: var(--sub); margin-top: 4px; }
 
-    /* ── PAGE HEADER ── */
-    .page-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 24px;
-      gap: 16px;
-    }
-    .page-title {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -.4px;
-    }
-    .page-sub {
-      font-size: 13px;
-      color: var(--sub);
-      margin-top: 4px;
-    }
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 22px; }
+    .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 8px; }
+    .stat-value { font-family: 'DM Sans',sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -.5px; }
+    .stat-hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-    /* ── STATS ROW ── */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .stat-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px 20px;
-      box-shadow: var(--shadow);
-    }
-    .stat-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .7px;
-      margin-bottom: 10px;
-    }
-    .stat-value {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -.5px;
-    }
-    .stat-delta {
-      font-size: 12px;
-      color: var(--green);
-      margin-top: 4px;
-    }
+    /* GERAR CARD */
+    .gen-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 22px; box-shadow: var(--shadow); margin-bottom: 18px; }
+    .gen-title { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 16px; }
 
-    /* ── GERAR LINK CARD ── */
-    .gen-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 20px;
-    }
-    .gen-title {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 10px;
-    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 11px; font-weight: 600; color: var(--sub); text-transform: uppercase; letter-spacing: .6px; }
     .input-field {
-      flex: 1;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      color: var(--text);
-      background: var(--bg);
-      outline: none;
-      transition: border-color .2s;
+      padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: 'Inter',sans-serif; font-size: 14px; color: var(--text);
+      background: var(--bg); outline: none; transition: border-color .2s;
     }
-    .input-field:focus {
-      border-color: var(--accent);
-      background: var(--white);
-    }
+    .input-field:focus { border-color: var(--accent); background: var(--white); }
     .input-field::placeholder { color: var(--muted); }
 
     .btn-gen {
-      padding: 12px 22px;
-      background: var(--accent);
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 3px 0 var(--accent-b);
-      transition: transform .1s, box-shadow .1s;
+      padding: 12px 22px; background: var(--accent); border: none;
+      border-radius: 10px; color: white; font-family: 'DM Sans',sans-serif;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 3px 0 var(--accent-b); transition: transform .1s, box-shadow .1s;
     }
     .btn-gen:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--accent-b); }
 
-    /* resultado */
     .result-box {
-      display: none;
-      margin-top: 14px;
-      padding: 14px 16px;
-      background: var(--green-l);
-      border: 1px solid #BBF7D0;
-      border-radius: 10px;
-      align-items: center;
-      gap: 10px;
+      display: none; margin-top: 14px; padding: 14px 16px;
+      background: var(--green-l); border: 1px solid #BBF7D0; border-radius: 10px;
+      align-items: center; gap: 10px;
     }
     .result-box.show { display: flex; }
     .result-link {
-      flex: 1;
-      font-size: 13px;
-      color: var(--green);
-      font-weight: 500;
-      word-break: break-all;
-      background: none;
-      border: none;
-      outline: none;
-      font-family: 'Inter', sans-serif;
-      cursor: text;
+      flex: 1; font-size: 13px; color: var(--green); font-weight: 500;
+      word-break: break-all; background: none; border: none; outline: none;
+      font-family: 'Inter',sans-serif; cursor: text;
     }
     .btn-copy {
-      padding: 8px 16px;
-      background: var(--green);
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      font-family: 'DM Sans', sans-serif;
+      padding: 8px 16px; background: var(--green); border: none; border-radius: 8px;
+      color: white; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+      font-family: 'DM Sans',sans-serif;
     }
-    .btn-copy:active { opacity: .85; }
 
-    /* ── TABELA DE LINKS ── */
-    .table-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
+    /* TOOLBAR */
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px; gap: 12px; flex-wrap: wrap;
     }
+    .search-input {
+      padding: 9px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: 'Inter',sans-serif; font-size: 13px; color: var(--text);
+      background: var(--white); outline: none; transition: border-color .2s; width: 220px;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+    .btn-clear-all {
+      padding: 9px 16px; background: var(--red-l); border: 1px solid #FECACA;
+      border-radius: 10px; color: var(--red); font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans',sans-serif; transition: background .15s;
+    }
+    .btn-clear-all:hover { background: #FEE2E2; }
+
+    /* TABLE CARD */
+    .table-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
     .table-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 22px; border-bottom: 1px solid var(--border);
     }
-    .table-head-title {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .badge-count {
-      font-size: 11px;
-      font-weight: 700;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--sub);
-      padding: 2px 9px;
-      border-radius: 20px;
-    }
+    .table-head-title { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; }
+    .badge-count { font-size: 11px; font-weight: 700; background: var(--bg); border: 1px solid var(--border); color: var(--sub); padding: 2px 9px; border-radius: 20px; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    table { width: 100%; border-collapse: collapse; }
     thead th {
-      padding: 11px 20px;
-      text-align: left;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .7px;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
+      padding: 10px 18px; text-align: left; font-size: 11px; font-weight: 600;
+      color: var(--muted); text-transform: uppercase; letter-spacing: .7px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
     }
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background .15s;
-    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: var(--bg); }
-    td {
-      padding: 13px 20px;
-      font-size: 13px;
-      color: var(--text);
-      vertical-align: middle;
-    }
-
-    .td-dest {
-      max-width: 200px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: var(--sub);
-      font-size: 12px;
-    }
-    .td-link {
-      color: var(--accent);
-      font-weight: 500;
-      font-size: 12px;
-      cursor: pointer;
-    }
+    tbody tr:hover { background: #FAFAFA; }
+    td { padding: 12px 18px; font-size: 13px; color: var(--text); vertical-align: middle; }
+    .td-name { font-weight: 600; font-size: 13px; max-width: 160px; }
+    .td-name small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; margin-top: 1px; }
+    .td-link { color: var(--accent); font-weight: 500; font-size: 12px; cursor: pointer; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
     .td-link:hover { text-decoration: underline; }
+    .td-date { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .pill-active { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; background: var(--green-l); color: var(--green); border: 1px solid #BBF7D0; }
 
-    .pill {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
+    .actions { display: flex; gap: 6px; }
+    .btn-act {
+      padding: 5px 11px; border-radius: 8px; font-size: 12px; font-weight: 600;
+      cursor: pointer; border: 1px solid var(--border); background: none; color: var(--sub);
+      transition: all .15s; font-family: 'DM Sans',sans-serif;
     }
-    .pill-active { background: var(--green-l); color: var(--green); border: 1px solid #BBF7D0; }
+    .btn-act.copy:hover { background: var(--accent-l); border-color: #FED7AA; color: var(--accent); }
+    .btn-act.del:hover  { background: var(--red-l); border-color: #FECACA; color: var(--red); }
 
-    .btn-del {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 5px 10px;
-      font-size: 12px;
-      color: var(--sub);
-      cursor: pointer;
-      transition: background .15s, border-color .15s, color .15s;
+    /* MODAL EDITAR */
+    .modal-bg {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(17,24,39,.4); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
     }
-    .btn-del:hover {
-      background: var(--red-l);
-      border-color: #FECACA;
-      color: var(--red);
+    .modal-bg.show { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 18px; padding: 26px;
+      width: 100%; max-width: 440px; box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    }
+    .modal-title { font-family: 'DM Sans',sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 18px; }
+    .modal-footer { display: flex; gap: 10px; margin-top: 18px; justify-content: flex-end; }
+    .btn-save {
+      padding: 10px 22px; background: var(--accent); border: none; border-radius: 10px;
+      color: white; font-family: 'DM Sans',sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; box-shadow: 0 3px 0 var(--accent-b);
+    }
+    .btn-cancel {
+      padding: 10px 18px; background: none; border: 1.5px solid var(--border);
+      border-radius: 10px; color: var(--sub); font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans',sans-serif;
     }
 
-    .empty-state {
-      text-align: center;
-      padding: 48px 24px;
-      color: var(--sub);
-    }
-    .empty-icon { font-size: 36px; margin-bottom: 12px; }
+    /* EMPTY */
+    .empty-state { text-align: center; padding: 52px 24px; }
+    .empty-icon { font-size: 38px; margin-bottom: 12px; }
     .empty-text { font-size: 14px; font-weight: 500; color: var(--sub); }
-    .empty-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .empty-hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
 
-    /* ── TOAST ── */
+    /* TOAST */
     .toast {
-      position: fixed;
-      bottom: 24px; right: 24px;
-      background: var(--text);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 500;
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--text); color: white; padding: 12px 20px;
+      border-radius: 10px; font-size: 13px; font-weight: 500;
       box-shadow: 0 4px 16px rgba(0,0,0,.2);
-      transform: translateY(60px);
-      opacity: 0;
-      transition: all .3s;
-      z-index: 999;
+      transform: translateY(60px); opacity: 0; transition: all .28s; z-index: 999;
     }
     .toast.show { transform: translateY(0); opacity: 1; }
 
-    /* ── MOBILE ── */
+    /* MOBILE */
     @media (max-width: 768px) {
       :root { --sidebar: 0px; }
       .sidebar { display: none; }
       .main { margin-left: 0; padding: 16px; }
       .stats-row { grid-template-columns: 1fr 1fr; }
-      .input-row { flex-direction: column; }
-      .btn-gen { width: 100%; }
-      thead th:nth-child(3),
-      td:nth-child(3) { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+      .search-input { width: 100%; }
+      thead th:nth-child(4), td:nth-child(4),
+      thead th:nth-child(5), td:nth-child(5) { display: none; }
     }
   </style>
 </head>
@@ -425,27 +231,31 @@
     <div class="sb-logo-dot">🔗</div>
     <div class="sb-logo-name">Link<span>Vault</span></div>
   </div>
-
-  <div class="sb-section">
-    <div class="sb-section-label">Principal</div>
-    <button class="sb-item active" onclick="showPage('links')">
-      <span class="sb-icon">🔗</span> Meus Links
+  <div class="sb-nav">
+    <div class="sb-group-label">Principal</div>
+    <button class="sb-item active" onclick="scrollTo(0,0)">
+      <span class="sb-icon">🏠</span> Painel
     </button>
-    <button class="sb-item" onclick="showPage('gerar')">
+    <button class="sb-item" onclick="focusGerar()">
       <span class="sb-icon">✨</span> Gerar Link
     </button>
+    <button class="sb-item" onclick="focusTabela()">
+      <span class="sb-icon">📋</span> Meus Links
+    </button>
 
-    <div class="sb-section-label" style="margin-top:16px;">Canais</div>
+    <div class="sb-group-label" style="margin-top:16px">Canais</div>
     <button class="sb-item" onclick="window.open('https://t.me/ApkBugado','_blank')">
       <span class="sb-icon">📱</span> APK Bugado
     </button>
     <button class="sb-item" onclick="window.open('https://t.me/streamflixofc','_blank')">
       <span class="sb-icon">🎬</span> StreamFlix
     </button>
+    <button class="sb-item" onclick="window.open('https://mnil.ink/p3','_blank')">
+      <span class="sb-icon">👑</span> VIP
+    </button>
   </div>
-
   <div class="sb-footer">
-    <div class="sb-version">LinkVault v2.0</div>
+    <div class="sb-version">LinkVault v2.1</div>
   </div>
 </aside>
 
@@ -453,10 +263,8 @@
 <main class="main">
 
   <div class="page-header">
-    <div>
-      <div class="page-title">Meus Links</div>
-      <div class="page-sub">Gerencie e monitore todos os seus links</div>
-    </div>
+    <div class="page-title">Painel de Links</div>
+    <div class="page-sub">Crie, gerencie e monitore seus links monetizados</div>
   </div>
 
   <!-- STATS -->
@@ -464,39 +272,49 @@
     <div class="stat-card">
       <div class="stat-label">Links criados</div>
       <div class="stat-value" id="stat-total">0</div>
-      <div class="stat-delta">↑ atualizado agora</div>
+      <div class="stat-hint">no total</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Cliques totais</div>
-      <div class="stat-value" id="stat-clicks">—</div>
-      <div class="stat-delta" style="color:var(--muted)">Via Monetag dashboard</div>
+      <div class="stat-label">Monetização</div>
+      <div class="stat-value" style="font-size:20px;padding-top:4px">✅</div>
+      <div class="stat-hint">Monetag ativo</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Status</div>
-      <div class="stat-value" style="font-size:20px;margin-top:4px;">✅</div>
-      <div class="stat-delta">Ads ativos</div>
+      <div class="stat-label">Tempo de espera</div>
+      <div class="stat-value">15s</div>
+      <div class="stat-hint">por link</div>
     </div>
   </div>
 
   <!-- GERAR LINK -->
-  <div class="gen-card">
-    <div class="gen-title">
-      ✨ Gerar novo link
+  <div class="gen-card" id="gen-card">
+    <div class="gen-title">✨ Gerar novo link</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Nome / descrição</label>
+        <input class="input-field" id="inp-nome" type="text" placeholder="Ex: Filme Homem-Aranha">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Categoria</label>
+        <input class="input-field" id="inp-cat" type="text" placeholder="Ex: Filme, APK, Série...">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Link de destino</label>
+        <input class="input-field" id="inp-url" type="url" placeholder="https://..." onkeydown="if(event.key==='Enter')gerarLink()">
+      </div>
     </div>
-    <div class="input-row">
-      <input
-        class="input-field"
-        id="url-input"
-        type="url"
-        placeholder="Cole o link de destino aqui..."
-        onkeydown="if(event.key==='Enter') gerarLink()"
-      >
-      <button class="btn-gen" onclick="gerarLink()">Gerar link</button>
-    </div>
+    <button class="btn-gen" onclick="gerarLink()">Gerar link →</button>
+
     <div class="result-box" id="result-box">
       <input class="result-link" id="result-link" readonly>
-      <button class="btn-copy" onclick="copiarLink()">Copiar</button>
+      <button class="btn-copy" onclick="copiarResultado()">Copiar</button>
     </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar" id="tabela-anchor">
+    <input class="search-input" id="search-inp" type="text" placeholder="🔍 Buscar por nome ou link..." oninput="renderTabela()">
+    <button class="btn-clear-all" onclick="limparTudo()">🗑️ Limpar tudo</button>
   </div>
 
   <!-- TABELA -->
@@ -505,19 +323,18 @@
       <div class="table-head-title">Links gerados</div>
       <span class="badge-count" id="badge-count">0 links</span>
     </div>
-
     <div id="empty-state" class="empty-state">
       <div class="empty-icon">🔗</div>
       <div class="empty-text">Nenhum link ainda</div>
-      <div class="empty-hint">Gere seu primeiro link acima para começar</div>
+      <div class="empty-hint">Preencha o formulário acima para gerar seu primeiro link</div>
     </div>
-
     <table id="links-table" style="display:none">
       <thead>
         <tr>
           <th>#</th>
+          <th>Nome</th>
           <th>Link gerado</th>
-          <th>Destino</th>
+          <th>Data</th>
           <th>Status</th>
           <th></th>
         </tr>
@@ -528,21 +345,41 @@
 
 </main>
 
+<!-- MODAL EDITAR -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <div class="modal-title">✏️ Editar link</div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label class="form-label">Nome / descrição</label>
+      <input class="input-field" id="edit-nome" type="text" placeholder="Nome do link">
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label class="form-label">Categoria</label>
+      <input class="input-field" id="edit-cat" type="text" placeholder="Categoria">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Link de destino</label>
+      <input class="input-field" id="edit-url" type="url" placeholder="https://...">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+      <button class="btn-save" onclick="salvarEdicao()">Salvar</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ──────────────────────────────────────────────────────
 const BASE_URL = 'https://linkvault-neon.vercel.app';
-// ────────────────────────────────────────────────────────────────
 
-let links = JSON.parse(localStorage.getItem('lv_links') || '[]');
+let links = JSON.parse(localStorage.getItem('lv_links2') || '[]');
+let editIdx = -1;
 
-function salvar() {
-  localStorage.setItem('lv_links', JSON.stringify(links));
-}
+function salvar() { localStorage.setItem('lv_links2', JSON.stringify(links)); }
 
-function toast(msg, dur = 2200) {
+function toast(msg, dur = 2400) {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.classList.add('show');
@@ -550,57 +387,105 @@ function toast(msg, dur = 2200) {
 }
 
 function gerarLink() {
-  const url = document.getElementById('url-input').value.trim();
-  if (!url) { toast('Cole um link antes de gerar.'); return; }
-  if (!url.startsWith('http')) { toast('Link inválido. Use http:// ou https://'); return; }
+  const url  = document.getElementById('inp-url').value.trim();
+  const nome = document.getElementById('inp-nome').value.trim() || 'Sem nome';
+  const cat  = document.getElementById('inp-cat').value.trim() || '—';
+  if (!url) { toast('⚠️ Cole o link de destino!'); return; }
+  if (!url.startsWith('http')) { toast('⚠️ Link inválido. Use http:// ou https://'); return; }
 
   const encoded = btoa(url);
   const final   = `${BASE_URL}/site/index.html?d=${encoded}`;
 
-  // Exibe resultado
-  const rb = document.getElementById('result-box');
-  const rl = document.getElementById('result-link');
-  rb.classList.add('show');
-  rl.value = final;
+  document.getElementById('result-box').classList.add('show');
+  document.getElementById('result-link').value = final;
 
-  // Salva histórico
-  links.unshift({ url, link: final, date: new Date().toLocaleDateString('pt-BR') });
+  links.unshift({ nome, cat, url, link: final, date: new Date().toLocaleDateString('pt-BR') });
   salvar();
-  renderTable();
+  renderTabela();
 
-  document.getElementById('url-input').value = '';
-  toast('✅ Link gerado com sucesso!');
+  document.getElementById('inp-url').value  = '';
+  document.getElementById('inp-nome').value = '';
+  document.getElementById('inp-cat').value  = '';
+  toast('✅ Link gerado!');
 }
 
-function copiarLink() {
-  const rl = document.getElementById('result-link');
-  navigator.clipboard.writeText(rl.value).then(() => toast('📋 Copiado!'));
+function copiarResultado() {
+  navigator.clipboard.writeText(document.getElementById('result-link').value)
+    .then(() => toast('📋 Link copiado!'));
 }
 
-function copiarDaTabela(link) {
-  navigator.clipboard.writeText(link).then(() => toast('📋 Copiado!'));
+function copiarLinkIdx(idx) {
+  navigator.clipboard.writeText(links[idx].link).then(() => toast('📋 Copiado!'));
 }
 
 function deletarLink(idx) {
+  if (!confirm('Remover este link?')) return;
   links.splice(idx, 1);
-  salvar();
-  renderTable();
+  salvar(); renderTabela();
   toast('🗑️ Link removido.');
 }
 
-function renderTable() {
+function limparTudo() {
+  if (!links.length) { toast('Nenhum link para limpar.'); return; }
+  if (!confirm(`Remover todos os ${links.length} links? Esta ação não pode ser desfeita.`)) return;
+  links = []; salvar(); renderTabela();
+  document.getElementById('result-box').classList.remove('show');
+  toast('🗑️ Todos os links removidos.');
+}
+
+function abrirModal(idx) {
+  editIdx = idx;
+  const item = links[idx];
+  document.getElementById('edit-nome').value = item.nome || '';
+  document.getElementById('edit-cat').value  = item.cat  || '';
+  document.getElementById('edit-url').value  = item.url  || '';
+  document.getElementById('modal-bg').classList.add('show');
+}
+
+function fecharModal() {
+  document.getElementById('modal-bg').classList.remove('show');
+  editIdx = -1;
+}
+
+function salvarEdicao() {
+  if (editIdx < 0) return;
+  const url  = document.getElementById('edit-url').value.trim();
+  const nome = document.getElementById('edit-nome').value.trim() || 'Sem nome';
+  const cat  = document.getElementById('edit-cat').value.trim() || '—';
+  if (!url.startsWith('http')) { toast('⚠️ Link inválido.'); return; }
+
+  const encoded = btoa(url);
+  links[editIdx] = {
+    ...links[editIdx],
+    nome, cat, url,
+    link: `${BASE_URL}/site/index.html?d=${encoded}`
+  };
+  salvar(); renderTabela(); fecharModal();
+  toast('✅ Link atualizado!');
+}
+
+function renderTabela() {
+  const query  = document.getElementById('search-inp').value.toLowerCase();
   const tbody  = document.getElementById('links-tbody');
   const table  = document.getElementById('links-table');
   const empty  = document.getElementById('empty-state');
   const badge  = document.getElementById('badge-count');
-  const statEl = document.getElementById('stat-total');
+  const stat   = document.getElementById('stat-total');
 
-  badge.textContent  = links.length + (links.length === 1 ? ' link' : ' links');
-  statEl.textContent = links.length;
+  const filtered = links.filter(l =>
+    l.nome.toLowerCase().includes(query) ||
+    l.link.toLowerCase().includes(query) ||
+    (l.cat||'').toLowerCase().includes(query)
+  );
 
-  if (links.length === 0) {
+  badge.textContent = links.length + (links.length === 1 ? ' link' : ' links');
+  stat.textContent  = links.length;
+
+  if (filtered.length === 0) {
     table.style.display = 'none';
     empty.style.display = 'block';
+    empty.querySelector('.empty-text').textContent = links.length ? 'Nenhum resultado' : 'Nenhum link ainda';
+    empty.querySelector('.empty-hint').textContent = links.length ? 'Tente outro termo de busca' : 'Preencha o formulário acima para gerar seu primeiro link';
     return;
   }
 
@@ -608,37 +493,42 @@ function renderTable() {
   empty.style.display = 'none';
   tbody.innerHTML = '';
 
-  links.forEach((item, i) => {
-    const shortDisplay = item.link.replace(window.location.origin, '').substring(0, 40) + '...';
-    const destDisplay  = item.url.replace(/^https?:\/\//, '').substring(0, 40);
-
+  filtered.forEach((item, i) => {
+    const realIdx = links.indexOf(item);
+    const shortLink = item.link.replace(BASE_URL, '').substring(0, 38) + '…';
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td style="color:var(--muted);font-size:12px;">${i + 1}</td>
-      <td>
-        <span class="td-link" onclick="copiarDaTabela('${item.link.replace(/'/g, "\\'")}')" title="Clique para copiar">
-          ${shortDisplay}
-        </span>
-        <div style="font-size:10px;color:var(--muted);margin-top:2px;">${item.date}</div>
+      <td style="color:var(--muted);font-size:12px">${realIdx+1}</td>
+      <td class="td-name">
+        ${item.nome}
+        <small>${item.cat !== '—' ? '📁 '+item.cat : ''}</small>
       </td>
-      <td class="td-dest" title="${item.url}">${destDisplay}</td>
-      <td><span class="pill pill-active">Ativo</span></td>
-      <td><button class="btn-del" onclick="deletarLink(${i})">Remover</button></td>
+      <td style="max-width:180px">
+        <span class="td-link" onclick="copiarLinkIdx(${realIdx})" title="${item.link}">${shortLink}</span>
+      </td>
+      <td class="td-date">${item.date}</td>
+      <td><span class="pill-active">Ativo</span></td>
+      <td>
+        <div class="actions">
+          <button class="btn-act copy" onclick="copiarLinkIdx(${realIdx})">📋 Copiar</button>
+          <button class="btn-act" onclick="abrirModal(${realIdx})" style="color:var(--sub)">✏️</button>
+          <button class="btn-act del" onclick="deletarLink(${realIdx})">🗑️</button>
+        </div>
+      </td>
     `;
     tbody.appendChild(tr);
   });
 }
 
-function showPage(p) {
-  document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-  if (p === 'gerar') {
-    document.getElementById('url-input').focus();
-    document.getElementById('url-input').scrollIntoView({ behavior: 'smooth' });
-  }
-}
+function focusGerar() { document.getElementById('inp-url').focus(); document.getElementById('gen-card').scrollIntoView({behavior:'smooth'}); }
+function focusTabela() { document.getElementById('tabela-anchor').scrollIntoView({behavior:'smooth'}); }
 
-renderTable();
+// Fechar modal clicando fora
+document.getElementById('modal-bg').addEventListener('click', function(e) {
+  if (e.target === this) fecharModal();
+});
+
+renderTabela();
 </script>
 </body>
 </html>
