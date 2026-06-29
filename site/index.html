@@ -16,7 +16,6 @@
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --bg:       #F8F9FB;
       --white:    #FFFFFF;
@@ -30,371 +29,190 @@
       --green-l:  #F0FDF4;
       --shadow:   0 1px 3px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.06);
     }
-
     body {
       background: var(--bg);
       font-family: 'Inter', sans-serif;
       color: var(--text);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 16px 80px;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0 16px 90px;
     }
-
-    /* ── TOPBAR ── */
     .topbar {
-      width: 100%;
-      background: var(--white);
+      width: 100%; background: var(--white);
       border-bottom: 1px solid var(--border);
       padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-bottom: 24px;
     }
-    .logo-dot {
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-    }
-    .logo-name {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -.3px;
-    }
+    .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+    .logo-name { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; color: var(--text); }
     .logo-name span { color: var(--accent); }
 
-    /* ── WRAPPER ── */
-    .wrapper {
-      width: 100%;
-      max-width: 420px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .wrapper { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 12px; }
 
-    /* ── SEAL CARD ── */
+    /* SEAL */
     .seal-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px 24px 24px;
-      text-align: center;
-      box-shadow: var(--shadow);
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px 24px 22px;
+      text-align: center; box-shadow: var(--shadow);
     }
-
-    .seal-wrap {
-      position: relative;
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 20px;
-    }
+    .seal-wrap { position: relative; width: 80px; height: 80px; margin: 0 auto 18px; }
     .seal-ring {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      animation: spin 1.4s linear infinite;
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 2.5px solid var(--border); border-top-color: var(--accent);
+      animation: spin 1.2s linear infinite;
     }
-    .seal-ring.done {
-      animation: none;
-      border-color: var(--green);
-      border-width: 2px;
-    }
+    .seal-ring.done { animation: none; border-color: var(--green); }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .seal-inner {
-      position: absolute;
-      inset: 8px;
-      border-radius: 50%;
+      position: absolute; inset: 9px; border-radius: 50%;
       background: var(--accent-l);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      transition: background .4s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; transition: background .4s;
     }
-    .seal-inner.done {
-      background: var(--green-l);
-    }
+    .seal-inner.done { background: var(--green-l); }
+    .seal-title { font-family: 'DM Sans',sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+    .seal-sub { font-size: 13px; color: var(--sub); line-height: 1.5; }
 
-    .seal-title {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .seal-sub {
-      font-size: 13px;
-      color: var(--sub);
-      line-height: 1.6;
-    }
-
-    /* ── STEPS CARD ── */
+    /* STEPS */
     .steps-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px 20px;
-      box-shadow: var(--shadow);
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow);
     }
     .steps-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--sub);
-      text-transform: uppercase;
-      letter-spacing: .8px;
-      margin-bottom: 14px;
+      font-size: 11px; font-weight: 600; color: var(--sub);
+      text-transform: uppercase; letter-spacing: .8px; margin-bottom: 14px;
     }
-
     .step-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 9px 0;
-      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
       transition: opacity .3s;
     }
-    .step-row:last-child { border-bottom: none; }
-    .step-row.pending { opacity: .4; }
-
+    .step-row:last-of-type { border-bottom: none; }
+    .step-row.pending { opacity: .38; }
     .step-icon {
-      width: 32px; height: 32px;
-      border-radius: 10px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-      transition: all .4s;
+      width: 34px; height: 34px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0; transition: all .4s;
     }
-    .step-row.active .step-icon {
-      background: var(--accent-l);
-      border-color: #FED7AA;
-    }
-    .step-row.done .step-icon {
-      background: var(--green-l);
-      border-color: #BBF7D0;
-    }
-
+    .step-row.active .step-icon { background: var(--accent-l); border-color: #FED7AA; }
+    .step-row.done  .step-icon { background: var(--green-l);  border-color: #BBF7D0; }
     .step-text { flex: 1; }
-    .step-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-    }
-    .step-desc {
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 1px;
-    }
-
+    .step-name { font-size: 13px; font-weight: 500; }
+    .step-desc { font-size: 11px; color: var(--sub); margin-top: 1px; }
     .step-badge {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 20px;
+      font-size: 10px; font-weight: 600; padding: 2px 9px; border-radius: 20px;
     }
     .badge-wait  { background: #FFF7ED; color: var(--accent); border: 1px solid #FED7AA; }
     .badge-ok    { background: var(--green-l); color: var(--green); border: 1px solid #BBF7D0; }
     .badge-queue { background: var(--bg); color: var(--sub); border: 1px solid var(--border); }
 
-    /* ── PROGRESS ── */
-    .prog-wrap {
-      margin-top: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    /* TIMER */
+    .timer-box {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
     }
+    .timer-label { font-size: 12px; color: var(--sub); }
+    .timer-val { font-family: 'DM Sans',sans-serif; font-size: 22px; font-weight: 700; color: var(--accent); min-width: 40px; text-align: right; }
+    .timer-val.done { color: var(--green); }
+
+    /* PROGRESS */
+    .prog-wrap { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
     .prog-track {
-      flex: 1;
-      height: 6px;
-      background: var(--bg);
-      border-radius: 3px;
-      overflow: hidden;
-      border: 1px solid var(--border);
+      flex: 1; height: 7px; background: var(--bg);
+      border-radius: 4px; overflow: hidden; border: 1px solid var(--border);
     }
     .prog-fill {
-      height: 100%;
-      width: 0%;
-      background: var(--accent);
-      border-radius: 3px;
-      transition: width .5s ease;
+      height: 100%; width: 0%; background: var(--accent);
+      border-radius: 4px; transition: width .6s ease;
     }
-    .prog-fill.done { background: var(--green); }
-    .prog-pct {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--sub);
-      min-width: 32px;
-      text-align: right;
-    }
+    .prog-fill.green { background: var(--green); }
+    .prog-pct { font-size: 12px; font-weight: 600; color: var(--sub); min-width: 36px; text-align: right; }
 
-    /* ── BOTÃO ── */
+    /* BOTÃO */
     .btn-main {
-      width: 100%;
-      padding: 17px;
-      background: var(--accent);
-      border: none;
-      border-radius: 14px;
-      color: white;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: .3px;
-      cursor: pointer;
+      width: 100%; padding: 18px;
+      background: var(--accent); border: none; border-radius: 14px;
+      color: white; font-family: 'DM Sans',sans-serif;
+      font-size: 16px; font-weight: 700; cursor: pointer;
       box-shadow: 0 4px 0 var(--accent-b), 0 8px 20px rgba(249,115,22,.25);
       transition: transform .1s, box-shadow .1s;
       display: none;
     }
-    .btn-main:active {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 var(--accent-b);
-    }
+    .btn-main:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--accent-b); }
     .btn-main.visible { display: block; }
     .btn-main.green-btn {
       background: var(--green);
       box-shadow: 0 4px 0 #15803D, 0 8px 20px rgba(22,163,74,.25);
     }
+    .btn-main.green-btn:active { box-shadow: 0 1px 0 #15803D; }
 
-    /* ── CANAIS ── */
+    /* CANAIS */
     .channels-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px 20px;
-      box-shadow: var(--shadow);
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 16px 20px; box-shadow: var(--shadow);
     }
-    .ch-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--sub);
-      text-transform: uppercase;
-      letter-spacing: .8px;
-      margin-bottom: 12px;
-    }
+    .ch-label { font-size: 11px; font-weight: 600; color: var(--sub); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 12px; }
     .ch-list { display: flex; flex-direction: column; gap: 8px; }
     .ch-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 14px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--text);
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px; border: 1px solid var(--border);
+      border-radius: 12px; text-decoration: none; color: var(--text);
       transition: border-color .2s, background .2s;
     }
-    .ch-item:hover {
-      background: var(--bg);
-      border-color: #D1D5DB;
-    }
+    .ch-item:hover { background: var(--bg); border-color: #D1D5DB; }
     .ch-emoji {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 17px;
-      flex-shrink: 0;
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
     }
     .ch-info { flex: 1; }
     .ch-name { font-size: 13px; font-weight: 600; }
     .ch-desc { font-size: 11px; color: var(--sub); margin-top: 1px; }
-    .ch-tag {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 20px;
-    }
+    .ch-tag { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
     .tag-free { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
     .tag-vip  { background: var(--accent-l); color: var(--accent); border: 1px solid #FED7AA; }
 
-    /* ── FOOTER ── */
     .footer {
-      position: fixed;
-      bottom: 0; left: 0;
-      width: 100%;
-      background: var(--white);
-      border-top: 1px solid var(--border);
+      position: fixed; bottom: 0; left: 0; width: 100%;
+      background: var(--white); border-top: 1px solid var(--border);
       padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 11px;
-      color: var(--sub);
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 11px; color: var(--sub);
     }
-    .footer-dot { color: var(--border); }
 
-    /* ── ADBLOCK OVERLAY ── */
+    /* ADBLOCK OVERLAY */
     .overlay {
-      display: none;
-      position: fixed; inset: 0; z-index: 999;
-      background: rgba(248,249,251,.97);
-      backdrop-filter: blur(8px);
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
-      text-align: center;
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(248,249,251,.97); backdrop-filter: blur(8px);
+      flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px; text-align: center;
     }
     .overlay.show { display: flex; }
     .overlay-icon { font-size: 48px; margin-bottom: 16px; }
-    .overlay-title {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    .overlay-desc {
-      font-size: 13px;
-      color: var(--sub);
-      line-height: 1.7;
-      max-width: 280px;
-      margin-bottom: 24px;
-    }
+    .overlay-title { font-family: 'DM Sans',sans-serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .overlay-desc { font-size: 13px; color: var(--sub); line-height: 1.7; max-width: 280px; margin-bottom: 24px; }
     .overlay-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 14px 28px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
+      background: var(--accent); color: white; border: none;
+      border-radius: 12px; padding: 14px 28px;
+      font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;
       box-shadow: 0 4px 0 var(--accent-b);
     }
 
-    /* isca adblock */
     .ad-bait { position: absolute; left: -9999px; width: 1px; height: 1px; }
   </style>
 </head>
 <body>
 
-<!-- Isca adblock -->
 <div class="ad-bait ads adsbygoogle banner adsbox" id="ad-bait"></div>
 
 <!-- Overlay adblock -->
 <div class="overlay" id="adblock-overlay">
   <div class="overlay-icon">🔕</div>
   <div class="overlay-title">Anúncios bloqueados</div>
-  <div class="overlay-desc">
-    Este serviço é gratuito e mantido por anúncios.<br>
-    Desative seu bloqueador para continuar.
-  </div>
+  <div class="overlay-desc">Este serviço é gratuito e mantido por anúncios.<br>Desative seu bloqueador para continuar.</div>
   <button class="overlay-btn" onclick="retryAdblock()">Já desativei — continuar</button>
 </div>
 
@@ -413,7 +231,7 @@
       <div class="seal-inner" id="seal-inner">🔗</div>
     </div>
     <div class="seal-title" id="seal-title">Verificando link</div>
-    <div class="seal-sub" id="seal-sub">Aguarde enquanto validamos o destino...</div>
+    <div class="seal-sub" id="seal-sub">Aguarde enquanto validamos o acesso...</div>
   </div>
 
   <!-- STEPS -->
@@ -428,36 +246,45 @@
       </div>
       <span class="step-badge badge-wait" id="badge1">Em curso</span>
     </div>
-
     <div class="step-row pending" id="step2">
       <div class="step-icon">🛡️</div>
       <div class="step-text">
         <div class="step-name">Verificação de segurança</div>
-        <div class="step-desc">Análise de conteúdo</div>
+        <div class="step-desc">Analisando conteúdo</div>
       </div>
       <span class="step-badge badge-queue" id="badge2">Aguardando</span>
     </div>
-
     <div class="step-row pending" id="step3">
+      <div class="step-icon">🔐</div>
+      <div class="step-text">
+        <div class="step-name">Autenticando sessão</div>
+        <div class="step-desc">Confirmando identidade</div>
+      </div>
+      <span class="step-badge badge-queue" id="badge3">Aguardando</span>
+    </div>
+    <div class="step-row pending" id="step4">
       <div class="step-icon">✅</div>
       <div class="step-text">
         <div class="step-name">Acesso liberado</div>
         <div class="step-desc">Pronto para redirecionar</div>
       </div>
-      <span class="step-badge badge-queue" id="badge3">Aguardando</span>
+      <span class="step-badge badge-queue" id="badge4">Aguardando</span>
     </div>
 
     <div class="prog-wrap">
-      <div class="prog-track">
-        <div class="prog-fill" id="prog-fill"></div>
-      </div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
       <div class="prog-pct" id="prog-pct">0%</div>
+    </div>
+
+    <div class="timer-box">
+      <span class="timer-label">⏱ Aguarde para liberar</span>
+      <span class="timer-val" id="timer-val">15</span>
     </div>
   </div>
 
   <!-- BOTÃO -->
   <button class="btn-main" id="btn-access" onclick="irParaDestino()">
-    Acessar link →
+    🚀 Acessar link agora
   </button>
 
   <!-- CANAIS -->
@@ -495,9 +322,7 @@
 
 <div class="footer">
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-  Conexão segura
-  <span class="footer-dot">·</span>
-  LinkVault
+  Conexão segura · LinkVault
 </div>
 
 <script>
@@ -505,43 +330,52 @@ const dest = new URLSearchParams(location.search).get('d') || sessionStorage.get
 if (dest) sessionStorage.setItem('_lv_d', dest);
 else document.body.innerHTML = "<p style='text-align:center;margin-top:40vh;font-family:sans-serif;color:#6B7280'>Link inválido ou expirado.</p>";
 
-function setProgress(pct) {
-  document.getElementById('prog-fill').style.width = pct + '%';
+// ── STEPS ──────────────────────────────────────────────────────
+function setProgress(pct, green) {
+  const f = document.getElementById('prog-fill');
+  f.style.width = pct + '%';
   document.getElementById('prog-pct').textContent = pct + '%';
-  if (pct === 100) document.getElementById('prog-fill').classList.add('done');
+  if (green) f.classList.add('green');
+}
+function activateStep(n) {
+  const r = document.getElementById('step'+n), b = document.getElementById('badge'+n);
+  r.classList.remove('pending'); r.classList.add('active');
+  b.className = 'step-badge badge-wait'; b.textContent = 'Em curso';
+}
+function doneStep(n) {
+  const r = document.getElementById('step'+n), b = document.getElementById('badge'+n);
+  r.classList.remove('active'); r.classList.add('done');
+  b.className = 'step-badge badge-ok'; b.textContent = 'OK';
 }
 
-function activateStep(num) {
-  const row   = document.getElementById('step' + num);
-  const badge = document.getElementById('badge' + num);
-  row.classList.remove('pending');
-  row.classList.add('active');
-  badge.className = 'step-badge badge-wait';
-  badge.textContent = 'Em curso';
-}
-
-function doneStep(num) {
-  const row   = document.getElementById('step' + num);
-  const badge = document.getElementById('badge' + num);
-  row.classList.remove('active');
-  row.classList.add('done');
-  badge.className = 'step-badge badge-ok';
-  badge.textContent = 'OK';
-}
-
-// Sequência
-setTimeout(() => { setProgress(33); doneStep(1); activateStep(2); }, 1200);
-setTimeout(() => { setProgress(66); doneStep(2); activateStep(3); }, 2600);
+// Etapas: step 1 já ativo. Schedule dos demais.
+setTimeout(() => { setProgress(25);  doneStep(1); activateStep(2); }, 3000);
+setTimeout(() => { setProgress(50);  doneStep(2); activateStep(3); }, 7000);
+setTimeout(() => { setProgress(75);  doneStep(3); activateStep(4); }, 11000);
 setTimeout(() => {
-  setProgress(100); doneStep(3);
+  setProgress(100, true); doneStep(4);
   document.getElementById('seal-ring').classList.add('done');
   document.getElementById('seal-inner').classList.add('done');
   document.getElementById('seal-inner').textContent = '✅';
   document.getElementById('seal-title').textContent = 'Link verificado';
   document.getElementById('seal-sub').textContent = 'Tudo certo! Clique para acessar.';
-  const btn = document.getElementById('btn-access');
-  btn.classList.add('visible', 'green-btn');
-}, 4200);
+  document.getElementById('timer-val').classList.add('done');
+}, 15000);
+
+// ── TIMER COUNTDOWN 15s ────────────────────────────────────────
+let secs = 15;
+const timerEl = document.getElementById('timer-val');
+const btnEl   = document.getElementById('btn-access');
+
+const tick = setInterval(() => {
+  secs--;
+  timerEl.textContent = secs > 0 ? secs : '✓';
+  if (secs <= 0) {
+    clearInterval(tick);
+    btnEl.classList.add('visible', 'green-btn');
+    document.querySelector('.timer-label').textContent = '✅ Acesso liberado!';
+  }
+}, 1000);
 
 function irParaDestino() {
   if (!dest) return;
@@ -555,18 +389,19 @@ window.addEventListener('popstate', () => history.pushState(null, '', location.h
 
 // Adblock
 function checkAdblock() {
-  const bait = document.getElementById('ad-bait');
-  const blocked = !bait || bait.offsetHeight === 0 || bait.offsetWidth === 0 ||
-    getComputedStyle(bait).display === 'none' || getComputedStyle(bait).visibility === 'hidden';
+  const b = document.getElementById('ad-bait');
+  const blocked = !b || b.offsetHeight === 0 || b.offsetWidth === 0 ||
+    getComputedStyle(b).display === 'none' || getComputedStyle(b).visibility === 'hidden';
   if (blocked) document.getElementById('adblock-overlay').classList.add('show');
 }
 function retryAdblock() {
-  const bait = document.getElementById('ad-bait');
-  const blocked = !bait || bait.offsetHeight === 0 || getComputedStyle(bait).display === 'none';
+  const b = document.getElementById('ad-bait');
+  const blocked = !b || b.offsetHeight === 0 || getComputedStyle(b).display === 'none';
   if (blocked) { alert('Bloqueador ainda ativo. Desative e tente novamente.'); return; }
   document.getElementById('adblock-overlay').classList.remove('show');
 }
-setTimeout(checkAdblock, 2000);
+setTimeout(checkAdblock, 2500);
+setTimeout(checkAdblock, 8000);
 </script>
 </body>
 </html>
