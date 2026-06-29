@@ -3,752 +3,570 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verificando Acesso...</title>
-
-  <!-- MONETAG: Multitag (auto-formato) -->
-  <script src="https://quge5.com/88/tag.min.js" data-zone="252599" async data-cfasync="false"></script>
-
-  <!-- MONETAG: Push Notification -->
-  <script src="https://5gvci.com/act/files/tag.min.js?z=11188340" async></script>
-
+  <title>Verificando acesso...</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- MONETAG: Multitag -->
+  <script src="https://quge5.com/88/tag.min.js" data-zone="252888" async data-cfasync="false"></script>
+  <!-- MONETAG: OnClick -->
+  <script>(function(s){s.dataset.zone='11192283';s.src='https://al5sm.com/tag.min.js';})(document.documentElement.appendChild(document.createElement('script')));</script>
+  <!-- MONETAG: Vignette -->
+  <script>(function(s){s.dataset.zone='11192284';s.src='https://n6wxm.com/vignette.min.js';})(document.documentElement.appendChild(document.createElement('script')));</script>
 
   <style>
-    /* ── TOKENS ─────────────────────────── */
-    :root {
-      --bg:      #080510;
-      --card:    #110d1e;
-      --border:  rgba(124,58,237,.22);
-      --violet:  #7c3aed;
-      --violet2: #5b21b6;
-      --orange:  #f97316;
-      --green:   #10b981;
-      --green2:  #065f46;
-      --red:     #ef4444;
-      --text:    #f1f0f4;
-      --muted:   #6b7280;
-      --grid:    rgba(124,58,237,.05);
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ── RESET ──────────────────────────── */
-    *{margin:0;padding:0;box-sizing:border-box}
+    :root {
+      --bg:       #F8F9FB;
+      --white:    #FFFFFF;
+      --border:   #E5E7EB;
+      --text:     #111827;
+      --sub:      #6B7280;
+      --accent:   #F97316;
+      --accent-l: #FFF7ED;
+      --accent-b: #EA6C0A;
+      --green:    #16A34A;
+      --green-l:  #F0FDF4;
+      --shadow:   0 1px 3px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.06);
+    }
 
     body {
       background: var(--bg);
-      background-image:
-        radial-gradient(ellipse 70% 45% at 50% -10%, rgba(124,58,237,.13) 0%, transparent 70%),
-        linear-gradient(var(--grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-      background-size: 100% 100%, 36px 36px, 36px 36px;
-      color: var(--text);
       font-family: 'Inter', sans-serif;
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      overflow-x: hidden;
+      padding: 0 16px 80px;
     }
 
-    /* ── TOPBAR ─────────────────────────── */
+    /* ── TOPBAR ── */
     .topbar {
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 200;
-      background: rgba(8,5,16,.92);
-      backdrop-filter: blur(12px);
+      width: 100%;
+      background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 10px 18px;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 28px;
     }
-    .brand {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 15px; font-weight: 700; letter-spacing: 4px;
-      text-transform: uppercase; color: var(--violet);
-      display: flex; align-items: center; gap: 7px;
+    .logo-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
     }
-    .brand svg { width:16px; height:16px; flex-shrink:0; }
+    .logo-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.3px;
+    }
+    .logo-name span { color: var(--accent); }
 
-    /* ── STEPPER ────────────────────────── */
-    .stepper {
-      display: flex; align-items: center; gap: 4px;
-    }
-    .step-node {
-      display: flex; align-items: center; justify-content: center;
-      width: 26px; height: 26px; border-radius: 50%;
-      border: 2px solid #1e1535;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px; font-weight: 700;
-      color: var(--muted); background: var(--card);
-      transition: all .4s;
-    }
-    .step-node.done  { border-color: var(--green); color: var(--green); background: rgba(16,185,129,.1); }
-    .step-node.active{ border-color: var(--violet); color: #fff; background: var(--violet); box-shadow: 0 0 10px rgba(124,58,237,.5); }
-    .step-line {
-      width: 28px; height: 2px; background: #1e1535; border-radius: 1px;
-      transition: background .4s;
-    }
-    .step-line.done { background: var(--green); }
-
-    .top-spacer { height: 108px; }
-
-    /* ── WRAPPER ────────────────────────── */
+    /* ── WRAPPER ── */
     .wrapper {
-      width: 92%; max-width: 400px;
-      display: flex; flex-direction: column; gap: 12px;
-      padding-bottom: 70px;
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    /* ── CARD ───────────────────────────── */
-    .card {
-      background: var(--card);
+    /* ── SEAL CARD ── */
+    .seal-card {
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 20px;
-    }
-    .card-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--violet);
-      margin-bottom: 14px;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .card-title svg { width:14px; height:14px; opacity:.8; }
-
-    /* ── SHIELD ANIMATION ───────────────── */
-    .shield-wrap {
-      display: flex; justify-content: center; margin-bottom: 10px;
-    }
-    .shield-box {
-      width: 72px; height: 80px; position: relative;
-    }
-    .shield-box svg { width:100%; height:100%; }
-    .scan-line {
-      position: absolute; top: 8px; left: 10px; right: 10px;
-      height: 2px; background: linear-gradient(90deg, transparent, var(--violet), transparent);
-      animation: scan 2s ease-in-out infinite;
-      border-radius: 1px;
-    }
-    @keyframes scan {
-      0%   { top: 8px;  opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 1; }
-      100% { top: 60px; opacity: 0; }
+      padding: 32px 24px 24px;
+      text-align: center;
+      box-shadow: var(--shadow);
     }
 
-    /* ── STATUS TAGS ────────────────────── */
-    .tag {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 9px; border-radius: 20px;
-      font-size: 10px; font-weight: 700; letter-spacing: .5px;
-      text-transform: uppercase;
+    .seal-wrap {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
     }
-    .tag-violet { background: rgba(124,58,237,.15); color: var(--violet); border: 1px solid rgba(124,58,237,.3); }
-    .tag-green  { background: rgba(16,185,129,.15);  color: var(--green);  border: 1px solid rgba(16,185,129,.3); }
-    .tag-orange { background: rgba(249,115,22,.15);  color: var(--orange); border: 1px solid rgba(249,115,22,.3); }
+    .seal-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      animation: spin 1.4s linear infinite;
+    }
+    .seal-ring.done {
+      animation: none;
+      border-color: var(--green);
+      border-width: 2px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── INFO ROWS ──────────────────────── */
-    .info-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.05);
-      font-size: 12px;
+    .seal-inner {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: var(--accent-l);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      transition: background .4s;
     }
-    .info-row:last-child { border: none; padding-bottom: 0; }
-    .info-key { color: var(--muted); }
-    .info-val { color: var(--text); font-weight: 600; }
-
-    /* ── PROGRESS BAR ───────────────────── */
-    .prog-wrap { margin-top: 4px; }
-    .prog-labels {
-      display: flex; justify-content: space-between;
-      font-size: 10px; color: var(--muted); margin-bottom: 6px;
-    }
-    .prog-track {
-      height: 8px; background: #1e1535; border-radius: 4px; overflow: hidden;
-    }
-    .prog-fill {
-      height: 100%; width: 0%;
-      background: linear-gradient(90deg, var(--violet), var(--orange));
-      border-radius: 4px;
-      transition: width 1s ease;
+    .seal-inner.done {
+      background: var(--green-l);
     }
 
-    /* ── ALERT BOXES ────────────────────── */
-    .alert {
-      display: flex; align-items: flex-start; gap: 10px;
-      border-radius: 12px; padding: 12px 14px; font-size: 12px; line-height: 1.5;
+    .seal-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
     }
-    .alert svg { width:16px; height:16px; flex-shrink:0; margin-top:1px; }
-    .alert-info { background: rgba(124,58,237,.08); border: 1px solid rgba(124,58,237,.2); color: #c4b5fd; }
-    .alert-warn { background: rgba(249,115,22,.08);  border: 1px solid rgba(249,115,22,.2);  color: #fdba74; }
-    .alert-ok   { background: rgba(16,185,129,.08);  border: 1px solid rgba(16,185,129,.2);  color: #6ee7b7; }
-
-    /* ── ACTIVITY BAR ───────────────────── */
-    .activity-bar {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 10px; border-radius: 12px;
-      background: rgba(249,115,22,.06); border: 1px solid rgba(249,115,22,.15);
-      font-size: 11px; color: #fdba74;
-    }
-    .pulse-dot {
-      width: 7px; height: 7px; border-radius: 50%; background: var(--orange);
-      animation: blink 1.4s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
-
-    /* ── BANNER SLOT ────────────────────── */
-    .banner-slot {
-      width: 100%; min-height: 60px;
-      background: rgba(124,58,237,.05);
-      border: 1px dashed rgba(124,58,237,.2);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .banner-placeholder {
-      font-size: 10px; color: var(--muted); text-align: center; padding: 14px;
+    .seal-sub {
+      font-size: 13px;
+      color: var(--sub);
       line-height: 1.6;
     }
 
-    /* ── TIMER RING ─────────────────────── */
-    .timer-wrap {
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-      margin: 4px 0 10px;
+    /* ── STEPS CARD ── */
+    .steps-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
     }
-    .timer-ring-svg { transform: rotate(-90deg); }
-    .timer-ring-track { fill: none; stroke: #1e1535; stroke-width: 4; }
-    .timer-ring-fill  {
-      fill: none; stroke: var(--violet); stroke-width: 4;
-      stroke-linecap: round;
-      stroke-dasharray: 125.6;
-      stroke-dashoffset: 125.6;
-      transition: stroke-dashoffset 1s linear;
-    }
-    .timer-num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px; font-weight: 700; color: var(--text);
-      margin-top: -42px; /* overlap center */
-    }
-    .timer-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
-
-    /* ── MAIN BUTTON ────────────────────── */
-    .btn-main {
-      width: 100%; padding: 17px;
-      background: linear-gradient(135deg, var(--violet), #4f46e5);
-      border: none; border-radius: 14px;
-      color: #fff;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 17px; font-weight: 700; letter-spacing: 1px;
+    .steps-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--sub);
       text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 14px;
+    }
+
+    .step-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      transition: opacity .3s;
+    }
+    .step-row:last-child { border-bottom: none; }
+    .step-row.pending { opacity: .4; }
+
+    .step-icon {
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: all .4s;
+    }
+    .step-row.active .step-icon {
+      background: var(--accent-l);
+      border-color: #FED7AA;
+    }
+    .step-row.done .step-icon {
+      background: var(--green-l);
+      border-color: #BBF7D0;
+    }
+
+    .step-text { flex: 1; }
+    .step-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .step-desc {
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 1px;
+    }
+
+    .step-badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .badge-wait  { background: #FFF7ED; color: var(--accent); border: 1px solid #FED7AA; }
+    .badge-ok    { background: var(--green-l); color: var(--green); border: 1px solid #BBF7D0; }
+    .badge-queue { background: var(--bg); color: var(--sub); border: 1px solid var(--border); }
+
+    /* ── PROGRESS ── */
+    .prog-wrap {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .prog-track {
+      flex: 1;
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .prog-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width .5s ease;
+    }
+    .prog-fill.done { background: var(--green); }
+    .prog-pct {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--sub);
+      min-width: 32px;
+      text-align: right;
+    }
+
+    /* ── BOTÃO ── */
+    .btn-main {
+      width: 100%;
+      padding: 17px;
+      background: var(--accent);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .3px;
       cursor: pointer;
-      box-shadow: 0 6px 0 var(--violet2), 0 8px 20px rgba(124,58,237,.35);
-      transition: transform .12s, box-shadow .12s;
-      position: relative; overflow: hidden;
+      box-shadow: 0 4px 0 var(--accent-b), 0 8px 20px rgba(249,115,22,.25);
+      transition: transform .1s, box-shadow .1s;
+      display: none;
     }
-    .btn-main::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(255,255,255,.08), transparent);
-      pointer-events: none;
+    .btn-main:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--accent-b);
     }
-    .btn-main:active  { transform: translateY(3px); box-shadow: 0 3px 0 var(--violet2); }
-    .btn-main:disabled {
-      background: #1e1535; color: var(--muted);
-      box-shadow: none; cursor: not-allowed; opacity: .7;
-    }
-    .btn-main.green {
-      background: linear-gradient(135deg, var(--green), #059669);
-      box-shadow: 0 6px 0 var(--green2), 0 8px 20px rgba(16,185,129,.35);
+    .btn-main.visible { display: block; }
+    .btn-main.green-btn {
+      background: var(--green);
+      box-shadow: 0 4px 0 #15803D, 0 8px 20px rgba(22,163,74,.25);
     }
 
-    /* ── STEP SECTIONS (injected dynamically) ── */
-    .step-section { display: none; }
-    .step-section.visible { display: contents; }
+    /* ── CANAIS ── */
+    .channels-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+    }
+    .ch-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 12px;
+    }
+    .ch-list { display: flex; flex-direction: column; gap: 8px; }
+    .ch-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color .2s, background .2s;
+    }
+    .ch-item:hover {
+      background: var(--bg);
+      border-color: #D1D5DB;
+    }
+    .ch-emoji {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .ch-info { flex: 1; }
+    .ch-name { font-size: 13px; font-weight: 600; }
+    .ch-desc { font-size: 11px; color: var(--sub); margin-top: 1px; }
+    .ch-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .tag-free { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+    .tag-vip  { background: var(--accent-l); color: var(--accent); border: 1px solid #FED7AA; }
 
-    /* ── FOOTER ─────────────────────────── */
+    /* ── FOOTER ── */
     .footer {
-      position: fixed; bottom: 0; left: 0; width: 100%;
-      background: rgba(8,5,16,.9); backdrop-filter: blur(8px);
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      background: var(--white);
       border-top: 1px solid var(--border);
-      padding: 10px 20px;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      font-size: 11px; color: var(--muted);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--sub);
     }
-    .footer svg { width:12px; height:12px; color: var(--green); }
+    .footer-dot { color: var(--border); }
 
-    /* ── TOAST ──────────────────────────── */
-    .toast {
-      position: fixed; bottom: 55px; left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--violet); color: #fff;
-      padding: 10px 22px; border-radius: 30px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px; font-weight: 600;
-      box-shadow: 0 4px 20px rgba(124,58,237,.5);
-      transition: transform .3s ease; z-index: 999;
-      white-space: nowrap;
+    /* ── ADBLOCK OVERLAY ── */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(248,249,251,.97);
+      backdrop-filter: blur(8px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      text-align: center;
     }
-    .toast.show { transform: translateX(-50%) translateY(0); }
+    .overlay.show { display: flex; }
+    .overlay-icon { font-size: 48px; margin-bottom: 16px; }
+    .overlay-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .overlay-desc {
+      font-size: 13px;
+      color: var(--sub);
+      line-height: 1.7;
+      max-width: 280px;
+      margin-bottom: 24px;
+    }
+    .overlay-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--accent-b);
+    }
 
-    /* ── RIPPLE ─────────────────────────── */
-    @keyframes ripple {
-      to { transform: scale(4); opacity: 0; }
-    }
-    .btn-main .ripple-el {
-      position: absolute; border-radius: 50%;
-      background: rgba(255,255,255,.25);
-      transform: scale(0);
-      animation: ripple .6s linear;
-      pointer-events: none;
-    }
-  </style>
-  <!-- ANTI-ADBLOCK -->
-  <style id="adblock-bait">
-    .ad-slot-bait { display: block; width: 1px; height: 1px; position: absolute; left: -9999px; }
+    /* isca adblock */
+    .ad-bait { position: absolute; left: -9999px; width: 1px; height: 1px; }
   </style>
 </head>
 <body>
 
-<!-- ISCA para detectar adblock -->
-<div class="ad-slot-bait ads banner adsbox" id="adblock-bait-el"></div>
+<!-- Isca adblock -->
+<div class="ad-bait ads adsbygoogle banner adsbox" id="ad-bait"></div>
 
-<!-- OVERLAY ANTI-ADBLOCK (oculto por padrão) -->
-<div id="adblock-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(8,5,16,.97);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
-  <div id="overlay-icon" style="font-size:52px;margin-bottom:16px">🚫</div>
-  <h2 id="overlay-title" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#f1f0f4;margin-bottom:10px;">Bloqueador Detectado</h2>
-  <p id="overlay-msg" style="font-size:14px;color:#6b7280;line-height:1.7;max-width:300px;margin-bottom:24px;"></p>
-  <button onclick="retryAccess()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:12px;padding:14px 28px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 5px 0 #5b21b6;">
-    ✅ JÁ DESATIVEI
-  </button>
-  <p style="margin-top:14px;font-size:11px;color:#3d3558;">Desative o bloqueador e toque em "Já Desativei"</p>
+<!-- Overlay adblock -->
+<div class="overlay" id="adblock-overlay">
+  <div class="overlay-icon">🔕</div>
+  <div class="overlay-title">Anúncios bloqueados</div>
+  <div class="overlay-desc">
+    Este serviço é gratuito e mantido por anúncios.<br>
+    Desative seu bloqueador para continuar.
+  </div>
+  <button class="overlay-btn" onclick="retryAdblock()">Já desativei — continuar</button>
 </div>
 
-<!-- ═══ TOPBAR ═══ -->
-<header class="topbar">
-  <div class="brand">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-    </svg>
-    LINKVAULT
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo-dot"></div>
+  <div class="logo-name">Link<span>Vault</span></div>
+</div>
+
+<div class="wrapper">
+
+  <!-- SEAL -->
+  <div class="seal-card">
+    <div class="seal-wrap">
+      <div class="seal-ring" id="seal-ring"></div>
+      <div class="seal-inner" id="seal-inner">🔗</div>
+    </div>
+    <div class="seal-title" id="seal-title">Verificando link</div>
+    <div class="seal-sub" id="seal-sub">Aguarde enquanto validamos o destino...</div>
   </div>
-  <div class="stepper">
-    <div class="step-node active" id="sn1">1</div>
-    <div class="step-line" id="sl1"></div>
-    <div class="step-node" id="sn2">2</div>
-    <div class="step-line" id="sl2"></div>
-    <div class="step-node" id="sn3">3</div>
-  </div>
-</header>
 
-<div class="top-spacer"></div>
+  <!-- STEPS -->
+  <div class="steps-card">
+    <div class="steps-label">Progresso da verificação</div>
 
-<!-- ═══ CONTENT ═══ -->
-<main class="wrapper" id="main">
-
-  <!-- ─── HERO CARD ─── -->
-  <div class="card">
-    <div class="shield-wrap">
-      <div class="shield-box">
-        <svg viewBox="0 0 72 80" fill="none">
-          <path d="M36 4L8 15v21c0 18.2 11.9 35.2 28 39.4C52.1 71.2 64 54.2 64 36V15L36 4z"
-                fill="rgba(124,58,237,.12)" stroke="rgba(124,58,237,.5)" stroke-width="1.5"/>
-          <path d="M36 14L16 23v14c0 12.1 8 23.4 20 26.6 12-3.2 20-14.5 20-26.6V23L36 14z"
-                fill="rgba(124,58,237,.07)" stroke="rgba(124,58,237,.3)" stroke-width="1"/>
-        </svg>
-        <div class="scan-line"></div>
+    <div class="step-row active" id="step1">
+      <div class="step-icon">🔍</div>
+      <div class="step-text">
+        <div class="step-name">Validando link</div>
+        <div class="step-desc">Checando integridade do destino</div>
       </div>
+      <span class="step-badge badge-wait" id="badge1">Em curso</span>
     </div>
-    <div style="text-align:center;margin-bottom:14px;">
-      <span class="tag tag-violet" id="status-tag">🔍 Verificando</span>
-    </div>
-    <div class="info-row">
-      <span class="info-key">Protocolo</span>
-      <span class="info-val">LinkVault v3</span>
-    </div>
-    <div class="info-row">
-      <span class="info-key">Segurança</span>
-      <span class="info-val">🔒 SSL Ativo</span>
-    </div>
-    <div class="info-row">
-      <span class="info-key">Destino</span>
-      <span class="info-val" id="dest-preview">—</span>
-    </div>
-    <div class="info-row">
-      <span class="info-key">Etapa</span>
-      <span class="info-val" id="step-label">1 de 3</span>
-    </div>
-    <div class="prog-wrap" style="margin-top:12px;">
-      <div class="prog-labels">
-        <span>Progresso</span>
-        <span id="prog-pct">0%</span>
+
+    <div class="step-row pending" id="step2">
+      <div class="step-icon">🛡️</div>
+      <div class="step-text">
+        <div class="step-name">Verificação de segurança</div>
+        <div class="step-desc">Análise de conteúdo</div>
       </div>
-      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+      <span class="step-badge badge-queue" id="badge2">Aguardando</span>
+    </div>
+
+    <div class="step-row pending" id="step3">
+      <div class="step-icon">✅</div>
+      <div class="step-text">
+        <div class="step-name">Acesso liberado</div>
+        <div class="step-desc">Pronto para redirecionar</div>
+      </div>
+      <span class="step-badge badge-queue" id="badge3">Aguardando</span>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-track">
+        <div class="prog-fill" id="prog-fill"></div>
+      </div>
+      <div class="prog-pct" id="prog-pct">0%</div>
     </div>
   </div>
 
-  <!-- ─── ACTIVITY BAR ─── -->
-  <div class="activity-bar">
-    <div class="pulse-dot"></div>
-    <span><strong id="user-count">247</strong> usuários verificaram nas últimas 2 horas</span>
-  </div>
+  <!-- BOTÃO -->
+  <button class="btn-main" id="btn-access" onclick="irParaDestino()">
+    Acessar link →
+  </button>
 
-  <!-- ═══ ETAPA 1 ═══ -->
-  <div class="step-section visible" id="sec-1">
-    <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        Etapa 1 — Verificação Inicial
-      </div>
-      <div class="alert alert-info" style="margin-bottom:12px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <span>Clique no botão abaixo para iniciar a verificação de segurança. O processo é automático.</span>
-      </div>
-      <div class="timer-wrap" id="timer1-wrap" style="display:none;">
-        <svg class="timer-ring-svg" width="52" height="52" viewBox="0 0 52 52">
-          <circle class="timer-ring-track" cx="26" cy="26" r="20"/>
-          <circle class="timer-ring-fill" id="ring1" cx="26" cy="26" r="20"/>
-        </svg>
-        <div class="timer-num" id="cnt1">12</div>
-        <div class="timer-label">aguarde</div>
-      </div>
-      <div id="pos1-btn">
-        <button class="btn-main" id="btn1" onclick="step1Click(this)">
-          ▶ INICIAR VERIFICAÇÃO
-        </button>
-      </div>
-    </div>
-
-    <!-- MONETAG Multitag Zona 1 -->
-    <div style="text-align:center;min-height:10px;">
-      <script src="https://quge5.com/88/tag.min.js" data-zone="252599" data-cfasync="false"></script>
+  <!-- CANAIS -->
+  <div class="channels-card">
+    <div class="ch-label">Nossos canais</div>
+    <div class="ch-list">
+      <a class="ch-item" href="https://t.me/ApkBugado" target="_blank">
+        <div class="ch-emoji">📱</div>
+        <div class="ch-info">
+          <div class="ch-name">APK Bugado</div>
+          <div class="ch-desc">Apps e jogos desbloqueados</div>
+        </div>
+        <span class="ch-tag tag-free">Grátis</span>
+      </a>
+      <a class="ch-item" href="https://t.me/streamflixofc" target="_blank">
+        <div class="ch-emoji">🎬</div>
+        <div class="ch-info">
+          <div class="ch-name">StreamFlix Cinema</div>
+          <div class="ch-desc">Filmes e séries em alta</div>
+        </div>
+        <span class="ch-tag tag-free">Grátis</span>
+      </a>
+      <a class="ch-item" href="https://mnil.ink/p3" target="_blank">
+        <div class="ch-emoji">👑</div>
+        <div class="ch-info">
+          <div class="ch-name">Acesso VIP</div>
+          <div class="ch-desc">Conteúdo premium sem anúncios</div>
+        </div>
+        <span class="ch-tag tag-vip">VIP</span>
+      </a>
     </div>
   </div>
 
-  <!-- ═══ ETAPA 2 ═══ -->
-  <div class="step-section" id="sec-2">
-    <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-        Etapa 2 — Validação de Acesso
-      </div>
-      <div class="alert alert-warn" style="margin-bottom:12px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <span>Validação secundária necessária. Confirme que você é humano para continuar.</span>
-      </div>
-      <div class="timer-wrap" id="timer2-wrap" style="display:none;">
-        <svg class="timer-ring-svg" width="52" height="52" viewBox="0 0 52 52">
-          <circle class="timer-ring-track" cx="26" cy="26" r="20"/>
-          <circle class="timer-ring-fill" id="ring2" cx="26" cy="26" r="20"/>
-        </svg>
-        <div class="timer-num" id="cnt2">10</div>
-        <div class="timer-label">aguarde</div>
-      </div>
-      <div id="pos2-btn">
-        <button class="btn-main" id="btn2" onclick="step2Click(this)">
-          ✅ CONFIRMAR IDENTIDADE
-        </button>
-      </div>
-    </div>
+</div>
 
-    <!-- MONETAG Multitag Zona 2 -->
-    <div style="text-align:center;min-height:10px;">
-      <script src="https://quge5.com/88/tag.min.js" data-zone="252599" data-cfasync="false"></script>
-    </div>
-  </div>
-
-  <!-- ═══ ETAPA 3 ═══ -->
-  <div class="step-section" id="sec-3">
-    <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        Etapa 3 — Liberando Acesso
-      </div>
-      <div class="alert alert-ok" style="margin-bottom:12px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-        <span>Verificação concluída com sucesso! Clique para acessar o conteúdo exclusivo.</span>
-      </div>
-      <div class="timer-wrap" id="timer3-wrap" style="display:none;">
-        <svg class="timer-ring-svg" width="52" height="52" viewBox="0 0 52 52">
-          <circle class="timer-ring-track" cx="26" cy="26" r="20"/>
-          <circle class="timer-ring-fill" id="ring3" cx="26" cy="26" r="20"/>
-        </svg>
-        <div class="timer-num" id="cnt3">8</div>
-        <div class="timer-label">aguarde</div>
-      </div>
-      <div id="pos3-btn">
-        <button class="btn-main green" id="btn3" onclick="step3Click(this)">
-          🚀 ACESSAR CONTEÚDO
-        </button>
-      </div>
-    </div>
-  </div>
-
-</main>
-
-<!-- ═══ FOOTER ═══ -->
-<footer class="footer">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-  Conexão protegida · LinkVault Security
-</footer>
-
-<!-- ═══ TOAST ═══ -->
-<div class="toast" id="toast">✅ Etapa concluída!</div>
+<div class="footer">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  Conexão segura
+  <span class="footer-dot">·</span>
+  LinkVault
+</div>
 
 <script>
-/* ─────────────────────────────────────────
-   CONFIGURAÇÃO — edite apenas esta seção
-────────────────────────────────────────── */
-const CONFIG = {
-  // Tempos de espera de cada etapa (segundos)
-  timer1: 12,
-  timer2: 10,
-  timer3: 8,
-
-  // MONETAG DIRECT LINKS
-  adLink1: 'https://omg10.com/4/11188342',
-  adLink2: 'https://omg10.com/4/11188342',
-
-  // Rota para a página de entrega final
-  safeRoute: '/safe/',
-};
-/* ────────────────────────────────────────── */
-
-// Captura o link de destino da URL
-const params = new URLSearchParams(window.location.search);
-let dest = params.get('d') || sessionStorage.getItem('_lv_dest');
-
-if (!dest) {
-  document.body.innerHTML = `
-    <div style="color:#fff;text-align:center;margin:100px auto;font-family:system-ui">
-      <div style="font-size:40px;margin-bottom:16px">🔗</div>
-      <h2 style="margin-bottom:8px">Link Inválido</h2>
-      <p style="color:#6b7280;font-size:14px">Este link está incompleto ou expirou.</p>
-    </div>`;
-} else {
-  sessionStorage.setItem('_lv_dest', dest);
-  // Mostra prévia do destino (truncada)
-  try {
-    const url = atob(dest);
-    const host = new URL(url).hostname.replace('www.','');
-    document.getElementById('dest-preview').textContent = host;
-  } catch(_) {
-    document.getElementById('dest-preview').textContent = '🔒 protegido';
-  }
-}
-
-// Contador de usuários falso (variação realista)
-setInterval(() => {
-  const el = document.getElementById('user-count');
-  const cur = parseInt(el.textContent);
-  const delta = Math.random() > .5 ? 1 : -1;
-  const next = Math.max(200, Math.min(320, cur + delta));
-  el.textContent = next;
-}, 7000);
-
-/* ── OVERLAY UNIFICADO ── */
-let _overlayReason = null; // 'adblock' | 'popup'
-
-function showOverlay(reason) {
-  _overlayReason = reason;
-  const overlay = document.getElementById('adblock-overlay');
-  const icon    = document.getElementById('overlay-icon');
-  const title   = document.getElementById('overlay-title');
-  const msg     = document.getElementById('overlay-msg');
-
-  if (reason === 'popup') {
-    icon.textContent  = '🔕';
-    title.textContent = 'Pop-ups Bloqueados';
-    msg.innerHTML     = 'Seu navegador está bloqueando os anúncios necessários.<br><br>Vá em <strong style="color:#c4b5fd">Configurações → Permissões → Pop-ups</strong> e permita este site, ou desative o bloqueador de anúncios.';
-  } else {
-    icon.textContent  = '🚫';
-    title.textContent = 'AdBlock Detectado';
-    msg.innerHTML     = 'Este site é mantido por anúncios. Por favor, <strong style="color:#c4b5fd">desative seu AdBlock</strong> para acessar o conteúdo gratuitamente.';
-  }
-  overlay.style.display = 'flex';
-}
-
-function hideOverlay() {
-  document.getElementById('adblock-overlay').style.display = 'none';
-  _overlayReason = null;
-}
-
-function retryAccess() {
-  // Re-checa adblock
-  const bait    = document.getElementById('adblock-bait-el');
-  const blocked =
-    !bait ||
-    bait.offsetParent === null ||
-    bait.offsetHeight === 0 ||
-    bait.offsetWidth  === 0 ||
-    bait.clientHeight === 0 ||
-    getComputedStyle(bait).display      === 'none' ||
-    getComputedStyle(bait).visibility   === 'hidden';
-
-  if (blocked) { showOverlay('adblock'); return; }
-
-  // Se era popup blocker: tenta reabrir o ad
-  if (_overlayReason === 'popup') {
-    const win = window.open(CONFIG.adLink1, '_blank');
-    if (!win || win.closed || typeof win.closed === 'undefined') {
-      showOverlay('popup'); return;
-    }
-  }
-  hideOverlay();
-}
-
-function checkAdblock() {
-  const bait    = document.getElementById('adblock-bait-el');
-  const blocked =
-    !bait ||
-    bait.offsetParent === null ||
-    bait.offsetHeight === 0 ||
-    bait.offsetWidth  === 0 ||
-    bait.clientHeight === 0 ||
-    getComputedStyle(bait).display      === 'none' ||
-    getComputedStyle(bait).visibility   === 'hidden';
-  if (blocked) showOverlay('adblock');
-}
-setTimeout(checkAdblock, 1500);
-
-/* ── UTILS ── */
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-
-function rippleEffect(btn, e) {
-  const r    = document.createElement('span');
-  r.className = 'ripple-el';
-  const rect = btn.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height);
-  const clientX = e ? e.clientX : rect.left + rect.width / 2;
-  const clientY = e ? e.clientY : rect.top  + rect.height / 2;
-  r.style.cssText = `width:${size}px;height:${size}px;left:${clientX - rect.left - size/2}px;top:${clientY - rect.top - size/2}px`;
-  btn.appendChild(r);
-  setTimeout(() => r.remove(), 700);
-}
-
-function scrollToEl(el) {
-  setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'center' }), 350);
-}
-
-function setStep(n) {
-  for (let i = 1; i <= 3; i++) {
-    const node = document.getElementById('sn'+i);
-    const line = document.getElementById('sl'+i);
-    if (i < n) { node.className = 'step-node done'; node.textContent = '✓'; }
-    else if (i === n) { node.className = 'step-node active'; node.textContent = i; }
-    else { node.className = 'step-node'; node.textContent = i; }
-    if (line) line.className = 'step-line' + (i < n ? ' done' : '');
-  }
-  document.getElementById('step-label').textContent = `${n} de 3`;
-}
+const dest = new URLSearchParams(location.search).get('d') || sessionStorage.getItem('_lv_d');
+if (dest) sessionStorage.setItem('_lv_d', dest);
+else document.body.innerHTML = "<p style='text-align:center;margin-top:40vh;font-family:sans-serif;color:#6B7280'>Link inválido ou expirado.</p>";
 
 function setProgress(pct) {
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-pct').textContent  = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  if (pct === 100) document.getElementById('prog-fill').classList.add('done');
 }
 
-function setStatusTag(text, cls) {
-  const tag   = document.getElementById('status-tag');
-  tag.textContent = text;
-  tag.className   = 'tag ' + cls;
+function activateStep(num) {
+  const row   = document.getElementById('step' + num);
+  const badge = document.getElementById('badge' + num);
+  row.classList.remove('pending');
+  row.classList.add('active');
+  badge.className = 'step-badge badge-wait';
+  badge.textContent = 'Em curso';
 }
 
-function runTimer(id, seconds, ringId, onDone) {
-  const wrap = document.getElementById('timer'+id+'-wrap');
-  const cnt  = document.getElementById('cnt'+id);
-  const ring = document.getElementById('ring'+id);
-  const circ = 125.6;
-  wrap.style.display = 'flex';
-  cnt.textContent    = seconds;
-  ring.style.strokeDashoffset = circ;
-  let remaining = seconds;
-  const iv = setInterval(() => {
-    remaining--;
-    cnt.textContent = remaining;
-    ring.style.strokeDashoffset = circ - (circ * (seconds - remaining) / seconds);
-    if (remaining <= 0) { clearInterval(iv); onDone(); }
-  }, 1000);
+function doneStep(num) {
+  const row   = document.getElementById('step' + num);
+  const badge = document.getElementById('badge' + num);
+  row.classList.remove('active');
+  row.classList.add('done');
+  badge.className = 'step-badge badge-ok';
+  badge.textContent = 'OK';
 }
 
-/* ── ETAPA 1 ── */
-function step1Click(btn) {
-  rippleEffect(btn, event || null);
+// Sequência
+setTimeout(() => { setProgress(33); doneStep(1); activateStep(2); }, 1200);
+setTimeout(() => { setProgress(66); doneStep(2); activateStep(3); }, 2600);
+setTimeout(() => {
+  setProgress(100); doneStep(3);
+  document.getElementById('seal-ring').classList.add('done');
+  document.getElementById('seal-inner').classList.add('done');
+  document.getElementById('seal-inner').textContent = '✅';
+  document.getElementById('seal-title').textContent = 'Link verificado';
+  document.getElementById('seal-sub').textContent = 'Tudo certo! Clique para acessar.';
+  const btn = document.getElementById('btn-access');
+  btn.classList.add('visible', 'green-btn');
+}, 4200);
 
-  // Tenta abrir o ad — detecta popup blocker
-  const win = window.open(CONFIG.adLink1, '_blank');
-  if (!win || win.closed || typeof win.closed === 'undefined') {
-    showOverlay('popup');
-    return; // não avança até desbloquear
-  }
-
-  btn.disabled    = true;
-  btn.textContent = '⏳ AGUARDE...';
-  setStatusTag('⏳ Verificando', 'tag-violet');
-  setProgress(10);
-
-  runTimer(1, CONFIG.timer1, 'ring1', () => {
-    document.getElementById('sec-1').classList.remove('visible');
-    document.getElementById('sec-2').classList.add('visible');
-    setStep(2);
-    setProgress(40);
-    setStatusTag('🔄 Validando', 'tag-orange');
-    showToast('✅ Etapa 1 concluída!');
-    scrollToEl(document.getElementById('sec-2'));
-  });
+function irParaDestino() {
+  if (!dest) return;
+  try { window.location.href = atob(dest); }
+  catch (_) { window.location.href = dest; }
 }
 
-/* ── ETAPA 2 ── */
-function step2Click(btn) {
-  rippleEffect(btn, event || null);
-
-  const win = window.open(CONFIG.adLink2, '_blank');
-  if (!win || win.closed || typeof win.closed === 'undefined') {
-    showOverlay('popup');
-    return;
-  }
-
-  btn.disabled    = true;
-  btn.textContent = '⏳ AGUARDE...';
-  setProgress(55);
-
-  runTimer(2, CONFIG.timer2, 'ring2', () => {
-    document.getElementById('sec-2').classList.remove('visible');
-    document.getElementById('sec-3').classList.add('visible');
-    setStep(3);
-    setProgress(80);
-    setStatusTag('✅ Quase pronto', 'tag-green');
-    showToast('✅ Etapa 2 concluída!');
-    scrollToEl(document.getElementById('sec-3'));
-  });
-}
-
-/* ── ETAPA 3 ── */
-function step3Click(btn) {
-  rippleEffect(btn, event || null);
-  btn.disabled    = true;
-  btn.textContent = '⏳ LIBERANDO...';
-  setProgress(92);
-
-  runTimer(3, CONFIG.timer3, 'ring3', () => {
-    setProgress(100);
-    setStatusTag('🎉 Acesso Liberado', 'tag-green');
-    showToast('🚀 Redirecionando!');
-    setTimeout(() => {
-      const d = sessionStorage.getItem('_lv_dest');
-      window.location.replace(CONFIG.safeRoute + '?d=' + d);
-    }, 800);
-  });
-}
-
-// Anti-back: bloqueia botão voltar
+// Anti-back
 history.pushState(null, '', location.href);
-window.addEventListener('popstate', () => {
-  history.pushState(null, '', location.href);
-});
-</script>
+window.addEventListener('popstate', () => history.pushState(null, '', location.href));
 
+// Adblock
+function checkAdblock() {
+  const bait = document.getElementById('ad-bait');
+  const blocked = !bait || bait.offsetHeight === 0 || bait.offsetWidth === 0 ||
+    getComputedStyle(bait).display === 'none' || getComputedStyle(bait).visibility === 'hidden';
+  if (blocked) document.getElementById('adblock-overlay').classList.add('show');
+}
+function retryAdblock() {
+  const bait = document.getElementById('ad-bait');
+  const blocked = !bait || bait.offsetHeight === 0 || getComputedStyle(bait).display === 'none';
+  if (blocked) { alert('Bloqueador ainda ativo. Desative e tente novamente.'); return; }
+  document.getElementById('adblock-overlay').classList.remove('show');
+}
+setTimeout(checkAdblock, 2000);
+</script>
 </body>
 </html>
