@@ -14,11 +14,6 @@
   <!-- MONETAG: Vignette -->
   <script>(function(s){s.dataset.zone='11192284';s.src='https://n6wxm.com/vignette.min.js';})(document.documentElement.appendChild(document.createElement('script')));</script>
 
-  <!-- AD BAITS para detecção -->
-  <div class="ad-bait ads adsbox adsbygoogle" id="ad-bait" aria-hidden="true"></div>
-  <div class="pub_300x250 banner-ads ad-unit" id="ad-bait-2" aria-hidden="true"></div>
-  <div id="banner" class="ads banner" aria-hidden="true"></div>
-
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     :root{
@@ -52,11 +47,6 @@
     }
 
     /* AD BAITS */
-    .ad-bait,.ads,.adsbox,.adsbygoogle,.banner-ads,.ad-unit,.pub_300x250,#banner{
-      position:absolute!important;left:-9999px!important;
-      width:1px!important;height:1px!important;opacity:0!important;
-    }
-
     /* TOPBAR */
     .topbar{
       width:100%;max-width:460px;
@@ -337,6 +327,11 @@
   </style>
 </head>
 <body>
+
+<!-- AD BAITS — dentro do body, com dimensão real para detecção funcionar -->
+<!-- Adblock remove/oculta esses elementos automaticamente -->
+<div id="ad-bait" class="ad-bait adsbox ads adsbygoogle" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;"></div>
+<div id="ad-bait-2" class="pub_300x250 banner-ads ad-unit" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;"></div>
 
 <!-- FLASH UNLOCK -->
 <div class="flash" id="flash"></div>
@@ -790,68 +785,83 @@ function buildOverlay(browser) {
   document.getElementById('ab-steps').innerHTML = c.steps.map((s,i)=>`<div class="ab-step"><div class="ab-step-num">${i+1}</div><span>${s}</span></div>`).join('');
 }
 
+// ─── ANTI-ADBLOCK — vetor único, sem timing fetch (falso positivo no mobile) ──
+// Lógica: adblock REMOVE ou oculta elementos com classes como "adsbox", "ads" etc.
+// Criamos um bait real no DOM e verificamos se foi removido/ocultado.
+// Os 2 baits fixos (#ad-bait, #ad-bait-2) existem no body para este teste.
+
 function checkBaits() {
-  const els = [document.getElementById('ad-bait'),document.getElementById('ad-bait-2'),document.getElementById('banner')];
+  const b1 = document.getElementById('ad-bait');
+  const b2 = document.getElementById('ad-bait-2');
   let blocked = 0;
-  els.forEach(el => {
-    if (!el) { blocked++; return; }
+
+  [b1, b2].forEach(el => {
+    if (!el) { blocked++; return; } // elemento removido do DOM = bloqueado
     const cs = getComputedStyle(el);
-    if (el.offsetHeight===0||el.offsetWidth===0||cs.display==='none'||cs.visibility==='hidden'||cs.opacity==='0') blocked++;
+    // Adblock tipicamente seta display:none ou visibility:hidden
+    if (cs.display === 'none' || cs.visibility === 'hidden') blocked++;
+    // NÃO verifica offsetHeight pois os baits têm height:1px por design
   });
-  return blocked >= 2;
+
+  return blocked >= 2; // precisa bloquear os 2 para confirmar (evita falso positivo)
 }
 
-async function checkTiming() {
-  const urls = ['https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js','https://googleads.g.doubleclick.net/pagead/viewthroughconversion/123456789/'];
-  let blocked = 0;
-  for (const url of urls) {
-    try {
-      const t0 = performance.now();
-      await fetch(`${url}?_=${Date.now()}`,{method:'HEAD',mode:'no-cors',cache:'no-store'});
-      if (performance.now()-t0 < 5) blocked++;
-    } catch(e) { blocked++; }
-  }
-  return blocked >= 1;
-}
-
-async function runAdblockCheck() {
-  const bait = checkBaits(); const timing = await checkTiming();
-  if (bait||timing) {
-    adblockActive = true; adblockCleared = false;
+function runAdblockCheck() {
+  if (adblockCleared) return;
+  if (checkBaits()) {
+    adblockActive = true;
     buildOverlay(detectBrowser());
     document.getElementById('adblock-overlay').classList.add('show');
     updateBtn();
   }
 }
 
-setInterval(async()=>{
+// Checa 1x após página carregar (aguarda baits renderizarem)
+setTimeout(runAdblockCheck, 2500);
+
+// Checa periódico a cada 8s (self-healing se ativar depois)
+setInterval(() => {
   if (adblockCleared) return;
-  if (checkBaits()&&!adblockActive) {
-    adblockActive=true; buildOverlay(detectBrowser());
+  if (checkBaits() && !adblockActive) {
+    adblockActive = true;
+    buildOverlay(detectBrowser());
     document.getElementById('adblock-overlay').classList.add('show');
     updateBtn();
   }
-},5000);
-
-setTimeout(runAdblockCheck, 2000);
-setTimeout(async()=>{ if(!adblockCleared){const b=checkBaits();const t=await checkTiming();if((b||t)&&!adblockActive){adblockActive=true;buildOverlay(detectBrowser());document.getElementById('adblock-overlay').classList.add('show');updateBtn();}} },7000);
+}, 8000);
 
 async function retryAdblock() {
   document.getElementById('ab-still').classList.remove('show');
+
+  // Cria bait temporário REAL no DOM e espera o browser renderizar
   const testBait = document.createElement('div');
-  testBait.className='adsbox ads ad-unit pub_300x250';
-  testBait.style.cssText='position:absolute;left:-9999px;width:1px;height:1px;';
+  testBait.id = 'test-bait-temp';
+  testBait.className = 'adsbox ads adsbygoogle ad-unit pub_300x250';
+  // Dimensão real para que adblock possa detectar e agir
+  testBait.style.cssText = 'position:fixed;top:-500px;left:-500px;width:300px;height:250px;pointer-events:none;';
   document.body.appendChild(testBait);
-  await new Promise(r=>setTimeout(r,300));
-  const bait = checkBaits()||testBait.offsetHeight===0;
-  const timing = await checkTiming();
-  document.body.removeChild(testBait);
-  if (bait||timing) {
+
+  // Aguarda 600ms para adblock ter tempo de agir no elemento
+  await new Promise(r => setTimeout(r, 600));
+
+  const cs = getComputedStyle(testBait);
+  const stillInDom = !!document.getElementById('test-bait-temp');
+  const hidden = !stillInDom || cs.display === 'none' || cs.visibility === 'hidden';
+
+  if (document.getElementById('test-bait-temp')) document.body.removeChild(testBait);
+
+  // Também re-checa os baits permanentes
+  const baitsPermanentes = checkBaits();
+
+  if (hidden || baitsPermanentes) {
     document.getElementById('ab-still').classList.add('show');
-    document.getElementById('ab-badge-text').textContent='⚠️ Ainda bloqueando!';
+    document.getElementById('ab-badge-text').textContent = '⚠️ Ainda bloqueando!';
     return;
   }
-  adblockActive=false; adblockCleared=true;
+
+  // LIBERADO
+  adblockActive  = false;
+  adblockCleared = true;
   document.getElementById('adblock-overlay').classList.remove('show');
   updateBtn();
 }
