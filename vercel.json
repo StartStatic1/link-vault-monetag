@@ -1,6 +1,17 @@
 {
   "rewrites": [
+    { "source": "/site", "destination": "/site/index.html" },
+    { "source": "/site/", "destination": "/site/index.html" },
     { "source": "/painel", "destination": "/painel/index.html" },
-    { "source": "/site",   "destination": "/site/index.html" }
+    { "source": "/painel/", "destination": "/painel/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
+    }
   ]
 }
