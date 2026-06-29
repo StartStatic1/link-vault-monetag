@@ -5,325 +5,385 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LinkVault — Painel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg:       #F8F9FB;
-      --white:    #FFFFFF;
-      --border:   #E5E7EB;
-      --text:     #111827;
-      --sub:      #6B7280;
-      --muted:    #9CA3AF;
-      --accent:   #F97316;
-      --accent-l: #FFF7ED;
-      --accent-b: #EA6C0A;
-      --green:    #16A34A;
-      --green-l:  #F0FDF4;
-      --red:      #DC2626;
-      --red-l:    #FEF2F2;
-      --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
-      --sidebar:  230px;
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#0D0F17;
+      --card:#141824;
+      --card2:#1A1F30;
+      --border:#252D45;
+      --border2:#1E2438;
+      --text:#EEF0F8;
+      --sub:#7880A0;
+      --muted:#404868;
+      --accent:#6C63FF;
+      --accent2:#8B83FF;
+      --accent-dark:#4A43CC;
+      --accent-glow:rgba(108,99,255,.2);
+      --green:#22C55E;
+      --green-dark:#16A34A;
+      --red:#EF4444;
+      --orange:#F97316;
+      --yellow:#EAB308;
+      --sb:220px;
     }
-    body { background: var(--bg); font-family: 'Inter', sans-serif; color: var(--text); min-height: 100vh; }
+    body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden}
 
     /* SIDEBAR */
-    .sidebar {
-      position: fixed; top: 0; left: 0;
-      width: var(--sidebar); height: 100vh;
-      background: var(--white); border-right: 1px solid var(--border);
-      display: flex; flex-direction: column; z-index: 100;
+    .sb{
+      position:fixed;top:0;left:0;width:var(--sb);height:100vh;
+      background:var(--card);border-right:1px solid var(--border);
+      display:flex;flex-direction:column;z-index:100;
+      overflow-y:auto;
     }
-    .sb-logo {
-      padding: 18px 16px 14px; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 9px;
+    .sb-logo{
+      padding:20px 18px 16px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;gap:10px;
     }
-    .sb-logo-dot {
-      width: 30px; height: 30px; background: var(--accent);
-      border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px;
+    .sb-logo-icon{
+      width:34px;height:34px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;font-size:17px;
+      box-shadow:0 0 14px var(--accent-glow);flex-shrink:0;
     }
-    .sb-logo-name { font-family: 'DM Sans',sans-serif; font-size: 16px; font-weight: 700; }
-    .sb-logo-name span { color: var(--accent); }
-
-    .sb-nav { padding: 14px 10px; flex: 1; }
-    .sb-group-label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; padding: 0 8px; margin: 10px 0 5px; }
-    .sb-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 10px; border-radius: 10px; cursor: pointer;
-      color: var(--sub); font-size: 13px; font-weight: 500;
-      transition: background .15s, color .15s;
-      margin-bottom: 1px; border: none; background: none; width: 100%; text-align: left;
+    .sb-logo-name{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:800;letter-spacing:-.3px}
+    .sb-logo-name span{color:var(--accent2)}
+    .sb-ver{font-size:10px;color:var(--muted);margin-top:1px}
+    .sb-nav{padding:16px 12px;flex:1}
+    .sb-section{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin:14px 0 6px}
+    .sb-item{
+      display:flex;align-items:center;gap:10px;
+      padding:9px 10px;border-radius:10px;cursor:pointer;
+      color:var(--sub);font-size:13px;font-weight:500;
+      transition:background .15s,color .15s;
+      margin-bottom:1px;border:none;background:none;width:100%;text-align:left;
     }
-    .sb-item:hover { background: var(--bg); color: var(--text); }
-    .sb-item.active { background: var(--accent-l); color: var(--accent); font-weight: 600; }
-    .sb-icon { font-size: 15px; width: 20px; text-align: center; }
-    .sb-footer { padding: 14px 16px; border-top: 1px solid var(--border); }
-    .sb-version { font-size: 11px; color: var(--muted); text-align: center; }
+    .sb-item:hover{background:var(--card2);color:var(--text)}
+    .sb-item.active{background:rgba(108,99,255,.15);color:var(--accent2);font-weight:600}
+    .sb-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+    .sb-footer{padding:14px 18px;border-top:1px solid var(--border)}
+    .sb-link-count{font-size:11px;color:var(--muted);text-align:center}
 
     /* MAIN */
-    .main { margin-left: var(--sidebar); min-height: 100vh; padding: 28px 28px 60px; }
+    .main{margin-left:var(--sb);min-height:100vh;padding:28px 28px 80px}
 
     /* PAGE HEADER */
-    .page-header { margin-bottom: 22px; }
-    .page-title { font-family: 'DM Sans',sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -.4px; }
-    .page-sub { font-size: 13px; color: var(--sub); margin-top: 4px; }
+    .ph{margin-bottom:24px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .ph-left{}
+    .ph-title{font-family:'DM Sans',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.4px}
+    .ph-sub{font-size:13px;color:var(--sub);margin-top:4px}
+    .ph-actions{display:flex;gap:8px}
 
     /* STATS */
-    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 22px; }
-    .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
-    .stat-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 8px; }
-    .stat-value { font-family: 'DM Sans',sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -.5px; }
-    .stat-hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-    /* GERAR CARD */
-    .gen-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 22px; box-shadow: var(--shadow); margin-bottom: 18px; }
-    .gen-title { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 16px; }
-
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-    .form-group { display: flex; flex-direction: column; gap: 5px; }
-    .form-group.full { grid-column: 1 / -1; }
-    .form-label { font-size: 11px; font-weight: 600; color: var(--sub); text-transform: uppercase; letter-spacing: .6px; }
-    .input-field {
-      padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
-      font-family: 'Inter',sans-serif; font-size: 14px; color: var(--text);
-      background: var(--bg); outline: none; transition: border-color .2s;
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+    .stat-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:14px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.2);
+      position:relative;overflow:hidden;
     }
-    .input-field:focus { border-color: var(--accent); background: var(--white); }
-    .input-field::placeholder { color: var(--muted); }
+    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+    .stat-card.c-purple::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+    .stat-card.c-green::before{background:linear-gradient(90deg,var(--green-dark),var(--green))}
+    .stat-card.c-orange::before{background:linear-gradient(90deg,#C2410C,var(--orange))}
+    .stat-card.c-yellow::before{background:linear-gradient(90deg,#A16207,var(--yellow))}
+    .stat-icon{font-size:20px;margin-bottom:10px}
+    .stat-val{font-family:'DM Sans',sans-serif;font-size:28px;font-weight:800;letter-spacing:-.5px;line-height:1}
+    .stat-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-top:6px}
+    .stat-hint{font-size:11px;color:var(--sub);margin-top:3px}
 
-    .btn-gen {
-      padding: 12px 22px; background: var(--accent); border: none;
-      border-radius: 10px; color: white; font-family: 'DM Sans',sans-serif;
-      font-size: 14px; font-weight: 700; cursor: pointer;
-      box-shadow: 0 3px 0 var(--accent-b); transition: transform .1s, box-shadow .1s;
-    }
-    .btn-gen:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--accent-b); }
+    /* GERAR */
+    .gen-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:20px}
+    .card-title{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .card-title-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:rgba(108,99,255,.15);color:var(--accent2);border:1px solid rgba(108,99,255,.25)}
 
-    .result-box {
-      display: none; margin-top: 14px; padding: 14px 16px;
-      background: var(--green-l); border: 1px solid #BBF7D0; border-radius: 10px;
-      align-items: center; gap: 10px;
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+    .form-group{display:flex;flex-direction:column;gap:5px}
+    .form-group.full{grid-column:1/-1}
+    .form-label{font-size:11px;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.7px}
+    .input{
+      padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;
+      font-family:'Inter',sans-serif;font-size:13px;color:var(--text);
+      background:var(--card2);outline:none;transition:border-color .2s;
     }
-    .result-box.show { display: flex; }
-    .result-link {
-      flex: 1; font-size: 13px; color: var(--green); font-weight: 500;
-      word-break: break-all; background: none; border: none; outline: none;
-      font-family: 'Inter',sans-serif; cursor: text;
+    .input:focus{border-color:var(--accent);background:var(--card)}
+    .input::placeholder{color:var(--muted)}
+    select.input{cursor:pointer}
+
+    .gen-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .btn{
+      padding:11px 20px;border:none;border-radius:10px;
+      font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;
+      transition:transform .1s,box-shadow .1s,opacity .15s;
     }
-    .btn-copy {
-      padding: 8px 16px; background: var(--green); border: none; border-radius: 8px;
-      color: white; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
-      font-family: 'DM Sans',sans-serif;
+    .btn:active{transform:translateY(1px)}
+    .btn-accent{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;box-shadow:0 3px 0 var(--accent-dark)}
+    .btn-accent:active{box-shadow:0 1px 0 var(--accent-dark)}
+    .btn-outline{background:none;border:1.5px solid var(--border);color:var(--sub)}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent2)}
+    .btn-red{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);color:var(--red)}
+    .btn-red:hover{background:rgba(239,68,68,.2)}
+    .btn-green{background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;box-shadow:0 3px 0 #15803D}
+    .btn-sm{padding:6px 12px;font-size:12px;border-radius:8px}
+
+    .result-box{
+      display:none;margin-top:14px;padding:14px 16px;
+      background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);
+      border-radius:12px;align-items:center;gap:10px;
+    }
+    .result-box.show{display:flex}
+    .result-link-val{
+      flex:1;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);
+      word-break:break-all;background:none;border:none;outline:none;cursor:text;
     }
 
     /* TOOLBAR */
-    .toolbar {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px; gap: 12px; flex-wrap: wrap;
-    }
-    .search-input {
-      padding: 9px 14px; border: 1.5px solid var(--border); border-radius: 10px;
-      font-family: 'Inter',sans-serif; font-size: 13px; color: var(--text);
-      background: var(--white); outline: none; transition: border-color .2s; width: 220px;
-    }
-    .search-input:focus { border-color: var(--accent); }
-    .search-input::placeholder { color: var(--muted); }
-    .btn-clear-all {
-      padding: 9px 16px; background: var(--red-l); border: 1px solid #FECACA;
-      border-radius: 10px; color: var(--red); font-size: 13px; font-weight: 600;
-      cursor: pointer; font-family: 'DM Sans',sans-serif; transition: background .15s;
-    }
-    .btn-clear-all:hover { background: #FEE2E2; }
+    .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+    .search-wrap{position:relative;flex:1;min-width:180px}
+    .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
+    .search-input{width:100%;padding:9px 12px 9px 34px;border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:var(--card2);outline:none;transition:border-color .2s}
+    .search-input:focus{border-color:var(--accent)}
+    .search-input::placeholder{color:var(--muted)}
+    .filter-select{padding:9px 12px;border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;color:var(--sub);background:var(--card2);outline:none;cursor:pointer}
 
-    /* TABLE CARD */
-    .table-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
-    .table-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 22px; border-bottom: 1px solid var(--border);
-    }
-    .table-head-title { font-family: 'DM Sans',sans-serif; font-size: 15px; font-weight: 700; }
-    .badge-count { font-size: 11px; font-weight: 700; background: var(--bg); border: 1px solid var(--border); color: var(--sub); padding: 2px 9px; border-radius: 20px; }
+    /* TABLE */
+    .table-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+    .table-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);gap:10px}
+    .table-head-title{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700}
+    .badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--card2);border:1px solid var(--border);color:var(--sub)}
 
-    table { width: 100%; border-collapse: collapse; }
-    thead th {
-      padding: 10px 18px; text-align: left; font-size: 11px; font-weight: 600;
-      color: var(--muted); text-transform: uppercase; letter-spacing: .7px;
-      background: var(--bg); border-bottom: 1px solid var(--border);
-    }
-    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: #FAFAFA; }
-    td { padding: 12px 18px; font-size: 13px; color: var(--text); vertical-align: middle; }
-    .td-name { font-weight: 600; font-size: 13px; max-width: 160px; }
-    .td-name small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; margin-top: 1px; }
-    .td-link { color: var(--accent); font-weight: 500; font-size: 12px; cursor: pointer; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
-    .td-link:hover { text-decoration: underline; }
-    .td-date { color: var(--muted); font-size: 12px; white-space: nowrap; }
-    .pill-active { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; background: var(--green-l); color: var(--green); border: 1px solid #BBF7D0; }
+    table{width:100%;border-collapse:collapse}
+    thead th{padding:10px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;background:var(--card2);border-bottom:1px solid var(--border)}
+    tbody tr{border-bottom:1px solid var(--border2);transition:background .12s}
+    tbody tr:last-child{border-bottom:none}
+    tbody tr:hover{background:rgba(255,255,255,.02)}
+    td{padding:12px 16px;font-size:13px;vertical-align:middle}
 
-    .actions { display: flex; gap: 6px; }
-    .btn-act {
-      padding: 5px 11px; border-radius: 8px; font-size: 12px; font-weight: 600;
-      cursor: pointer; border: 1px solid var(--border); background: none; color: var(--sub);
-      transition: all .15s; font-family: 'DM Sans',sans-serif;
+    .td-num{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;width:32px}
+    .td-name{font-weight:600;max-width:150px}
+    .td-name small{display:block;font-weight:400;color:var(--muted);font-size:11px;margin-top:2px}
+    .td-link{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);cursor:pointer;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+    .td-link:hover{text-decoration:underline}
+    .td-date{color:var(--muted);font-size:11px;white-space:nowrap}
+    .td-cat{
+      font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;
+      background:rgba(108,99,255,.12);color:var(--accent2);border:1px solid rgba(108,99,255,.2);
+      white-space:nowrap;
     }
-    .btn-act.copy:hover { background: var(--accent-l); border-color: #FED7AA; color: var(--accent); }
-    .btn-act.del:hover  { background: var(--red-l); border-color: #FECACA; color: var(--red); }
-
-    /* MODAL EDITAR */
-    .modal-bg {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(17,24,39,.4); backdrop-filter: blur(4px);
-      align-items: center; justify-content: center; padding: 20px;
+    .td-status{
+      font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;
+      background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.2);
+      white-space:nowrap;
     }
-    .modal-bg.show { display: flex; }
-    .modal {
-      background: var(--white); border-radius: 18px; padding: 26px;
-      width: 100%; max-width: 440px; box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    .td-actions{display:flex;gap:5px;white-space:nowrap}
+    .act-btn{
+      padding:5px 10px;border-radius:7px;font-size:11px;font-weight:600;
+      cursor:pointer;border:1px solid var(--border);background:none;color:var(--sub);
+      transition:all .15s;font-family:'DM Sans',sans-serif;
     }
-    .modal-title { font-family: 'DM Sans',sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 18px; }
-    .modal-footer { display: flex; gap: 10px; margin-top: 18px; justify-content: flex-end; }
-    .btn-save {
-      padding: 10px 22px; background: var(--accent); border: none; border-radius: 10px;
-      color: white; font-family: 'DM Sans',sans-serif; font-size: 14px; font-weight: 700;
-      cursor: pointer; box-shadow: 0 3px 0 var(--accent-b);
-    }
-    .btn-cancel {
-      padding: 10px 18px; background: none; border: 1.5px solid var(--border);
-      border-radius: 10px; color: var(--sub); font-size: 14px; font-weight: 600;
-      cursor: pointer; font-family: 'DM Sans',sans-serif;
-    }
+    .act-btn:hover.copy-btn{background:rgba(108,99,255,.1);border-color:rgba(108,99,255,.3);color:var(--accent2)}
+    .act-btn:hover.edit-btn{background:rgba(234,179,8,.1);border-color:rgba(234,179,8,.3);color:var(--yellow)}
+    .act-btn:hover.del-btn{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:var(--red)}
+    .act-btn:hover.qr-btn{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:var(--green)}
 
     /* EMPTY */
-    .empty-state { text-align: center; padding: 52px 24px; }
-    .empty-icon { font-size: 38px; margin-bottom: 12px; }
-    .empty-text { font-size: 14px; font-weight: 500; color: var(--sub); }
-    .empty-hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
+    .empty{text-align:center;padding:56px 24px}
+    .empty-icon{font-size:40px;margin-bottom:12px}
+    .empty-text{font-size:14px;font-weight:600;color:var(--sub)}
+    .empty-hint{font-size:12px;color:var(--muted);margin-top:5px}
+
+    /* MODAL */
+    .modal-bg{display:none;position:fixed;inset:0;z-index:200;background:rgba(9,11,17,.8);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+    .modal-bg.show{display:flex}
+    .modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px;width:100%;max-width:440px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .modal-title{font-family:'DM Sans',sans-serif;font-size:17px;font-weight:800;margin-bottom:18px}
+    .modal-body{display:flex;flex-direction:column;gap:12px}
+    .modal-footer{display:flex;gap:8px;margin-top:20px;justify-content:flex-end}
+
+    /* QR MODAL */
+    .qr-modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px;width:100%;max-width:300px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .qr-title{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px}
+    .qr-wrap{background:white;border-radius:12px;padding:16px;display:inline-block;margin-bottom:14px}
+    #qr-canvas{display:block}
+    .qr-link{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sub);word-break:break-all;margin-bottom:14px}
 
     /* TOAST */
-    .toast {
-      position: fixed; bottom: 24px; right: 24px;
-      background: var(--text); color: white; padding: 12px 20px;
-      border-radius: 10px; font-size: 13px; font-weight: 500;
-      box-shadow: 0 4px 16px rgba(0,0,0,.2);
-      transform: translateY(60px); opacity: 0; transition: all .28s; z-index: 999;
-    }
-    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:var(--bg);padding:12px 18px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.3);transform:translateY(60px);opacity:0;transition:all .25s;z-index:999;display:flex;align-items:center;gap:8px;max-width:280px}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.green{background:var(--green);color:white}
+    .toast.red{background:var(--red);color:white}
+
+    /* CONFIRM DIALOG */
+    .confirm-modal{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .confirm-icon{font-size:36px;margin-bottom:10px}
+    .confirm-title{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px}
+    .confirm-desc{font-size:13px;color:var(--sub);line-height:1.5;margin-bottom:18px}
+    .confirm-footer{display:flex;gap:8px}
+
+    /* EXPORT */
+    .export-modal{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;width:100%;max-width:360px}
+    .export-title{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px}
+    .export-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .export-opt{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .2s}
+    .export-opt:hover{border-color:var(--accent)}
+    .export-opt-icon{font-size:20px}
+    .export-opt-text{flex:1}
+    .export-opt-name{font-size:13px;font-weight:600}
+    .export-opt-desc{font-size:11px;color:var(--muted)}
 
     /* MOBILE */
-    @media (max-width: 768px) {
-      :root { --sidebar: 0px; }
-      .sidebar { display: none; }
-      .main { margin-left: 0; padding: 16px; }
-      .stats-row { grid-template-columns: 1fr 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      .search-input { width: 100%; }
-      thead th:nth-child(4), td:nth-child(4),
-      thead th:nth-child(5), td:nth-child(5) { display: none; }
+    @media(max-width:900px){
+      :root{--sb:0px}
+      .sb{display:none}
+      .main{margin-left:0;padding:16px}
+      .stats{grid-template-columns:1fr 1fr}
+      .form-grid{grid-template-columns:1fr}
+      thead th:nth-child(4),td:nth-child(4),
+      thead th:nth-child(6),td:nth-child(6){display:none}
+    }
+    @media(max-width:560px){
+      .stats{grid-template-columns:1fr 1fr}
+      .stat-val{font-size:22px}
+      thead th:nth-child(5),td:nth-child(5){display:none}
     }
   </style>
 </head>
 <body>
 
 <!-- SIDEBAR -->
-<aside class="sidebar">
+<aside class="sb">
   <div class="sb-logo">
-    <div class="sb-logo-dot">🔗</div>
-    <div class="sb-logo-name">Link<span>Vault</span></div>
+    <div class="sb-logo-icon">🔗</div>
+    <div>
+      <div class="sb-logo-name">Link<span>Vault</span></div>
+      <div class="sb-ver">Painel v4.0</div>
+    </div>
   </div>
-  <div class="sb-nav">
-    <div class="sb-group-label">Principal</div>
-    <button class="sb-item active" onclick="scrollTo(0,0)">
-      <span class="sb-icon">🏠</span> Painel
-    </button>
-    <button class="sb-item" onclick="focusGerar()">
-      <span class="sb-icon">✨</span> Gerar Link
-    </button>
-    <button class="sb-item" onclick="focusTabela()">
-      <span class="sb-icon">📋</span> Meus Links
-    </button>
+  <nav class="sb-nav">
+    <div class="sb-section">Principal</div>
+    <button class="sb-item active" onclick="scrollTo(0,0)"><span class="sb-icon">🏠</span> Dashboard</button>
+    <button class="sb-item" onclick="focusGerar()"><span class="sb-icon">✨</span> Gerar Link</button>
+    <button class="sb-item" onclick="focusTabela()"><span class="sb-icon">📋</span> Meus Links</button>
+    <button class="sb-item" onclick="abrirExport()"><span class="sb-icon">📤</span> Exportar</button>
 
-    <div class="sb-group-label" style="margin-top:16px">Canais</div>
-    <button class="sb-item" onclick="window.open('https://t.me/ApkBugado','_blank')">
-      <span class="sb-icon">📱</span> APK Bugado
-    </button>
-    <button class="sb-item" onclick="window.open('https://t.me/streamflixofc','_blank')">
-      <span class="sb-icon">🎬</span> StreamFlix
-    </button>
-    <button class="sb-item" onclick="window.open('https://mnil.ink/p3','_blank')">
-      <span class="sb-icon">👑</span> VIP
-    </button>
-  </div>
+    <div class="sb-section">Canais</div>
+    <button class="sb-item" onclick="window.open('https://t.me/ApkBugado','_blank')"><span class="sb-icon">📱</span> APK Bugado</button>
+    <button class="sb-item" onclick="window.open('https://t.me/streamflixofc','_blank')"><span class="sb-icon">🎬</span> StreamFlix</button>
+    <button class="sb-item" onclick="window.open('https://mnil.ink/p3','_blank')"><span class="sb-icon">👑</span> VIP</button>
+
+    <div class="sb-section">Configurações</div>
+    <button class="sb-item" onclick="abrirConfig()"><span class="sb-icon">⚙️</span> Configurar</button>
+  </nav>
   <div class="sb-footer">
-    <div class="sb-version">LinkVault v2.1</div>
+    <div class="sb-link-count" id="sb-count">0 links armazenados</div>
   </div>
 </aside>
 
 <!-- MAIN -->
 <main class="main">
 
-  <div class="page-header">
-    <div class="page-title">Painel de Links</div>
-    <div class="page-sub">Crie, gerencie e monitore seus links monetizados</div>
+  <!-- HEADER -->
+  <div class="ph">
+    <div class="ph-left">
+      <div class="ph-title">Painel de Links</div>
+      <div class="ph-sub">Crie, gerencie e monitore seus links monetizados</div>
+    </div>
+    <div class="ph-actions">
+      <button class="btn btn-outline btn-sm" onclick="abrirExport()">📤 Exportar</button>
+      <button class="btn btn-red btn-sm" onclick="confirmarLimparTudo()">🗑 Limpar tudo</button>
+    </div>
   </div>
 
   <!-- STATS -->
-  <div class="stats-row">
-    <div class="stat-card">
+  <div class="stats">
+    <div class="stat-card c-purple">
+      <div class="stat-icon">🔗</div>
+      <div class="stat-val" id="s-total">0</div>
       <div class="stat-label">Links criados</div>
-      <div class="stat-value" id="stat-total">0</div>
-      <div class="stat-hint">no total</div>
+      <div class="stat-hint" id="s-hint">comece gerando um link</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card c-green">
+      <div class="stat-icon">✅</div>
+      <div class="stat-val" style="font-size:20px;padding-top:6px">Monetag</div>
       <div class="stat-label">Monetização</div>
-      <div class="stat-value" style="font-size:20px;padding-top:4px">✅</div>
-      <div class="stat-hint">Monetag ativo</div>
+      <div class="stat-hint">Multitag · OnClick · Vignette</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card c-orange">
+      <div class="stat-icon">⏱</div>
+      <div class="stat-val" id="s-timer">15s</div>
       <div class="stat-label">Tempo de espera</div>
-      <div class="stat-value">15s</div>
-      <div class="stat-hint">por link</div>
+      <div class="stat-hint">configurável no painel</div>
+    </div>
+    <div class="stat-card c-yellow">
+      <div class="stat-icon">🗂</div>
+      <div class="stat-val" id="s-cats">0</div>
+      <div class="stat-label">Categorias</div>
+      <div class="stat-hint" id="s-cats-hint">em uso</div>
     </div>
   </div>
 
-  <!-- GERAR LINK -->
+  <!-- GERAR -->
   <div class="gen-card" id="gen-card">
-    <div class="gen-title">✨ Gerar novo link</div>
+    <div class="card-title">
+      ✨ Gerar novo link
+      <span class="card-title-badge">encode Base64</span>
+    </div>
     <div class="form-grid">
       <div class="form-group">
         <label class="form-label">Nome / descrição</label>
-        <input class="input-field" id="inp-nome" type="text" placeholder="Ex: Filme Homem-Aranha">
+        <input class="input" id="inp-nome" type="text" placeholder="Ex: Homem-Aranha Dublado">
       </div>
       <div class="form-group">
         <label class="form-label">Categoria</label>
-        <input class="input-field" id="inp-cat" type="text" placeholder="Ex: Filme, APK, Série...">
+        <select class="input" id="inp-cat">
+          <option value="Filme">🎬 Filme</option>
+          <option value="Série">📺 Série</option>
+          <option value="APK">📱 APK</option>
+          <option value="Jogo">🎮 Jogo</option>
+          <option value="Ferramenta">🔧 Ferramenta</option>
+          <option value="Outro">📁 Outro</option>
+        </select>
       </div>
       <div class="form-group full">
         <label class="form-label">Link de destino</label>
-        <input class="input-field" id="inp-url" type="url" placeholder="https://..." onkeydown="if(event.key==='Enter')gerarLink()">
+        <input class="input" id="inp-url" type="url" placeholder="https://..." onkeydown="if(event.key==='Enter')gerarLink()">
       </div>
     </div>
-    <button class="btn-gen" onclick="gerarLink()">Gerar link →</button>
+    <div class="gen-row">
+      <button class="btn btn-accent" onclick="gerarLink()">Gerar link →</button>
+      <button class="btn btn-outline btn-sm" onclick="limparForm()">Limpar</button>
+    </div>
 
     <div class="result-box" id="result-box">
-      <input class="result-link" id="result-link" readonly>
-      <button class="btn-copy" onclick="copiarResultado()">Copiar</button>
+      <input class="result-link-val" id="result-val" readonly>
+      <button class="btn btn-green btn-sm" onclick="copiarResultado()">📋 Copiar</button>
     </div>
   </div>
 
   <!-- TOOLBAR -->
-  <div class="toolbar" id="tabela-anchor">
-    <input class="search-input" id="search-inp" type="text" placeholder="🔍 Buscar por nome ou link..." oninput="renderTabela()">
-    <button class="btn-clear-all" onclick="limparTudo()">🗑️ Limpar tudo</button>
+  <div class="toolbar" id="table-anchor">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="search" type="text" placeholder="Buscar por nome, link ou categoria..." oninput="renderTable()">
+    </div>
+    <select class="filter-select input" id="filter-cat" onchange="renderTable()">
+      <option value="">Todas categorias</option>
+      <option value="Filme">🎬 Filme</option>
+      <option value="Série">📺 Série</option>
+      <option value="APK">📱 APK</option>
+      <option value="Jogo">🎮 Jogo</option>
+      <option value="Ferramenta">🔧 Ferramenta</option>
+      <option value="Outro">📁 Outro</option>
+    </select>
   </div>
 
-  <!-- TABELA -->
+  <!-- TABLE -->
   <div class="table-card">
     <div class="table-head">
       <div class="table-head-title">Links gerados</div>
-      <span class="badge-count" id="badge-count">0 links</span>
+      <span class="badge" id="table-badge">0 links</span>
     </div>
-    <div id="empty-state" class="empty-state">
+    <div class="empty" id="empty-state">
       <div class="empty-icon">🔗</div>
       <div class="empty-text">Nenhum link ainda</div>
       <div class="empty-hint">Preencha o formulário acima para gerar seu primeiro link</div>
@@ -334,6 +394,7 @@
           <th>#</th>
           <th>Nome</th>
           <th>Link gerado</th>
+          <th>Categoria</th>
           <th>Data</th>
           <th>Status</th>
           <th></th>
@@ -345,25 +406,117 @@
 
 </main>
 
-<!-- MODAL EDITAR -->
-<div class="modal-bg" id="modal-bg">
+<!-- MODAIS -->
+
+<!-- EDITAR -->
+<div class="modal-bg" id="modal-edit">
   <div class="modal">
     <div class="modal-title">✏️ Editar link</div>
-    <div class="form-group" style="margin-bottom:12px">
-      <label class="form-label">Nome / descrição</label>
-      <input class="input-field" id="edit-nome" type="text" placeholder="Nome do link">
-    </div>
-    <div class="form-group" style="margin-bottom:12px">
-      <label class="form-label">Categoria</label>
-      <input class="input-field" id="edit-cat" type="text" placeholder="Categoria">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Link de destino</label>
-      <input class="input-field" id="edit-url" type="url" placeholder="https://...">
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Nome</label>
+        <input class="input" id="e-nome" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Categoria</label>
+        <select class="input" id="e-cat">
+          <option value="Filme">🎬 Filme</option>
+          <option value="Série">📺 Série</option>
+          <option value="APK">📱 APK</option>
+          <option value="Jogo">🎮 Jogo</option>
+          <option value="Ferramenta">🔧 Ferramenta</option>
+          <option value="Outro">📁 Outro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Link de destino</label>
+        <input class="input" id="e-url" type="url">
+      </div>
     </div>
     <div class="modal-footer">
-      <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
-      <button class="btn-save" onclick="salvarEdicao()">Salvar</button>
+      <button class="btn btn-outline" onclick="fecharModal('modal-edit')">Cancelar</button>
+      <button class="btn btn-accent" onclick="salvarEdicao()">Salvar alterações</button>
+    </div>
+  </div>
+</div>
+
+<!-- QR CODE -->
+<div class="modal-bg" id="modal-qr">
+  <div class="qr-modal">
+    <div class="qr-title">QR Code do link</div>
+    <div class="qr-wrap"><canvas id="qr-canvas" width="200" height="200"></canvas></div>
+    <div class="qr-link" id="qr-link-txt"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-accent btn-sm" style="flex:1" onclick="downloadQR()">💾 Baixar</button>
+      <button class="btn btn-outline btn-sm" onclick="fecharModal('modal-qr')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="modal-bg" id="modal-confirm">
+  <div class="confirm-modal">
+    <div class="confirm-icon" id="c-icon">⚠️</div>
+    <div class="confirm-title" id="c-title">Tem certeza?</div>
+    <div class="confirm-desc" id="c-desc">Esta ação não pode ser desfeita.</div>
+    <div class="confirm-footer">
+      <button class="btn btn-outline" style="flex:1" onclick="fecharModal('modal-confirm')">Cancelar</button>
+      <button class="btn btn-red" style="flex:1" id="c-ok-btn" onclick="">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT -->
+<div class="modal-bg" id="modal-export">
+  <div class="export-modal">
+    <div class="export-title">📤 Exportar links</div>
+    <div class="export-opts">
+      <div class="export-opt" onclick="exportCSV()">
+        <div class="export-opt-icon">📊</div>
+        <div class="export-opt-text">
+          <div class="export-opt-name">CSV — Excel / Sheets</div>
+          <div class="export-opt-desc">Planilha com todos os dados</div>
+        </div>
+        <span>→</span>
+      </div>
+      <div class="export-opt" onclick="exportJSON()">
+        <div class="export-opt-icon">{ }</div>
+        <div class="export-opt-text">
+          <div class="export-opt-name">JSON — Backup completo</div>
+          <div class="export-opt-desc">Todos os dados em JSON</div>
+        </div>
+        <span>→</span>
+      </div>
+      <div class="export-opt" onclick="exportTXT()">
+        <div class="export-opt-icon">📝</div>
+        <div class="export-opt-text">
+          <div class="export-opt-name">TXT — Lista simples</div>
+          <div class="export-opt-desc">Só os links gerados, um por linha</div>
+        </div>
+        <span>→</span>
+      </div>
+    </div>
+    <button class="btn btn-outline" style="width:100%" onclick="fecharModal('modal-export')">Cancelar</button>
+  </div>
+</div>
+
+<!-- CONFIG -->
+<div class="modal-bg" id="modal-config">
+  <div class="modal">
+    <div class="modal-title">⚙️ Configurações</div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">URL base do passador</label>
+        <input class="input" id="cfg-base" type="url" placeholder="https://seu-site.vercel.app">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Timer de espera (segundos)</label>
+        <input class="input" id="cfg-timer" type="number" min="5" max="60" placeholder="15">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="fecharModal('modal-config')">Cancelar</button>
+      <button class="btn btn-accent" onclick="salvarConfig()">Salvar</button>
     </div>
   </div>
 </div>
@@ -372,163 +525,278 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BASE_URL = 'https://linkvault-neon.vercel.app';
+// ─── CONFIG ────────────────────────────────────────────────────
+const DEFAULT_BASE  = 'https://linkvault-neon.vercel.app';
+const DEFAULT_TIMER = 15;
 
-let links = JSON.parse(localStorage.getItem('lv_links2') || '[]');
+let cfg = JSON.parse(localStorage.getItem('lv_cfg') || 'null') || { base: DEFAULT_BASE, timer: DEFAULT_TIMER };
+let links = JSON.parse(localStorage.getItem('lv_links3') || '[]');
 let editIdx = -1;
+let currentQrLink = '';
 
-function salvar() { localStorage.setItem('lv_links2', JSON.stringify(links)); }
+function saveCfg()  { localStorage.setItem('lv_cfg',   JSON.stringify(cfg)); }
+function saveLinks(){ localStorage.setItem('lv_links3', JSON.stringify(links)); }
 
-function toast(msg, dur = 2400) {
+// ─── TOAST ──────────────────────────────────────────────────────
+function toast(msg, type='', dur=2500) {
   const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), dur);
+  el.textContent = msg; el.className = 'toast show';
+  if (type) el.classList.add(type);
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), dur);
 }
 
+// ─── GERAR LINK ─────────────────────────────────────────────────
 function gerarLink() {
   const url  = document.getElementById('inp-url').value.trim();
   const nome = document.getElementById('inp-nome').value.trim() || 'Sem nome';
-  const cat  = document.getElementById('inp-cat').value.trim() || '—';
+  const cat  = document.getElementById('inp-cat').value;
+
   if (!url) { toast('⚠️ Cole o link de destino!'); return; }
-  if (!url.startsWith('http')) { toast('⚠️ Link inválido. Use http:// ou https://'); return; }
+  if (!url.startsWith('http')) { toast('⚠️ Link inválido. Use https://...'); return; }
 
   const encoded = btoa(url);
-  const final   = `${BASE_URL}/site/index.html?d=${encoded}`;
+  const final   = `${cfg.base}/site/?d=${encoded}`;
 
   document.getElementById('result-box').classList.add('show');
-  document.getElementById('result-link').value = final;
+  document.getElementById('result-val').value = final;
 
-  links.unshift({ nome, cat, url, link: final, date: new Date().toLocaleDateString('pt-BR') });
-  salvar();
-  renderTabela();
+  const item = {
+    id: Date.now(),
+    nome, cat, url,
+    link: final,
+    date: new Date().toLocaleDateString('pt-BR'),
+    ts: Date.now()
+  };
+  links.unshift(item);
+  saveLinks();
+  renderTable();
+  updateStats();
 
   document.getElementById('inp-url').value  = '';
   document.getElementById('inp-nome').value = '';
-  document.getElementById('inp-cat').value  = '';
-  toast('✅ Link gerado!');
+  toast('✅ Link gerado!', 'green');
+}
+
+function limparForm() {
+  document.getElementById('inp-url').value  = '';
+  document.getElementById('inp-nome').value = '';
+  document.getElementById('result-box').classList.remove('show');
 }
 
 function copiarResultado() {
-  navigator.clipboard.writeText(document.getElementById('result-link').value)
+  navigator.clipboard.writeText(document.getElementById('result-val').value)
     .then(() => toast('📋 Link copiado!'));
 }
 
-function copiarLinkIdx(idx) {
-  navigator.clipboard.writeText(links[idx].link).then(() => toast('📋 Copiado!'));
+// ─── COPY / QR / EDIT / DELETE ──────────────────────────────────
+function copiarLink(idx) {
+  navigator.clipboard.writeText(links[idx].link)
+    .then(() => toast('📋 Copiado!', 'green'));
 }
 
-function deletarLink(idx) {
-  if (!confirm('Remover este link?')) return;
-  links.splice(idx, 1);
-  salvar(); renderTabela();
-  toast('🗑️ Link removido.');
+function abrirQR(idx) {
+  const link = links[idx].link;
+  currentQrLink = link;
+  document.getElementById('qr-link-txt').textContent = link;
+  gerarQR(link);
+  document.getElementById('modal-qr').classList.add('show');
 }
 
-function limparTudo() {
-  if (!links.length) { toast('Nenhum link para limpar.'); return; }
-  if (!confirm(`Remover todos os ${links.length} links? Esta ação não pode ser desfeita.`)) return;
-  links = []; salvar(); renderTabela();
-  document.getElementById('result-box').classList.remove('show');
-  toast('🗑️ Todos os links removidos.');
-}
-
-function abrirModal(idx) {
+function abrirEditar(idx) {
   editIdx = idx;
   const item = links[idx];
-  document.getElementById('edit-nome').value = item.nome || '';
-  document.getElementById('edit-cat').value  = item.cat  || '';
-  document.getElementById('edit-url').value  = item.url  || '';
-  document.getElementById('modal-bg').classList.add('show');
-}
-
-function fecharModal() {
-  document.getElementById('modal-bg').classList.remove('show');
-  editIdx = -1;
+  document.getElementById('e-nome').value = item.nome || '';
+  document.getElementById('e-cat').value  = item.cat  || 'Outro';
+  document.getElementById('e-url').value  = item.url  || '';
+  document.getElementById('modal-edit').classList.add('show');
 }
 
 function salvarEdicao() {
   if (editIdx < 0) return;
-  const url  = document.getElementById('edit-url').value.trim();
-  const nome = document.getElementById('edit-nome').value.trim() || 'Sem nome';
-  const cat  = document.getElementById('edit-cat').value.trim() || '—';
+  const url  = document.getElementById('e-url').value.trim();
+  const nome = document.getElementById('e-nome').value.trim() || 'Sem nome';
+  const cat  = document.getElementById('e-cat').value;
   if (!url.startsWith('http')) { toast('⚠️ Link inválido.'); return; }
 
   const encoded = btoa(url);
-  links[editIdx] = {
-    ...links[editIdx],
-    nome, cat, url,
-    link: `${BASE_URL}/site/index.html?d=${encoded}`
-  };
-  salvar(); renderTabela(); fecharModal();
-  toast('✅ Link atualizado!');
+  links[editIdx] = { ...links[editIdx], nome, cat, url, link: `${cfg.base}/site/?d=${encoded}` };
+  saveLinks(); renderTable(); updateStats(); fecharModal('modal-edit');
+  toast('✅ Link atualizado!', 'green');
 }
 
-function renderTabela() {
-  const query  = document.getElementById('search-inp').value.toLowerCase();
-  const tbody  = document.getElementById('links-tbody');
-  const table  = document.getElementById('links-table');
-  const empty  = document.getElementById('empty-state');
-  const badge  = document.getElementById('badge-count');
-  const stat   = document.getElementById('stat-total');
-
-  const filtered = links.filter(l =>
-    l.nome.toLowerCase().includes(query) ||
-    l.link.toLowerCase().includes(query) ||
-    (l.cat||'').toLowerCase().includes(query)
-  );
-
-  badge.textContent = links.length + (links.length === 1 ? ' link' : ' links');
-  stat.textContent  = links.length;
-
-  if (filtered.length === 0) {
-    table.style.display = 'none';
-    empty.style.display = 'block';
-    empty.querySelector('.empty-text').textContent = links.length ? 'Nenhum resultado' : 'Nenhum link ainda';
-    empty.querySelector('.empty-hint').textContent = links.length ? 'Tente outro termo de busca' : 'Preencha o formulário acima para gerar seu primeiro link';
-    return;
-  }
-
-  table.style.display = 'table';
-  empty.style.display = 'none';
-  tbody.innerHTML = '';
-
-  filtered.forEach((item, i) => {
-    const realIdx = links.indexOf(item);
-    const shortLink = item.link.replace(BASE_URL, '').substring(0, 38) + '…';
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="color:var(--muted);font-size:12px">${realIdx+1}</td>
-      <td class="td-name">
-        ${item.nome}
-        <small>${item.cat !== '—' ? '📁 '+item.cat : ''}</small>
-      </td>
-      <td style="max-width:180px">
-        <span class="td-link" onclick="copiarLinkIdx(${realIdx})" title="${item.link}">${shortLink}</span>
-      </td>
-      <td class="td-date">${item.date}</td>
-      <td><span class="pill-active">Ativo</span></td>
-      <td>
-        <div class="actions">
-          <button class="btn-act copy" onclick="copiarLinkIdx(${realIdx})">📋 Copiar</button>
-          <button class="btn-act" onclick="abrirModal(${realIdx})" style="color:var(--sub)">✏️</button>
-          <button class="btn-act del" onclick="deletarLink(${realIdx})">🗑️</button>
-        </div>
-      </td>
-    `;
-    tbody.appendChild(tr);
+function confirmarDeletar(idx) {
+  abrirConfirm('🗑️','Remover este link?',`"${links[idx].nome}" será deletado permanentemente.`, () => {
+    links.splice(idx,1); saveLinks(); renderTable(); updateStats();
+    toast('🗑️ Link removido.','red');
   });
 }
 
-function focusGerar() { document.getElementById('inp-url').focus(); document.getElementById('gen-card').scrollIntoView({behavior:'smooth'}); }
-function focusTabela() { document.getElementById('tabela-anchor').scrollIntoView({behavior:'smooth'}); }
+function confirmarLimparTudo() {
+  if (!links.length) { toast('Nenhum link para limpar.'); return; }
+  abrirConfirm('⚠️','Limpar todos os links?',`Todos os ${links.length} links serão removidos permanentemente.`, () => {
+    links = []; saveLinks(); renderTable(); updateStats();
+    document.getElementById('result-box').classList.remove('show');
+    toast('🗑️ Todos os links removidos.','red');
+  });
+}
 
-// Fechar modal clicando fora
-document.getElementById('modal-bg').addEventListener('click', function(e) {
-  if (e.target === this) fecharModal();
+// ─── CONFIRM DIALOG ─────────────────────────────────────────────
+function abrirConfirm(icon, title, desc, fn) {
+  document.getElementById('c-icon').textContent  = icon;
+  document.getElementById('c-title').textContent = title;
+  document.getElementById('c-desc').textContent  = desc;
+  document.getElementById('c-ok-btn').onclick = () => { fecharModal('modal-confirm'); fn(); };
+  document.getElementById('modal-confirm').classList.add('show');
+}
+
+// ─── MODAIS ─────────────────────────────────────────────────────
+function fecharModal(id) { document.getElementById(id).classList.remove('show'); }
+document.querySelectorAll('.modal-bg').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); });
 });
 
-renderTabela();
+// ─── EXPORT ─────────────────────────────────────────────────────
+function abrirExport() { document.getElementById('modal-export').classList.add('show'); }
+
+function downloadFile(content, filename, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], { type }));
+  a.download = filename; a.click();
+}
+
+function exportCSV() {
+  if (!links.length) { toast('Nenhum link para exportar.'); return; }
+  const rows = [['#','Nome','Categoria','Link Gerado','URL Original','Data']];
+  links.forEach((l,i) => rows.push([i+1, l.nome, l.cat||'', l.link, l.url, l.date]));
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  downloadFile('\uFEFF'+csv, 'linkvault-links.csv', 'text/csv;charset=utf-8');
+  fecharModal('modal-export'); toast('📊 CSV exportado!', 'green');
+}
+
+function exportJSON() {
+  if (!links.length) { toast('Nenhum link para exportar.'); return; }
+  downloadFile(JSON.stringify(links, null, 2), 'linkvault-backup.json', 'application/json');
+  fecharModal('modal-export'); toast('{ } JSON exportado!', 'green');
+}
+
+function exportTXT() {
+  if (!links.length) { toast('Nenhum link para exportar.'); return; }
+  const txt = links.map(l => l.link).join('\n');
+  downloadFile(txt, 'linkvault-links.txt', 'text/plain');
+  fecharModal('modal-export'); toast('📝 TXT exportado!', 'green');
+}
+
+// ─── CONFIG ─────────────────────────────────────────────────────
+function abrirConfig() {
+  document.getElementById('cfg-base').value  = cfg.base;
+  document.getElementById('cfg-timer').value = cfg.timer;
+  document.getElementById('modal-config').classList.add('show');
+}
+
+function salvarConfig() {
+  const base  = document.getElementById('cfg-base').value.trim();
+  const timer = parseInt(document.getElementById('cfg-timer').value) || DEFAULT_TIMER;
+  if (!base.startsWith('http')) { toast('⚠️ URL base inválida.'); return; }
+  cfg = { base, timer };
+  saveCfg();
+  document.getElementById('s-timer').textContent = timer + 's';
+  fecharModal('modal-config');
+  toast('⚙️ Configurações salvas!', 'green');
+}
+
+// ─── QR CODE (canvas puro, sem lib externa) ────────────────────
+function gerarQR(text) {
+  const canvas = document.getElementById('qr-canvas');
+  const ctx    = canvas.getContext('2d');
+  // QR simples via API pública
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}&color=6C63FF&bgcolor=FFFFFF`;
+  img.onload = () => { ctx.clearRect(0,0,200,200); ctx.drawImage(img,0,0,200,200); };
+  img.onerror = () => {
+    ctx.fillStyle = '#141824'; ctx.fillRect(0,0,200,200);
+    ctx.fillStyle = '#8892B0'; ctx.font='13px Inter'; ctx.textAlign='center';
+    ctx.fillText('QR indisponível', 100, 100);
+  };
+}
+
+function downloadQR() {
+  const canvas = document.getElementById('qr-canvas');
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = 'qrcode-linkvault.png'; a.click();
+  toast('💾 QR baixado!', 'green');
+}
+
+// ─── STATS ──────────────────────────────────────────────────────
+function updateStats() {
+  const total = links.length;
+  const cats  = [...new Set(links.map(l => l.cat).filter(Boolean))].length;
+
+  document.getElementById('s-total').textContent      = total;
+  document.getElementById('s-cats').textContent       = cats;
+  document.getElementById('s-timer').textContent      = cfg.timer + 's';
+  document.getElementById('sb-count').textContent     = `${total} link${total!==1?'s':''} armazenado${total!==1?'s':''}`;
+  document.getElementById('table-badge').textContent  = `${total} link${total!==1?'s':''}`;
+  document.getElementById('s-hint').textContent       = total > 0 ? `último: ${links[0]?.date||''}` : 'comece gerando um link';
+  document.getElementById('s-cats-hint').textContent  = cats > 0 ? cats+' categoria'+(cats!==1?'s':'')+' diferentes' : 'em uso';
+}
+
+// ─── RENDER TABLE ───────────────────────────────────────────────
+function renderTable() {
+  const q    = document.getElementById('search').value.toLowerCase();
+  const cat  = document.getElementById('filter-cat').value;
+  const tbody= document.getElementById('links-tbody');
+  const table= document.getElementById('links-table');
+  const empty= document.getElementById('empty-state');
+
+  let filtered = links.filter(l => {
+    const matchQ   = !q || l.nome.toLowerCase().includes(q) || l.link.toLowerCase().includes(q) || (l.cat||'').toLowerCase().includes(q) || l.url.toLowerCase().includes(q);
+    const matchCat = !cat || l.cat === cat;
+    return matchQ && matchCat;
+  });
+
+  if (filtered.length === 0) {
+    table.style.display = 'none'; empty.style.display = 'block';
+    empty.querySelector('.empty-text').textContent = links.length ? 'Nenhum resultado encontrado' : 'Nenhum link ainda';
+    empty.querySelector('.empty-hint').textContent = links.length ? 'Tente outros termos de busca' : 'Preencha o formulário acima para gerar seu primeiro link';
+    return;
+  }
+
+  table.style.display = 'table'; empty.style.display = 'none';
+  tbody.innerHTML = '';
+
+  filtered.forEach((item) => {
+    const realIdx = links.indexOf(item);
+    const shortLink = item.link.length > 42 ? item.link.substring(0,42)+'…' : item.link;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="td-num">${realIdx+1}</td>
+      <td><div class="td-name">${item.nome}</div></td>
+      <td><span class="td-link" onclick="copiarLink(${realIdx})" title="${item.link}">${shortLink}</span></td>
+      <td><span class="td-cat">${item.cat||'—'}</span></td>
+      <td class="td-date">${item.date}</td>
+      <td><span class="td-status">● Ativo</span></td>
+      <td>
+        <div class="td-actions">
+          <button class="act-btn copy-btn" onclick="copiarLink(${realIdx})">📋</button>
+          <button class="act-btn qr-btn"   onclick="abrirQR(${realIdx})">QR</button>
+          <button class="act-btn edit-btn" onclick="abrirEditar(${realIdx})">✏️</button>
+          <button class="act-btn del-btn"  onclick="confirmarDeletar(${realIdx})">🗑</button>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+
+  updateStats();
+}
+
+function focusGerar()  { document.getElementById('inp-url').focus(); document.getElementById('gen-card').scrollIntoView({behavior:'smooth'}); }
+function focusTabela() { document.getElementById('table-anchor').scrollIntoView({behavior:'smooth'}); }
+
+// ─── INIT ────────────────────────────────────────────────────────
+renderTable();
+updateStats();
 </script>
 </body>
 </html>
