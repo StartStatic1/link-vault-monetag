@@ -344,6 +344,10 @@
           <option value="Outro">📁 Outro</option>
         </select>
       </div>
+      <div class="form-group">
+        <label class="form-label">Tempo (s) — opcional, sobrescreve o padrão</label>
+        <input class="input" id="inp-timer" type="number" min="5" max="120" placeholder="ex: 20">
+      </div>
       <div class="form-group full">
         <label class="form-label">Link de destino</label>
         <input class="input" id="inp-url" type="url" placeholder="https://..." onkeydown="if(event.key==='Enter')gerarLink()">
@@ -511,7 +515,7 @@
       </div>
       <div class="form-group">
         <label class="form-label">Timer de espera (segundos)</label>
-        <input class="input" id="cfg-timer" type="number" min="5" max="60" placeholder="15">
+        <input class="input" id="cfg-timer" type="number" min="5" max="120" placeholder="15">
       </div>
     </div>
     <div class="modal-footer">
@@ -550,19 +554,21 @@ function gerarLink() {
   const url  = document.getElementById('inp-url').value.trim();
   const nome = document.getElementById('inp-nome').value.trim() || 'Sem nome';
   const cat  = document.getElementById('inp-cat').value;
+  const timerOverride = parseInt(document.getElementById('inp-timer').value) || null;
 
   if (!url) { toast('⚠️ Cole o link de destino!'); return; }
   if (!url.startsWith('http')) { toast('⚠️ Link inválido. Use https://...'); return; }
 
   const encoded = btoa(url);
-  const final   = `${cfg.base}/site/?d=${encoded}`;
+  const tParam  = timerOverride ? `&t=${timerOverride}` : '';
+  const final   = `${cfg.base}/site/?d=${encoded}${tParam}`;
 
   document.getElementById('result-box').classList.add('show');
   document.getElementById('result-val').value = final;
 
   const item = {
     id: Date.now(),
-    nome, cat, url,
+    nome, cat, url, timer: timerOverride,
     link: final,
     date: new Date().toLocaleDateString('pt-BR'),
     ts: Date.now()
@@ -572,8 +578,9 @@ function gerarLink() {
   renderTable();
   updateStats();
 
-  document.getElementById('inp-url').value  = '';
-  document.getElementById('inp-nome').value = '';
+  document.getElementById('inp-url').value   = '';
+  document.getElementById('inp-nome').value  = '';
+  document.getElementById('inp-timer').value = '';
   toast('✅ Link gerado!', 'green');
 }
 
