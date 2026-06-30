@@ -44,7 +44,12 @@
       min-height:100vh;
       display:flex;flex-direction:column;align-items:center;
       padding:0 16px 120px;
+      transition:padding-top .2s ease;
     }
+    /* Aplicada via JS quando detectamos que o Multitag renderizou um banner
+       no topo da viewport — evita espaço em branco fixo quando o anúncio
+       não carrega (ex: adblock, zona indisponível, rede lenta). */
+    body.ad-clearance{padding-top:170px}
 
     /* AD BAITS */
     /* TOPBAR */
@@ -235,6 +240,11 @@
     }
     .btn-main:active{transform:translateY(3px);box-shadow:0 1px 0 var(--accent-dark)}
     .btn-main.show{display:block}
+    /* O botão de início precisa ficar SEMPRE clicável, mesmo se o Multitag
+       do Monetag renderizar um banner fixed por cima do topo da página
+       (formato "notificação push" que ocupa ~250-300px do topo). */
+    #btn-start{position:relative;z-index:500}
+    #start-gate{position:relative;z-index:500}
     .btn-main.green-btn{
       background:linear-gradient(135deg,var(--green-dark),var(--green));
       box-shadow:0 4px 0 #15803D,0 8px 24px var(--green-glow);
@@ -580,17 +590,26 @@ function startTimer() {
 }
 
 // ─── PASSO 0: CLIQUE OBRIGATÓRIO (dispara o OnClick do Monetag) ──
-function handleStartClick() {
+function handleStartClick(e) {
+  // Em alguns navegadores mobile, o tag OnClick do Monetag intercepta o
+  // primeiro clique da página pra abrir popup/nova aba, o que pode atrasar
+  // ou impedir a execução do nosso próprio handler. Forçamos a atualização
+  // de UI a rodar de forma síncrona e imediata, independente do que o
+  // script de ads fizer com o evento.
   if (startClicked) return;
   startClicked = true;
-  document.getElementById('start-gate').classList.remove('show');
-  document.getElementById('btn-start').classList.remove('show');
-  scrollGate.classList.add('show');
-  timerLabel.textContent = '👇 Role a página para continuar';
-  // O próprio onclick nativo já é suficiente para o tag OnClick do Monetag
-  // disparar (ele escuta o primeiro clique/touch da página). Não precisamos
-  // chamar nada manualmente — apenas garantir que este é o PRIMEIRO clique
-  // possível no fluxo (antes não havia nenhum botão clicável).
+
+  const startGate = document.getElementById('start-gate');
+  const btnStart  = document.getElementById('btn-start');
+  if (startGate) startGate.classList.remove('show');
+  if (btnStart)  { btnStart.classList.remove('show'); btnStart.disabled = true; }
+  if (scrollGate) scrollGate.classList.add('show');
+  if (timerLabel) timerLabel.textContent = '👇 Role a página para continuar';
+
+  // Feedback visual imediato de que o clique foi registrado, mesmo que o
+  // anúncio abra por cima e o usuário ache que "não aconteceu nada".
+  const fl = document.getElementById('flash');
+  if (fl) { fl.classList.add('show'); setTimeout(() => fl.classList.remove('show'), 250); }
 }
 
 // ─── PAUSA AO SAIR DA ABA ───────────────────────────────────────
@@ -899,6 +918,36 @@ function runAdblockCheck() {
 
 // Checa 1x após página carregar (aguarda baits renderizarem)
 setTimeout(runAdblockCheck, 2500);
+
+// ─── CLEARANCE PARA BANNER DO MULTITAG ───────────────────────────
+// O Multitag (zona 252888) injeta elementos position:fixed direto no
+// <body>/<html>, fora da nossa árvore de elementos, simulando notificações
+// push no topo da tela. Detectamos isso varrendo por elementos fixed/sticky
+// próximos do topo que NÃO pertencem ao nosso markup, e empurramos o
+// conteúdo crítico (botão de início) para baixo deles.
+function detectTopAdClearance() {
+  const ourIds = new Set(['adblock-overlay','flash','ad-bait','ad-bait-2']);
+  let maxBottom = 0;
+  document.querySelectorAll('body > *').forEach(el => {
+    if (ourIds.has(el.id)) return;
+    if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return;
+    const cs = getComputedStyle(el);
+    if (cs.position !== 'fixed' && cs.position !== 'sticky') return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= 20 && rect.height > 30 && rect.width > 100) {
+      maxBottom = Math.max(maxBottom, rect.bottom);
+    }
+  });
+  if (maxBottom > 60) {
+    document.body.classList.add('ad-clearance');
+  } else {
+    document.body.classList.remove('ad-clearance');
+  }
+}
+// Checa repetidamente nos primeiros segundos (o Multitag carrega async e
+// pode demorar 1-3s para aparecer), depois espaça os checks.
+[300, 800, 1500, 2500, 4000].forEach(t => setTimeout(detectTopAdClearance, t));
+setInterval(detectTopAdClearance, 6000);
 
 // Checa periódico a cada 8s (self-healing se ativar depois)
 setInterval(() => {
