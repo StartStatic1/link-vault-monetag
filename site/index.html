@@ -506,9 +506,15 @@
 <script>
 // ─── DESTINO ────────────────────────────────────────────────────
 const dest = new URLSearchParams(location.search).get('d') || sessionStorage.getItem('_lv_d');
-if (dest) sessionStorage.setItem('_lv_d', dest);
-else {
+if (dest) {
+  sessionStorage.setItem('_lv_d', dest);
+} else {
   document.body.innerHTML = `<p style="text-align:center;margin-top:40vh;font-family:sans-serif;color:#8892B0;font-size:14px">❌ Link inválido ou expirado.</p>`;
+  // Para a execução do restante do script: sem isso, o código abaixo tenta
+  // usar elementos do DOM (timer, botões, etc.) que acabaram de ser apagados
+  // pelo innerHTML acima, gera TypeError e mata silenciosamente o resto do
+  // script — inclusive o handler do botão "Iniciar verificação".
+  throw new Error('LinkVault: destino ausente, abortando inicialização.');
 }
 
 // ─── ESTADO ─────────────────────────────────────────────────────
@@ -536,6 +542,7 @@ let step3Done       = false;
 let adblockActive   = false;
 let adblockCleared  = false;
 let tabHidden       = false;
+let startClicked    = false;
 
 const timerEl    = document.getElementById('timer-val');
 const timerLabel = document.getElementById('timer-label');
