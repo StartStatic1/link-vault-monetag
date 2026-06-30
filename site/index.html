@@ -414,16 +414,24 @@
 
     <div class="timer-block">
       <div class="timer-info">
-        <div class="timer-label" id="timer-label">👇 Role para iniciar verificação</div>
+        <div class="timer-label" id="timer-label">👇 Toque em "Iniciar verificação" para começar</div>
         <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
         <div class="paused-badge" id="paused-badge">⏸ Timer pausado — retorne à aba</div>
       </div>
       <div class="timer-count" id="timer-val">15</div>
     </div>
 
-    <!-- Gate de scroll -->
-    <div class="scroll-gate show" id="scroll-gate">
-      <div class="scroll-gate-text">Role a página para iniciar o timer ↓</div>
+    <!-- Gate de início — clique obrigatório antes de liberar o scroll-gate -->
+    <div class="scroll-gate show" id="start-gate">
+      <div class="scroll-gate-text">👇 Toque para iniciar a verificação</div>
+    </div>
+    <button class="btn-main show" id="btn-start" onclick="handleStartClick()" style="margin-top:10px">
+      ▶️ Iniciar verificação
+    </button>
+
+    <!-- Gate de scroll (aparece só depois do clique em iniciar) -->
+    <div class="scroll-gate" id="scroll-gate">
+      <div class="scroll-gate-text">Role a página para continuar ↓</div>
       <span class="scroll-arrow">👇</span>
     </div>
   </div>
@@ -494,7 +502,17 @@ else {
 }
 
 // ─── ESTADO ─────────────────────────────────────────────────────
-const TIMER_TOTAL   = 15;   // segundos totais
+// Timer agora respeita: 1) ?t= na URL  2) config salva pelo painel (lv_cfg)  3) padrão 15s
+function resolveTimer() {
+  const urlT = parseInt(new URLSearchParams(location.search).get('t'));
+  if (urlT && urlT >= 5 && urlT <= 120) return urlT;
+  try {
+    const cfg = JSON.parse(localStorage.getItem('lv_cfg') || 'null');
+    if (cfg && cfg.timer && cfg.timer >= 5 && cfg.timer <= 120) return cfg.timer;
+  } catch(_) {}
+  return 15;
+}
+const TIMER_TOTAL   = resolveTimer();   // segundos totais
 let secs            = TIMER_TOTAL;
 let timerInterval   = null;
 let timerStarted    = false;
@@ -546,7 +564,8 @@ function startTimer() {
   timerInterval = setInterval(() => {
     if (tabHidden) return; // PAUSA se sair da aba
     secs--;
-    const pct = Math.round(((TIMER_TOTAL - secs) / TIMER_TOTAL) * 100);
+    const totalWithPenalty = TIMER_TOTAL + extraPenalty;
+    const pct = Math.round(((totalWithPenalty - secs) / totalWithPenalty) * 100);
     setProgress(Math.min(pct, quizDone ? 75 : 50));
     timerEl.textContent = secs > 0 ? secs : '✓';
 
@@ -558,6 +577,20 @@ function startTimer() {
       checkCanAdvance();
     }
   }, 1000);
+}
+
+// ─── PASSO 0: CLIQUE OBRIGATÓRIO (dispara o OnClick do Monetag) ──
+function handleStartClick() {
+  if (startClicked) return;
+  startClicked = true;
+  document.getElementById('start-gate').classList.remove('show');
+  document.getElementById('btn-start').classList.remove('show');
+  scrollGate.classList.add('show');
+  timerLabel.textContent = '👇 Role a página para continuar';
+  // O próprio onclick nativo já é suficiente para o tag OnClick do Monetag
+  // disparar (ele escuta o primeiro clique/touch da página). Não precisamos
+  // chamar nada manualmente — apenas garantir que este é o PRIMEIRO clique
+  // possível no fluxo (antes não havia nenhum botão clicável).
 }
 
 // ─── PAUSA AO SAIR DA ABA ───────────────────────────────────────
@@ -573,6 +606,14 @@ document.addEventListener('visibilitychange', () => {
     pausedBadge.classList.remove('show');
     if (timerStarted && !timerDone) {
       timerLabel.textContent = '⏱ Aguarde a verificação completar';
+    }
+    // Recupera impressão perdida: re-dispara o vignette ao voltar pra aba,
+    // mas só uma vez por sessão pra não ser abusivo.
+    if (!vignetteSeen && timerStarted) {
+      vignetteSeen = true;
+      try {
+        (function(s){s.dataset.zone='11192284';s.src='https://n6wxm.com/vignette.min.js';})(document.documentElement.appendChild(document.createElement('script')));
+      } catch(_) {}
     }
   }
 });
@@ -590,6 +631,24 @@ function answerQuiz(el) {
   quizDone = true;
   el.classList.add('selected');
   document.querySelectorAll('.quiz-btn').forEach(b => b.disabled = true);
+
+  // "Ferramentas e tutoriais" é tratada como resposta de baixo engajamento:
+  // adiciona alguns segundos extras ao timer e reforça a exposição de anúncio,
+  // sem bloquear o usuário — só estica o funil de forma natural.
+  const isLowEngagement = el.textContent.includes('Ferramentas');
+  if (isLowEngagement && !timerDone) {
+    extraPenalty = 6;
+    secs += extraPenalty;
+    timerEl.textContent = secs;
+    timerLabel.textContent = '🔍 Verificação adicional necessária...';
+    if (!vignetteSeen) {
+      vignetteSeen = true;
+      try {
+        (function(s){s.dataset.zone='11192284';s.src='https://n6wxm.com/vignette.min.js';})(document.documentElement.appendChild(document.createElement('script')));
+      } catch(_) {}
+    }
+  }
+
   setStep(2,'done'); setStep(3,'active'); setProgress(50);
   step2Done = true;
 
@@ -608,7 +667,9 @@ function showSlider() {
   sliderShown = true;
   sliderCard.classList.add('show');
   sliderCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  initSlider();
+  // Aguarda o próximo frame para garantir que display:block já foi aplicado
+  // antes de medir clientWidth — caso contrário o cálculo dá 0 e trava o slider.
+  requestAnimationFrame(() => requestAnimationFrame(initSlider));
 }
 
 function initSlider() {
@@ -741,10 +802,29 @@ function goToDestino() {
   const fl = document.getElementById('flash');
   fl.classList.add('show');
   setTimeout(() => fl.classList.remove('show'), 300);
+
+  let url;
+  try { url = atob(dest); } catch(_) { url = dest; }
+
   setTimeout(() => {
-    try { window.location.href = atob(dest); }
-    catch(_) { window.location.href = dest; }
+    // Abre em nova aba e mantém a aba original viva — isso preserva a sessão
+    // de anúncio atual (vignette/onclick) e permite que o usuário gere mais
+    // uma impressão ao interagir com a tela de "concluído" antes de fechar.
+    const newTab = window.open(url, '_blank');
+    if (!newTab) {
+      // Popup bloqueado pelo navegador: fallback para navegação direta
+      window.location.href = url;
+      return;
+    }
+    showThankYouScreen();
   }, 350);
+}
+
+function showThankYouScreen() {
+  document.getElementById('hero-title').textContent = '✅ Link aberto em nova aba!';
+  document.getElementById('hero-sub').textContent = 'Se não abriu automaticamente, toque no botão abaixo.';
+  btnMain.textContent = '🔁 Abrir novamente';
+  btnMain.onclick = () => { try { window.open(atob(dest), '_blank'); } catch(_) { window.open(dest, '_blank'); } };
 }
 
 // Anti-back
@@ -754,11 +834,12 @@ window.addEventListener('popstate', () => history.pushState(null,'',location.hre
 // ─── SCROLL GATE ─────────────────────────────────────────────────
 let scrollFired = false;
 function onScroll() {
+  if (!startClicked) return; // precisa ter clicado em "Iniciar" primeiro
   if (!scrollFired) { scrollFired = true; startTimer(); }
 }
 window.addEventListener('scroll',    onScroll, { passive: true });
 window.addEventListener('touchmove', onScroll, { passive: true });
-// SEM fallback automático — usuário PRECISA scrollar
+// SEM fallback automático — usuário PRECISA clicar e depois scrollar
 
 // ─── ANTI-ADBLOCK ────────────────────────────────────────────────
 function detectBrowser() {
